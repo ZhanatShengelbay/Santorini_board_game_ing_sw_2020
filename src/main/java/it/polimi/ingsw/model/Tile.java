@@ -1,22 +1,38 @@
 package it.polimi.ingsw.model;
 
-public class Tile {
+class Tile {
     TypeBlock block;
     Worker worker=null;
-    public Tile(TypeBlock block) {
+    final int X, Y;
+
+    public Tile(TypeBlock block, int x, int y) {
         this.block = block;
+        this.X=x;
+        this.Y=y;
+    }
+
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
     }
 
     public void setHigh(TypeBlock block) {
         this.block = block;
     }
 
-    public TypeBlock getBlock() {
+    public TypeBlock getHigh() {
         return block;
     }
 
     public Worker getWorker() {
         return worker;
+    }
+
+    public void noneWorker(){
+        this.worker=null;
     }
 
     public void setWorker(Worker worker) {

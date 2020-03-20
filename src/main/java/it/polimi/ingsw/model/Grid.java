@@ -14,7 +14,7 @@ class Grid {
         for(int i=0;i<N_ROWS;i++)
             for(int j=0;j<N_ROWS;j++)
                 grid[i][j]=new Tile(TypeBlock.FLOOR,i,j);
-        }
+    }
 
 
      public Tile getWorkerTile(Worker work){
@@ -24,7 +24,9 @@ class Grid {
 
     }
 
-
+    public Tile getTile(int x, int y) {
+        return grid[x][y];
+    }
 
     // dato il tile di partenza e la direzione dell'azione, restituisce il tile destinazione
     public Tile nextTile(Tile from, Cardinal direction){

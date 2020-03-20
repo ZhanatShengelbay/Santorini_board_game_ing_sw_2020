@@ -10,16 +10,23 @@ import java.util.Scanner;
 
 public class View extends Subject<State> implements Observer<Model> {
 
-    State currentState;
+    State currentState; // use reference to model? clone it? can we pass references through socket?
     Scanner inStream;
     PrintStream outStream;
+    Model model;
+
+    public View(){
+        inStream = new Scanner(System.in);
+        outStream = new PrintStream(System.out);
+    }
 
     @Override
     public void update(Model message) {
-        message.toString();
-        message.
+        this.currentState = model.getCurrentState();
+        outStream.println(currentState.toString());
+        currentState.getInput();
+        notify(currentState);
     }
-
 
 
 

@@ -11,5 +11,7 @@ public interface State {
     gli stati vengono comunicati alla view o dal Model o dal controller
      */
 
+    public void getInput();
+
     
 }

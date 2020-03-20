@@ -36,12 +36,17 @@ public class Model extends Subject<Model> implements Cloneable {
         return currentWorker;
     }
 
+    protected void setCurrentWorker(Worker worker) {
+        this.currentWorker = worker;
+    }
+
     public State getCurrentState() {
         return currentState;
     }
 
     protected void setCurrentState(State currentState) {
         this.currentState = currentState;
+        notify(this);
     }
 }
 

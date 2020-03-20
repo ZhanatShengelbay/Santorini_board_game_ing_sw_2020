@@ -12,7 +12,6 @@ public class Controller implements Observer<State>  {
 
     View view;
     Model model;
-    State currentState;
     Player currentPlayer;
     public Controller(View view, Model model) {
         this.view = view;
@@ -22,24 +21,20 @@ public class Controller implements Observer<State>  {
 
     @Override
     public void update(State message) {
-        currentState=message;
-       handle();
+        if (message instanceof Move)
+            makeMovement((Move)message);
 
     }
-    public void handle() {
 
-        if (currentState instanceof Move)
-            makeMovement((Move)currentState);
-
-    }
 
 
     public void makeMovement (Move move){
         /*2 approcci, si modifica il model con uno strategy pattern
         ma la sua implementazione puo venire o qua o nel model
          */
-        currentState = currentPlayer.makeMovement(model,move);
-        handle();
+        currentPlayer.makeMovement(model,move);
+        model.notify(model.clone());
+
 
     }
 }

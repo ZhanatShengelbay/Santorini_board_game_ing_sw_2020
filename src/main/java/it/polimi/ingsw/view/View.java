@@ -17,11 +17,10 @@ public class View extends Subject<State> implements Observer<Model> {
     @Override
     public void update(Model message) {
         message.toString();
+        message.
     }
 
 
-    public void handle(State state){
-        notify(state);
-    }
+
 
 }

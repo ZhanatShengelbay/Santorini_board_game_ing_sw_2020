@@ -2,13 +2,14 @@ package it.polimi.ingsw.model;
 
 class Tile {
     TypeBlock block;
-    Worker worker=null;
+    Worker worker;
     final int X, Y;
 
     public Tile(TypeBlock block, int x, int y) {
         this.block = block;
         this.X=x;
         this.Y=y;
+        this.worker=null;
     }
 
     public int getX() {

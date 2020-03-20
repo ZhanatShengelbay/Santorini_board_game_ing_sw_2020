@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utility.Cardinal;
-
-import java.util.ArrayList;
-import java.util.List;
+import it.polimi.ingsw.utility.Coordinate;
 
 class Grid {
 
@@ -20,8 +18,9 @@ class Grid {
 
 
      public Tile getWorkerTile(Worker work){
-
-
+        int x = work.getPosition().getX();
+        int y = work.getPosition().getY();
+        return grid[x][y];
 
     }
 
@@ -31,9 +30,17 @@ class Grid {
     public Tile nextTile(Tile from, Cardinal direction){
                 int x = from.getX() + direction.getX();
                 int y = from.getY() + direction.getY();
-                //check coordinate
-                return grid[x][y];
+                if( (0<=x && x< N_ROWS )&&( 0<=y && y< N_COLS))
+                        return grid[x][y];
+                else throw new IllegalArgumentException();
     }
+
+    public boolean validTile(Tile from, Coordinate c){
+        for(Cardinal.){
+
+        }
+    }
+
 
 
 

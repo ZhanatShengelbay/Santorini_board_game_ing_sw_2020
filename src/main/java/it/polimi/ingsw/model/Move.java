@@ -1,14 +1,24 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.utility.Cardinal;
-
 
 public class Move implements State {
 
-    Cardinal choice;
+    int X, Y;
+    Worker worker;
 
+    public Move(Worker worker) {
+        this.worker = worker;
+    }
 
-    public Cardinal getChoice() {
-        return choice;
+    public void setX(int x) { X = x; }
+
+    public void setY (int y) { Y = y; }
+
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
     }
 }

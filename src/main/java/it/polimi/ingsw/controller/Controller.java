@@ -1,12 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Select;
-import it.polimi.ingsw.model.Move;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.Observer;
-import it.polimi.ingsw.model.State;
 import it.polimi.ingsw.view.View;
+
+import javax.swing.text.Position;
 
 
 public class Controller implements Observer<State>  {
@@ -27,7 +25,12 @@ public class Controller implements Observer<State>  {
             makeSelection((Select)message);
         else if (message instanceof Move)
             makeMovement((Move)message);
+        else if (message instanceof PositionWorkers)
+            positionWorker((PositionWorkers)message);
+    }
 
+    public void positionWorker(PositionWorkers posWorker){
+        currentPlayer.positionWorker(model, posWorker);
     }
 
     public void makeSelection(Select select){

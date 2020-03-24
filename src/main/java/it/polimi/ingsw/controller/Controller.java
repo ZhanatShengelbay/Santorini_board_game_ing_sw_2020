@@ -44,4 +44,9 @@ public class Controller implements Observer<State>  {
         currentPlayer.makeMovement(model, move);
         model.notify(model.clone());
     }
+    public void build(Build build){
+
+    }
+
+
 }

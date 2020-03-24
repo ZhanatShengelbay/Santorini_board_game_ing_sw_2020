@@ -4,13 +4,13 @@ public class Checks {
 
     static int HIGH_DIFF = 1;
 
-    public boolean checkDestination(Tile from, Tile destination){
+    public  boolean checkDestination(Tile from, Tile destination){
         if(!isDome(destination)&&!isWorker(destination)&&
         isRisible(from,destination))return true;
         else return false;
 
     }
-    public boolean isRisible(Tile from, Tile destination){
+    public  boolean isRisible(Tile from, Tile destination){
         int highDifference = destination.getHigh().ordinal() - from.getHigh().ordinal();
         return highDifference<=HIGH_DIFF;
 

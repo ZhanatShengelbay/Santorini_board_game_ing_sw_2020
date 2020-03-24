@@ -5,7 +5,7 @@ import static it.polimi.ingsw.model.TypeBlock.*;
 
 
 public class Build implements State {
-    
+
     private Cardinal choice;
     private TypeBlock block;
     private State currentState;
@@ -26,31 +26,32 @@ public class Build implements State {
         return choice;
     }
 
-    public boolean isBuildable(){
-       if(!currentState.equals(DOME) && !currentState.equals(worker)){
-          return true;
-       } else return false;
+    public boolean isBuildable() {
+        if (!currentState.equals(DOME) && !currentState.equals(worker)) {
+            return true;
+        } else return false;
 
        /* if(!c.isDome(tile) && !c.isWorker(tile)){
             return true;
         } else return false;*/
 
 
-    public void build() throws IllegalStateException {
-        if(isBuildable() == true){
-            if (FLOOR.equals(currentState)) {
-                block = FIRST;
+        public void build () throws IllegalStateException {
+            if (isBuildable() == true) {
+                if (FLOOR.equals(currentState)) {
+                    block = FIRST;
 
-            } else if (FIRST.equals(currentState)) {
-                block = SECOND;
+                } else if (FIRST.equals(currentState)) {
+                    block = SECOND;
 
-            } else if (SECOND.equals(currentState)) {
-                block = THIRD;
+                } else if (SECOND.equals(currentState)) {
+                    block = THIRD;
 
-            } else if (THIRD.equals(currentState)) {
-                block = DOME;
-            } else {
-                throw new IllegalStateException("Unexpected value: " + currentState);
+                } else if (THIRD.equals(currentState)) {
+                    block = DOME;
+                } else {
+                    throw new IllegalStateException("Unexpected value: " + currentState);
+                }
             }
         }
     }

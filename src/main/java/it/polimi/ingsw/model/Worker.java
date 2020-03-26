@@ -2,16 +2,14 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utility.Coordinate;
 
-class Worker {
+public class Worker {
 
-    Player player;
-    Coordinate position;
 
-    public Coordinate getPosition() {
-        return position;
+    private Player player;
+
+    public Player getPlayer() {
+
+        return player;
     }
 
-    public void setPosition(Coordinate position) {
-        this.position = position;
-    }
 }

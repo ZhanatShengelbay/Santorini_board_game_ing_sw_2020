@@ -1,17 +1,21 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utility.Subject;
+import it.polimi.ingsw.utility.Coordinate;
+
+import java.util.List;
 
 public class Model extends Subject<Model> implements Cloneable {
 
     private Grid grid;
-    private Worker currentWorker;
+    private Coordinate currentWorker;
     private State currentState;
-    private Checks check;
+
+    List<GroundEffect>playerEffect;
 
 
 
-    @Override
+
     public Model clone(){
         Model model = new Model();
         model.grid=this.grid;
@@ -28,15 +32,11 @@ public class Model extends Subject<Model> implements Cloneable {
         return grid;
     }
 
-    protected Checks getCheck() {
-        return check;
-    }
-
-    protected Worker getCurrentWorker() {
+    protected Coordinate getCurrentWorker() {
         return currentWorker;
     }
 
-    protected void setCurrentWorker(Worker worker) {
+    protected void setCurrentWorker(Coordinate worker) {
         this.currentWorker = worker;
     }
 
@@ -48,6 +48,8 @@ public class Model extends Subject<Model> implements Cloneable {
         this.currentState = currentState;
         notify(this);
     }
+
+
 }
 
 

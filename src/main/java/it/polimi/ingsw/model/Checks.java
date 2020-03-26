@@ -1,33 +1,53 @@
 package it.polimi.ingsw.model;
 
+import java.util.List;
+
+
 public class Checks {
+    private Tile from;
+    private Tile destination;
+    private boolean result;
+
+    public Checks(Tile from, Tile destination,Model model) {
+        this.from = from;
+        this.destination = destination;
+        this.result = true;
+        if(!model.playerEffect.isEmpty()){
+            for(GroundEffect g : model.playerEffect){
+                if(!g.respectEffect(from, destination))
+                    result=false;
+            }
+        }
+    }
+
+    public Checks(Tile tile){
+        this.destination = tile;
+        this.from=null;
+        this.result = true;
+    }
 
     static int HIGH_DIFF = 1;
 
-    public boolean checkDestination(Tile from, Tile destination){
-        if(!isDome(destination)&&!isWorker(destination)&&
-        isRisible(from,destination))return true;
-        else return false;
 
-    }
-    public boolean isRisible(Tile from, Tile destination){
-        int highDifference = destination.getHigh().ordinal() - from.getHigh().ordinal();
-        return highDifference<=HIGH_DIFF;
 
+    public Checks isRisible(){
+        int highDifference = this.destination.getHigh().ordinal() - this.from.getHigh().ordinal();
+        if(highDifference>HIGH_DIFF)result=false;
+        return this;
     }
 
-    public boolean isDome(Tile t){
-        if(t.getHigh().equals(TypeBlock.DOME))return true;
-        else return false;
+    public Checks isNotDome(){
+        if(this.destination.getHigh().equals(TypeBlock.DOME))
+            result=false;
+        return this;
     }
 
-    public boolean isWorker(Tile t){
-        if(t.getWorker()!=null) return true;
-        else return false;
+    public Checks isNotWorker(){
+        if(this.destination.getWorker()==null) result=false;
+        return this;
     }
 
-
-
-
-
+    public boolean getResult() {
+        return result;
+    }
 }

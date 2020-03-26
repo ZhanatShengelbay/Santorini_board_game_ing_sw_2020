@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.utility.Cardinal;
+import it.polimi.ingsw.utility.Coordinate;
 
 public class Build implements State {
-    
-    Cardinal choice;
+    Coordinate choice;
 
-    public Cardinal getChoice() {
+    public Coordinate getChoice() {
         return choice;
     }
-    
 }

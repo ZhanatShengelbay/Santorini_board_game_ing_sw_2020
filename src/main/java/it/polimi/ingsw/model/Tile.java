@@ -1,24 +1,23 @@
 package it.polimi.ingsw.model;
 
-class Tile {
-    TypeBlock block;
-    Worker worker;
-    final int X, Y;
+import it.polimi.ingsw.utility.Coordinate;
 
-    public Tile(TypeBlock block, int x, int y) {
+public class Tile {
+    private TypeBlock block;
+    private Worker worker;
+    private Coordinate position;
+
+    public Tile(TypeBlock block,Coordinate coordinate) {
         this.block = block;
-        this.X=x;
-        this.Y=y;
+        this.position=coordinate;
         this.worker=null;
     }
 
-    public int getX() {
-        return X;
+    public Coordinate getPosition() {
+        return position;
     }
 
-    public int getY() {
-        return Y;
-    }
+
 
     public void setHigh(TypeBlock block) {
         this.block = block;
@@ -38,5 +37,24 @@ class Tile {
 
     public void setWorker(Worker worker) {
         this.worker = worker;
+    }
+
+    public Tile levelUp() {
+        switch (block){
+            case FLOOR:
+                this.block=TypeBlock.FIRST;
+                break;
+            case FIRST:
+                this.block=TypeBlock.SECOND;
+                break;
+            case SECOND:
+                this.block=TypeBlock.THIRD;
+                break;
+            case THIRD:
+                this.block=TypeBlock.DOME;
+                break;
+            default:
+        }
+        return this;
     }
 }

@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+
 import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.view.View;
 
-import javax.swing.text.Position;
 
-
-public class Controller implements Observer<State>  {
+public class Controller implements Observer<State> {
 
     View view;
     Model model;
@@ -34,7 +33,7 @@ public class Controller implements Observer<State>  {
     }
 
     public void makeSelection(Select select){
-        currentPlayer.makeSelection(model, select, currentPlayer);
+        currentPlayer.makeSelection(model, select);
     }
 
     public void makeMovement(Move move){
@@ -42,6 +41,5 @@ public class Controller implements Observer<State>  {
         ma la sua implementazione puo venire o qua o nel model
          */
         currentPlayer.makeMovement(model, move);
-        model.notify(model.clone());
     }
 }

@@ -24,9 +24,10 @@ public class View extends Subject<State> implements Observer<Model> {
     public void update(Model message) {
         this.currentState = model.getCurrentState();
         outStream.println(currentState.toString());
-        currentState.getInput();
+       // currentState.getInput();
         notify(currentState);
     }
+    
 
 
 

@@ -1,24 +1,14 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.utility.Coordinate;
+
 public class Move implements State {
 
-    int X, Y;
-    Worker worker;
+    Coordinate choice;
 
-    public Move(Worker worker) {
-        this.worker = worker;
+    public Coordinate getChoice() {
+        return choice;
     }
 
-    public void setX(int x) { X = x; }
-
-    public void setY (int y) { Y = y; }
-
-    public int getX() {
-        return X;
-    }
-
-    public int getY() {
-        return Y;
-    }
 }

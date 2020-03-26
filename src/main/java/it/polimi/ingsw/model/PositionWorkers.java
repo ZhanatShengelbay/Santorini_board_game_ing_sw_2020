@@ -24,7 +24,7 @@ public class PositionWorkers implements State{
 
     @Override
     public String toString() {
-        return "Choose where to place you worker";
+        return "Choose where to place your worker";
     }
 
     public void getInput(){

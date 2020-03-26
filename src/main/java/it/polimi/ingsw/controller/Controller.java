@@ -42,4 +42,9 @@ public class Controller implements Observer<State> {
          */
         currentPlayer.makeMovement(model, move);
     }
+    public void build(Build build){
+
+    }
+
+
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Grid;
 import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utility.Coordinate;
 import org.junit.After;
 import org.junit.Before;
@@ -36,6 +37,37 @@ public class GridTest {
 
 
         }
+
+    @Test
+    public void testLevelUp(){
+        Coordinate c1 = new Coordinate(3,2);
+        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.FLOOR);
+        grid.getTile(c1).levelUp();
+        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.FIRST);
+        grid.getTile(c1).levelUp();
+        grid.getTile(c1).levelUp();
+        grid.getTile(c1).levelUp();
+        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.DOME);
+        try {
+            grid.getTile(c1).levelUp();
+        }catch (IllegalStateException exception){
+            assertTrue(grid.getTile(c1).getHigh()==TypeBlock.DOME);
+        }
+
+        Coordinate c2 = new Coordinate(5,4);
+        try {
+            grid.getTile(c2).levelUp();
+        }catch (Exception exception) {
+            assertTrue(grid.getTile(c2) == null);
+        }
+
+
+
+
+
+
+
+    }
 
 
 }

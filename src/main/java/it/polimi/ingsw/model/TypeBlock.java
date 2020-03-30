@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-enum TypeBlock {
+public enum TypeBlock {
     FLOOR (0),
     FIRST(1),
     SECOND(2),

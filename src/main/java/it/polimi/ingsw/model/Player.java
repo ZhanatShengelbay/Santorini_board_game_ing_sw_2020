@@ -66,7 +66,11 @@ public abstract class Player {
                 Tile destinationTile = model.getGrid().getTile(from);
                 Checks buildCheck= new Checks(destinationTile).isNotDome().isNotWorker();
                 if (buildCheck.getResult()) {
-                    destinationTile.levelUp();
+                    try {
+                        destinationTile.levelUp();
+                    }catch (Exception e){
+
+                    }
                     model.setCurrentState(new End());
                 } else model.setCurrentState(new Move()); //segnalare la mossa non valida in qualche modo
             }

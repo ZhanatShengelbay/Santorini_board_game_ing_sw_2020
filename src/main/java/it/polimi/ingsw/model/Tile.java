@@ -5,23 +5,13 @@ import it.polimi.ingsw.utility.Coordinate;
 public class Tile {
     private TypeBlock block;
     private Worker worker;
-    private Coordinate position;
 
     public Tile(TypeBlock block,Coordinate coordinate) {
         this.block = block;
-        this.position=coordinate;
         this.worker=null;
     }
 
-    public Coordinate getPosition() {
-        return position;
-    }
 
-
-
-    public void setHigh(TypeBlock block) {
-        this.block = block;
-    }
 
     public TypeBlock getHigh() {
         return block;
@@ -39,7 +29,7 @@ public class Tile {
         this.worker = worker;
     }
 
-    public Tile levelUp() {
+    public Tile levelUp ()throws IllegalStateException {
         switch (block){
             case FLOOR:
                 this.block=TypeBlock.FIRST;
@@ -53,7 +43,7 @@ public class Tile {
             case THIRD:
                 this.block=TypeBlock.DOME;
                 break;
-            default:
+            default: throw new IllegalStateException();
         }
         return this;
     }

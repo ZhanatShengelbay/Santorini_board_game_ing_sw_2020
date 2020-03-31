@@ -4,7 +4,7 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.util.List;
 
-public abstract class Player {
+public class Player {
 
         private     List<Worker> workers;
         private     String playerID;
@@ -12,11 +12,17 @@ public abstract class Player {
         public Player(List<Worker> workers, String playerID) {
         this.workers = workers;
         this.playerID = playerID;
+        workers.get(0).setPlayer(this);
+        workers.get(1).setPlayer(this);
     }
 
         public String getPlayerID() {
         return playerID;
     }
+
+        public Worker getWorker(int num){
+            return workers.get(num);
+        }
 
         public void positionWorker(Model model, PositionWorkers posWorker){
             Tile destination = model.getGrid().getTile(posWorker.getCoordinate());
@@ -31,7 +37,7 @@ public abstract class Player {
 
             if (workerTmp.getPlayer().equals(this)){
                 model.setCurrentWorker(selection);
-                model.setCurrentState((new Move()));
+                model.setCurrentState((new Move(null)));
             }
             else model.setCurrentState(new Select(null));
         }
@@ -42,18 +48,18 @@ public abstract class Player {
 
             if(model.getGrid().checkDestination(from,destination)){
                 Tile fromTile = model.getGrid().getTile(from);
-                Tile destinationTile = model.getGrid().getTile(from);
+                Tile destinationTile = model.getGrid().getTile(destination);
                 Checks moveCheck= new Checks(fromTile,destinationTile,model).isRisible().isNotDome().isNotWorker();
                 if(moveCheck.getResult()){
                     destinationTile.setWorker(fromTile.getWorker());
                     model.setCurrentWorker(destination);
                     fromTile.noneWorker();
                     if(winCondition(fromTile,destinationTile)) model.setCurrentState(new Win());
-                    else model.setCurrentState(new Build());
-                }else model.setCurrentState(new Move());
+                    else model.setCurrentState(new Build(null));
+                }else model.setCurrentState(new Move(null));
 
 
-            }else model.setCurrentState(new Move());
+            }else model.setCurrentState(new Move(null));
 
 
         }
@@ -63,7 +69,7 @@ public abstract class Player {
             Coordinate from = model.getCurrentWorker();
 
             if(model.getGrid().checkDestination(from,destination)) {
-                Tile destinationTile = model.getGrid().getTile(from);
+                Tile destinationTile = model.getGrid().getTile(destination);
                 Checks buildCheck= new Checks(destinationTile).isNotDome().isNotWorker();
                 if (buildCheck.getResult()) {
                     try {
@@ -72,13 +78,13 @@ public abstract class Player {
 
                     }
                     model.setCurrentState(new End());
-                } else model.setCurrentState(new Move()); //segnalare la mossa non valida in qualche modo
+                } else model.setCurrentState(new Move(null)); //segnalare la mossa non valida in qualche modo
             }
 
     }
 
         private boolean winCondition(Tile from,Tile destination){
-            return from.getHigh().equals(TypeBlock.SECOND) && destination.getHigh().equals(TypeBlock.THIRD);
+            return from.getHeight().equals(TypeBlock.SECOND) && destination.getHeight().equals(TypeBlock.THIRD);
         }
 
         @Override

@@ -41,17 +41,17 @@ public class GridTest {
     @Test
     public void testLevelUp(){
         Coordinate c1 = new Coordinate(3,2);
-        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.FLOOR);
+        assertTrue(grid.getTile(c1).getHeight()==TypeBlock.FLOOR);
         grid.getTile(c1).levelUp();
-        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.FIRST);
+        assertTrue(grid.getTile(c1).getHeight()==TypeBlock.FIRST);
         grid.getTile(c1).levelUp();
         grid.getTile(c1).levelUp();
         grid.getTile(c1).levelUp();
-        assertTrue(grid.getTile(c1).getHigh()==TypeBlock.DOME);
+        assertTrue(grid.getTile(c1).getHeight()==TypeBlock.DOME);
         try {
             grid.getTile(c1).levelUp();
         }catch (IllegalStateException exception){
-            assertTrue(grid.getTile(c1).getHigh()==TypeBlock.DOME);
+            assertTrue(grid.getTile(c1).getHeight()==TypeBlock.DOME);
         }
 
         Coordinate c2 = new Coordinate(5,4);

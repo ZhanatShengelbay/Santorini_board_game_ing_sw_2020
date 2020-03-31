@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.utility.Subject;
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends Subject<Model> implements Cloneable {
@@ -11,17 +12,20 @@ public class Model extends Subject<Model> implements Cloneable {
     private Coordinate currentWorker;
     private State currentState;
 
-    List<GroundEffect>playerEffect;
+    List<GroundEffect>playerEffect = new ArrayList<GroundEffect>();
 
 
 
 
     public Model clone(){
-        Model model = new Model();
+        Model model = new Model(grid);
         model.grid=this.grid;
         return model;
     }
 
+    public Model(Grid grid){
+        this.grid = grid;
+    }
 
     @Override
     public String toString() {
@@ -32,7 +36,7 @@ public class Model extends Subject<Model> implements Cloneable {
         return grid;
     }
 
-    protected Coordinate getCurrentWorker() {
+    public Coordinate getCurrentWorker() {
         return currentWorker;
     }
 

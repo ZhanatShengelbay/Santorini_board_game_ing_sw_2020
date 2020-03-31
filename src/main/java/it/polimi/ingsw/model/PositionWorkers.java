@@ -16,8 +16,9 @@ public class PositionWorkers implements State{
         return coordinate;
     }
 
-    public PositionWorkers(Coordinate coordinate){
+    public PositionWorkers(Coordinate coordinate, int num){
         this.coordinate = coordinate;
+        this.num = num;
         inStream = new Scanner(System.in);
         outStream = new PrintStream(System.out);
     }

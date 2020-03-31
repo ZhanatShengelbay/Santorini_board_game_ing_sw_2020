@@ -13,7 +13,7 @@ public class Tile {
 
 
 
-    public TypeBlock getHigh() {
+    public TypeBlock getHeight() {
         return block;
     }
 

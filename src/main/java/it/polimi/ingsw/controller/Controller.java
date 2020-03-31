@@ -12,13 +12,11 @@ public class Controller implements Observer<State> {
     Model model;
     Player currentPlayer;
 
-    public Controller(View view, Model model) {
-        this.view = view;
+    public Controller(Model model) {
         this.model = model;
-
     }
 
-    @Override
+    @Override // Add view to parameters
     public void update(State message) {
         if (message instanceof Select)
             makeSelection((Select)message);

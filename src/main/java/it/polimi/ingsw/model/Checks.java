@@ -31,19 +31,19 @@ public class Checks {
 
 
     public Checks isRisible(){
-        int highDifference = this.destination.getHigh().ordinal() - this.from.getHigh().ordinal();
+        int highDifference = this.destination.getHeight().ordinal() - this.from.getHeight().ordinal();
         if(highDifference>HIGH_DIFF)result=false;
         return this;
     }
 
     public Checks isNotDome(){
-        if(this.destination.getHigh().equals(TypeBlock.DOME))
+        if(this.destination.getHeight().equals(TypeBlock.DOME))
             result=false;
         return this;
     }
 
     public Checks isNotWorker(){
-        if(this.destination.getWorker()==null) result=false;
+        if(this.destination.getWorker()!=null) result=false;
         return this;
     }
 

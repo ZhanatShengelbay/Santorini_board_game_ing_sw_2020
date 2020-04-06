@@ -1,53 +1,92 @@
 package it.polimi.ingsw.model;
 
+
+import it.polimi.ingsw.utility.Coordinate;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class Checks {
-    private Tile from;
-    private Tile destination;
-    private boolean result;
+    private Model model;
+    private Coordinate from;
+    private List<Coordinate> destinations;
+    private List<Boolean> result;
 
-    public Checks(Tile from, Tile destination,Model model) {
+
+
+    public Checks( Model model, Coordinate from, Coordinate destination) {
+        this.model=model;
         this.from = from;
-        this.destination = destination;
-        this.result = true;
-        if(!model.playerEffect.isEmpty()){
-            for(GroundEffect g : model.playerEffect){
-                if(!g.respectEffect(from, destination))
-                    result=false;
-            }
+        this.destinations=new ArrayList<>();
+        this.destinations.add(destination);
+        result=new ArrayList<>(Collections.nCopies(destinations.size(), false));
+
+
+    }
+
+    public Checks(Model model, Coordinate from){
+        this.model=model;
+        this.from = from;
+        this.destinations=model.getGrid().validTileAround(from);
+        result=new ArrayList<>(Collections.nCopies(destinations.size(), true));
+
+
+    }
+
+    public Checks isRisible(int MaxPositiveHeight){
+        for(Coordinate destination : destinations) {
+            int heightDifference = model.getGrid().getTile(destination).getHeight().ordinal() - model.getGrid().getTile(from).getHeight().ordinal();
+            if (heightDifference > MaxPositiveHeight) result.set(destinations.indexOf(destination),false);
         }
-    }
-
-    public Checks(Tile tile){
-        this.destination = tile;
-        this.from=null;
-        this.result = true;
-    }
-
-    static int HIGH_DIFF = 1;
-
-
-
-    public Checks isRisible(){
-        int highDifference = this.destination.getHeight().ordinal() - this.from.getHeight().ordinal();
-        if(highDifference>HIGH_DIFF)result=false;
         return this;
     }
 
+    public Checks isRisible(){
+        return isRisible(1);
+    }
+
     public Checks isNotDome(){
-        if(this.destination.getHeight().equals(TypeBlock.DOME))
-            result=false;
+        for(Coordinate destination : destinations) {
+
+            if (model.getGrid().getTile(destination).getHeight().equals(TypeBlock.DOME))
+                result.set(destinations.indexOf(destination),false);
+        }
+
         return this;
     }
 
     public Checks isNotWorker(){
-        if(this.destination.getWorker()!=null) result=false;
+        for(Coordinate destination : destinations) {
+
+            if (model.getGrid().getTile(destination).getWorker()!=null)
+                result.set(destinations.indexOf(destination),false);
+        }
+
         return this;
     }
 
-    public boolean getResult() {
-        return result;
+    public Checks remove(Coordinate alwaysFalseCoordinate){
+        result.remove(destinations.indexOf(alwaysFalseCoordinate));
+        destinations.remove(alwaysFalseCoordinate);
+        return this;
+
     }
+
+    public List<Coordinate> getResult() {
+        List<GroundEffect> tmp = model.getGroundEffects();
+        List<Coordinate> returnList = new ArrayList<>();
+
+
+        for(Coordinate destination : destinations) {
+            if(result.get(destinations.indexOf(destination)))   returnList.add(destination);
+            if(!tmp.isEmpty())
+                for(GroundEffect g : tmp){
+                    if(g.respectEffect(model, from, destination))    destinations.remove(destination);
+                }
+         }
+        return returnList;
+    }
+
 }

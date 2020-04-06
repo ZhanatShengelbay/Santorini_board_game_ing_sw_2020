@@ -2,7 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.State;
+import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.utility.Subject;
 
@@ -30,7 +30,7 @@ public class RemoteView extends Subject<State> implements Observer<Model>{
     public void update(Model message) {
         this.currentState = model.getCurrentState();
         //outStream.println(currentState.toString());
-        currentState.getInput();
+        currentState.getChoice();
         notify(currentState);
     }
 }

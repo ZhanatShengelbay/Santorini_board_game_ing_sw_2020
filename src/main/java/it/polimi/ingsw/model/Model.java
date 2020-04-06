@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Subject;
 import it.polimi.ingsw.utility.Coordinate;
 
@@ -11,11 +12,7 @@ public class Model extends Subject<Model> implements Cloneable {
     private Grid grid;
     private Coordinate currentWorker;
     private State currentState;
-
-    List<GroundEffect>playerEffect = new ArrayList<GroundEffect>();
-
-
-
+    private List<GroundEffect>groundEffects;
 
     public Model clone(){
         Model model = new Model(grid);
@@ -25,6 +22,7 @@ public class Model extends Subject<Model> implements Cloneable {
 
     public Model(Grid grid){
         this.grid = grid;
+        this.groundEffects=new ArrayList<>();
     }
 
     @Override
@@ -48,12 +46,13 @@ public class Model extends Subject<Model> implements Cloneable {
         return currentState;
     }
 
-    protected void setCurrentState(State currentState) {
+    public void setCurrentState(State currentState) {
         this.currentState = currentState;
-        notify(this);
     }
 
-
+    protected List<GroundEffect> getGroundEffects() {
+        return groundEffects;
+    }
 }
 
 

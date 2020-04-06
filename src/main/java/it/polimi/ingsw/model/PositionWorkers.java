@@ -1,18 +1,20 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Coordinate;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class PositionWorkers implements State{
+public class PositionWorkers implements State {
 
     Coordinate coordinate;
     Scanner inStream;
     PrintStream outStream;
     int num;
 
-    public Coordinate getCoordinate() {
+    @Override
+    public Coordinate getChoice() {
         return coordinate;
     }
 

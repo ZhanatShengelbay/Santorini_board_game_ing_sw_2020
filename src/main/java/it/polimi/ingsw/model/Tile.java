@@ -47,4 +47,16 @@ public class Tile {
         }
         return this;
     }
+
+    public boolean isDome(){
+        return this.block.equals(TypeBlock.DOME);
+
+    }
+
+    public boolean isWorker(){
+        return this.worker!=null;
+
+    }
+
+
 }

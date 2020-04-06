@@ -55,6 +55,12 @@ public class Grid {
         return 0 <= x && x < N_ROWS && 0 <= y && y < N_COLS;
     }
 
+    public int HeightDifference(Coordinate from, Coordinate destination){
+      return getTile(from).getHeight().ordinal() - getTile(destination).getHeight().ordinal();
+
+    }
+
+
 
 
 }

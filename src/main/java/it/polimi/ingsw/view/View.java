@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.State;
+import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.utility.Subject;
 

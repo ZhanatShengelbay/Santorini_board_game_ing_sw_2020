@@ -1,8 +1,9 @@
-*
+/*
+
 !.gitignore
 !README.md
 !pom.xml
 !src/
 !javadoc/
-!UML/
+!/UML/
 

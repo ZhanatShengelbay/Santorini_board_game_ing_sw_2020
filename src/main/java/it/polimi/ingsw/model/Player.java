@@ -8,10 +8,16 @@ public class Player {
 
         private     List<Worker> workers;
         private     String playerID;
+        private     int age;
 
-        public Player(List<Worker> workers, String playerID) {
+    public int getAge() {
+        return age;
+    }
+
+    public Player(List<Worker> workers, String playerID, int age) {
         this.workers = workers;
         this.playerID = playerID;
+        this.age = age;
         workers.get(0).setPlayer(this);
         workers.get(1).setPlayer(this);
     }

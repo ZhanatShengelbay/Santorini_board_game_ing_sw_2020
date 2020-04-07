@@ -38,20 +38,16 @@ public class Apollo extends Player {
 
             if(wrkDestination==null)
                 moveWorker(model,destination);
-            else{
+            else if(!wrkDestination.getPlayer().equals(this)) {
 
                 Worker wrkFrom = model.getGrid().getTile(model.getCurrentWorker()).getWorker();
                 model.getGrid().getTile(destination).setWorker(wrkFrom);
                 model.getGrid().getTile(model.getCurrentWorker()).setWorker(wrkDestination);
                 model.setCurrentWorker(destination);
-
-            }
-            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
-            else {
-                nextPhase(model);
-
-
-            }
+                if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+                else
+                    nextPhase(model);
+            }else return;
         } else return;
     }
 

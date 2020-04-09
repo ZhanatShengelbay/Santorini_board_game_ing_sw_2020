@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.State;
 
 import it.polimi.ingsw.utility.Coordinate;
 
+
 public class Choice implements State{
 
     State state;

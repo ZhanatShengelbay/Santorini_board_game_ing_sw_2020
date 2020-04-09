@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * The player is used by the controller to change the model between a Strategy pattern's approach:
  * is responsible of all changes in the grid and
- * all actions  a worker could do is describe in this class.
- * The class is abstract because it needs an implementation depending on which God the user decide to use during the game.
+ * all the actions that could be done by its workers are described in this class.
+ * The class is abstract because it needs an implementation depending on which God the user decides to use during the game.
  */
 
 public abstract class Player {
@@ -41,7 +41,7 @@ public abstract class Player {
     }
 
     /**
-     * Set the coordinate from an object Checks
+     * Sets the value of coordinate from an object Checks
      * @param checks
      */
     public final void setValidCoordinate(Checks checks) {

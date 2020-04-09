@@ -102,6 +102,7 @@ public class PlayerTest {
         assertEquals(grid.getTile(move.getChoice()).getWorker(), grid.getTile(moveCoordinate).getWorker());
     }
 
+
     @Test
     public void testMakeBuild(){
         player.positionWorker(model, posWorker);

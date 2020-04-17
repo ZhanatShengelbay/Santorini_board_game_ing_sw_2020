@@ -1,5 +1,12 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Enum class TypeBlock represents building blocks with indicated levels.
+ * Blocks are buildable in ascending order, 1 at a time (special cases are specified in god powers)
+ * The building with level 4 is considered as a complete tower.
+ *  @author CG51
+ *  @version 0.1
+ */
 public enum TypeBlock {
     FLOOR (0),
     FIRST(1),
@@ -8,9 +15,15 @@ public enum TypeBlock {
     DOME(4);
 
     //ToString da implementare
-
+    /**
+     * level attribute of type int
+     */
     private int level;
 
+    /**
+     * constructor to assign the level attribute into constants
+     * @param level
+     */
     TypeBlock(int level) {
         this.level=level;
     }

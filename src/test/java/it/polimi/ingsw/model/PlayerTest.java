@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.State.Build;
-import it.polimi.ingsw.model.State.Choice;
-import it.polimi.ingsw.model.State.Move;
-import it.polimi.ingsw.model.State.Select;
+import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Before;
 import org.junit.Test;

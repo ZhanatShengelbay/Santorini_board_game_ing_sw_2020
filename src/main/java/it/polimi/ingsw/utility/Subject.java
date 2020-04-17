@@ -11,6 +11,10 @@ public abstract class Subject<T> {
         list.add(observer);
     }
 
+    public void removeObserver(Observer<T> observer){
+        list.remove(observer);
+    }
+
     public void notify(T message){
         for(Observer<T> o : list) o.update(message);
     }

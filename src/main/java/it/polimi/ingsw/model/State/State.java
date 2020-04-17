@@ -12,7 +12,6 @@ import it.polimi.ingsw.utility.Coordinate;
 public interface State {
 
 
-    public Coordinate getChoice();
 
 
 

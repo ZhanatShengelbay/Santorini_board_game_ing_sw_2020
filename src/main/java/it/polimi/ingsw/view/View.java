@@ -8,7 +8,7 @@ import it.polimi.ingsw.utility.Subject;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class View extends Subject<State> implements Observer<Model> {
+public class View extends Subject<State> implements Observer<State> {
 
     State currentState; // use reference to model? clone it? can we pass references through socket?
     Scanner inStream;
@@ -21,7 +21,7 @@ public class View extends Subject<State> implements Observer<Model> {
     }
 
     @Override
-    public void update(Model message) {
+    public void update(State message) {
         this.currentState = model.getCurrentState();
         outStream.println(currentState.toString());
        // currentState.getInput();

@@ -126,7 +126,7 @@ public abstract class Player {
     /**
      * This function needs an implementation of the FSM structure which describe game's round for each kind of god.
      * For each state, the function had to decide the next state, depends also if the power is active or not.
-     * @param model The model where set the bew current State
+     * @param model The model where set the new current State
      */
     public abstract void nextPhase(Model model);
 

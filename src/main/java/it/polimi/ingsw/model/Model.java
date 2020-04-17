@@ -13,6 +13,7 @@ public class Model extends Subject<Model> implements Cloneable {
     private Coordinate currentWorker;
     private State currentState;
     private List<GroundEffect>groundEffects;
+    private List<Player> players;
 
     public Model clone(){
         Model model = new Model(grid);
@@ -52,6 +53,19 @@ public class Model extends Subject<Model> implements Cloneable {
 
     protected List<GroundEffect> getGroundEffects() {
         return groundEffects;
+    }
+
+    public Player getPlayer(int index){
+        return players.get(index);
+    }
+
+    public void createPlayer(String god, String id){
+        if(god.toUpperCase().compareTo("APOLLO") == 1){
+            List<Worker> workers = new ArrayList<>();
+            workers.add(new Worker());
+            workers.add(new Worker());
+            players.add(new Apollo(workers, id));
+        }
     }
 }
 

@@ -32,17 +32,26 @@ public abstract class Player {
             worker.setPlayer(this);
     }
 
+    /**
+     * Getter method to access the playerID
+     * @return the string which holds playerID
+     */
     public String getPlayerID() {
         return playerID;
     }
 
+    /**
+     * Getter method to access the worker
+     * @param num index of worker to be accessed
+     * @return specified worker
+     */
     public Worker getWorker(int num) {
         return workers.get(num);
     }
 
     /**
-     * Sets the value of coordinate from an object Checks
-     * @param checks
+     * Sets the value of coordinate from an object Checks if the passed parameter is in the set of valid coordinates
+     * @param checks to be verified
      */
     public final void setValidCoordinate(Checks checks) {
         this.validCoordinate= checks.getResult();
@@ -54,6 +63,11 @@ public abstract class Player {
 
     }
 
+    /**
+     * Method locates the worker in the working area (game board) if there is no worker at chosen point
+     * @param model
+     * @param posWorker
+     */
     public void positionWorker(Model model, PositionWorkers posWorker) {
         Tile destination = model.getGrid().getTile(posWorker.getChoice());
         if (destination.getWorker() == null) {
@@ -61,6 +75,11 @@ public abstract class Player {
         }
     }
 
+    /**
+     * 
+     * @param model
+     * @param select
+     */
     public void makeSelection(Model model, Select select) {
         Coordinate selection = select.getChoice();
         Worker workerTmp = model.getGrid().getTile(selection).getWorker();
@@ -132,10 +151,15 @@ public abstract class Player {
 
     public abstract void makePower(Model model, Choice choice);
 
-    public final boolean containsInValidCoordinate(Coordinate coordinate){
+    public final boolean containsValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 
+    /**
+     * Overriden equals method to compare the player object
+     * @param obj to be compared with player
+     * @return current player if passed parameter is player instance
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Player)) return false;

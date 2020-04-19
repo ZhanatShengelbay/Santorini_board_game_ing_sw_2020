@@ -13,7 +13,6 @@ import it.polimi.ingsw.utility.Subject;
 public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>{
 
     private Connection connection;
-    private Player player;
     State currentState;
     Model model;
 
@@ -63,9 +62,5 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
     @Override
     public void update(Model model) {
         this.currentState = model.getCurrentState();
-        if (currentState instanceof GameStart){
-            removeObserver(((GameStart)currentState).getOldController());
-            addObserver(((GameStart)currentState).getNewController());
-        }
     }
 }

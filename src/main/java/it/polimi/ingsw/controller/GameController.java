@@ -3,29 +3,32 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.*;
 
 import it.polimi.ingsw.model.State.*;
-import it.polimi.ingsw.model.playerChoice.GameChoice;
 import it.polimi.ingsw.model.playerChoice.PlayerChoice;
 import it.polimi.ingsw.utility.Observer;
+import it.polimi.ingsw.view.RemoteView;
 
 import java.lang.invoke.WrongMethodTypeException;
+import java.util.List;
 
 
 public class GameController implements Observer<PlayerChoice>, Controller {
 
     Model model;
     Player currentPlayer;
+    List<RemoteView> views;
 
-    public GameController(Model model) {
+    public GameController(Model model, List<RemoteView> views) {
         this.model = model;
         this.currentPlayer = model.getPlayer(0);
+        this.views = views;
     }
 
     @Override // Add view to parameters
     public void update(PlayerChoice message) {
-        handler(message);
+        handle(message);
     }
 
-    private void handler(PlayerChoice message){
+    private void handle(PlayerChoice message){
         try{
             if(model.getCurrentState() instanceof Select){
 

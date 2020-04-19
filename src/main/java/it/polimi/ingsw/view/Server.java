@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.SetUpController;
 import it.polimi.ingsw.model.Model;
@@ -45,15 +46,17 @@ public class Server {
             players.add(c2.getID());
             RemoteView player1view = new RemoteView(c1);
             RemoteView player2view = new RemoteView(c2);
+            List<RemoteView> views = new ArrayList<>();
+            views.add(player1view);
+            views.add(player2view);
             Grid grid = new Grid();
             Model model = new Model(grid);
-            SetUpController controller = new SetUpController(model, players);
+            SetUpController controller = new SetUpController(model, players, views);
             model.addObserver(player1view);
             model.addObserver(player2view);
             player1view.addObserver(controller);
             player2view.addObserver(controller);
             model.setCurrentState(new Init());
-            controller.startGame();
         }
         else if(connectionList.size()==3){
             Connection c1 = connectionList.get(0);
@@ -66,9 +69,13 @@ public class Server {
             RemoteView player1view = new RemoteView(c1);
             RemoteView player2view = new RemoteView(c2);
             RemoteView player3view = new RemoteView(c3);
+            List<RemoteView> views = new ArrayList<>();
+            views.add(player1view);
+            views.add(player2view);
+            views.add(player3view);
             Grid grid = new Grid();
             Model model = new Model(grid);
-            SetUpController controller = new SetUpController(model, players);
+            SetUpController controller = new SetUpController(model, players, views);
             model.addObserver(player1view);
             model.addObserver(player2view);
             model.addObserver(player3view);
@@ -76,7 +83,6 @@ public class Server {
             player2view.addObserver(controller);
             player3view.addObserver(controller);
             model.setCurrentState(new Init());
-            controller.startGame();
         }
     }
 

@@ -46,14 +46,21 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         catch (Error e){
 
         }
-        if (model.getCurrentState() instanceof SelectGods || model.getCurrentState() instanceof Init){
-            notify(new SetUpChoice(inputs, connection.getID()));
+        if (model.getCurrentState() instanceof GameStart){
+            notify(new SetUpChoice(inputs, connection.getID(),this));
         }
-        else notify(new GameChoice(new Coordinate(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1])), connection.getID()));
+        else notify(new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]),connection.getID(), this));
     }
 
     private void checkInput(String[] inputs) throws Error{
 
+    }
+    public void showMessage(String message){
+
+    }
+    public void showError(String error){
+        showMessage(error);
+        //something else
     }
 
     protected void showModel(Model model) {

@@ -20,7 +20,7 @@ public class ChecksTest {
         Worker worker1 = new Worker();
         Worker worker2 = new Worker();
 
-        model=new Model(new Grid());
+        model=new Model();
         model.getGrid().getTile(new Coordinate(2,0)).levelUp(); //1
         model.getGrid().getTile(new Coordinate(2,0)).setWorker(worker1);
         model.getGrid().getTile(new Coordinate(2,1)).levelUp().levelUp().levelUp().levelUp();//dome

@@ -12,41 +12,45 @@ import java.util.List;
  *  @version 0.1
  */
 
-public class Athena extends Player implements GroundEffect {
+public class Athena extends PlayerWithGroundEffect {
 
     private Coordinate from;
 
     /**
      * Constructor is used to initialize the object.
-     * @param workers list of workers
+     *
      * @param playerID players name
      */
-    public Athena(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Athena( String playerID) {
+        super(playerID);
     }
 
     /**
      * Method is overridden to keep info from where player moved
      * @param model
-     * @param select
+     * @param selection
      */
     @Override
-    public void makeSelection(Model model, Select select) {
-        super.makeSelection(model, select);
-        from = model.getCurrentWorker();
+    public boolean makeSelection(Model model, Coordinate selection) {
+        boolean result = super.makeSelection(model, selection);
+        if(result)from = selection;
+        return result;
 
     }
 
     /**
      * Method is overridden to active the ground effect if player moved UP
+     * @param destination The input choice
      * @param model The model where the movement happened
-     * @param move The Move state that contains input choice
+     * @return
      */
     @Override
-    public void makeMovement(Model model, Move move) {
-        super.makeMovement(model, move);
-        if(model.getGrid().HeightDifference(from,move.getChoice())==1)
+    public boolean makeMovement(Model model, Coordinate destination) {
+        boolean result = super.makeMovement(model, destination);
+        if(result)
+            if(model.getGrid().HeightDifference(from,destination)==1)
                 addEffect(model);
+        return result;
     }
 
     /**
@@ -58,9 +62,9 @@ public class Athena extends Player implements GroundEffect {
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
-            nextState=new Move(null);
+            nextState=new Move();
         else if(currentState instanceof Move)
-            nextState=new Build(null);
+            nextState=new Build();
         else if(currentState instanceof Build)
             nextState=new End();
         model.setCurrentState(nextState);
@@ -70,10 +74,11 @@ public class Athena extends Player implements GroundEffect {
     /**
      * Method throws exception according to the power of Athena, in case he opponent tries to move up
      * @param model
-     * @param choice
+     * @param destination
+     * @return
      */
     @Override
-    public void makePower(Model model, Choice choice) {
+    public boolean makePower(Model model, Coordinate destination) {
         throw new IllegalStateException();
 
     }
@@ -93,13 +98,5 @@ public class Athena extends Player implements GroundEffect {
 
     }
 
-    /**
-     * Adds the effect into model
-     * @param model
-     */
-    @Override
-    public void addEffect(Model model) {
-        model.getGroundEffects().add(this);
 
-    }
 }

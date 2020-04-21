@@ -8,17 +8,14 @@ public class SetUpChoice extends PlayerChoice {
 
     String[] inputs;
 
-    public SetUpChoice(String[] inputs, String player_id){
+    public SetUpChoice(String[] inputs, String player_id, RemoteView view){
+        super(player_id,view);
         this.inputs = inputs;
-        this.player_id = player_id;
+
     }
 
     public String[] getInputs() {
         return inputs;
     }
 
-    @Override
-    public String getPlayer(){
-        return player_id;
-    }
 }

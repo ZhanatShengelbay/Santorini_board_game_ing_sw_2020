@@ -17,48 +17,48 @@ public class DemeterTest {
 
     @Before
     public void setupGridTest(){
-        List<Worker> workerList = new ArrayList<>();
-        Worker worker1 = new Worker();
-        Worker worker2 = new Worker();
-        workerList.add(worker1);
-        workerList.add(worker2);
-        demeter = new Demeter(workerList, "demeterTest");
 
-        model = new Model(new Grid());
-        model.getGrid().getTile(new Coordinate(1,1)).levelUp().setWorker(worker1);
+        demeter = new Demeter( "demeterTest");
+        demeter.addWorker();
+        demeter.addWorker();
+
+        model = new Model();
+        model.getGrid().getTile(new Coordinate(1,1)).levelUp().setWorker(demeter.getWorker(0));
         model.getGrid().getTile(new Coordinate(2,0)).levelUp().levelUp();
         model.getGrid().getTile(new Coordinate(2,1)).levelUp().levelUp();
         model.getGrid().getTile(new Coordinate(1,3)).levelUp().levelUp();
-        model.getGrid().getTile(new Coordinate(3,2)).levelUp().setWorker(worker2);
+        model.getGrid().getTile(new Coordinate(3,2)).levelUp().setWorker(demeter.getWorker(1));
         model.getGrid().getTile(new Coordinate(3,0)).levelUp().levelUp();
     }
 
     @Test
     public void twiceBuildingTest(){
 
-        model.setCurrentState(new Select(null));
-        Coordinate from = new Coordinate(1,1);
-        demeter.makeSelection(model, new Select(from));
+        model.setCurrentState(new Select());
+        demeter.makeSelection(model,new Coordinate(1,1));
         Coordinate destination = new Coordinate(2,0);
         assertTrue(model.getCurrentState() instanceof Move);
-        demeter.makeMovement(model, new Move(destination));
+        demeter.makeMovement(model, destination);
         assertEquals("demeter should move", demeter, model.getGrid().getTile(destination).getWorker().getPlayer());
 
         assertTrue(model.getCurrentState() instanceof Build);
         Coordinate bldPlace = new Coordinate(2,1);
         int bld = model.getGrid().getTile(bldPlace).getHeight().ordinal();
-        demeter.makeBuild(model, new Build(bldPlace));
+        demeter.makeBuild(model,bldPlace);
         assertEquals(bld+1, model.getGrid().getTile(bldPlace).getHeight().ordinal());
-
-        assertTrue( model.getCurrentState() instanceof Choice);
-        Choice newDest = new Choice();
-        newDest.setState(new Build(new Coordinate(1,1)));
+        assertTrue( model.getCurrentState() instanceof Power);
+        int newBld = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
+        demeter.togglePower();
+        Coordinate newDest=(new Coordinate(2,1));
+        boolean result = demeter.makePower(model, newDest);
+        assertFalse(result);
+        assertEquals(newBld, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
+        assertTrue(model.getCurrentState() instanceof Power);
+        newDest=(new Coordinate(1,1));
         demeter.makePower(model, newDest);
-        int nbld = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
-        demeter.makeBuild(model, new Build(new Coordinate(1,1)));
-        assertEquals(nbld+1, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
+        assertEquals(newBld+1, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
-// to check that building at the same place is not allowed:
+
 
 //        assertTrue( model.getCurrentState() instanceof Choice);
 //        Choice newDest = new Choice();
@@ -67,8 +67,6 @@ public class DemeterTest {
 //        int nbld = model.getGrid().getTile(new Coordinate(2,1)).getHeight().ordinal();
 //        demeter.makeBuild(model, new Build(new Coordinate(2,1)));
 //        assertEquals(nbld+1, model.getGrid().getTile(new Coordinate(2,1)).getHeight().ordinal());
-
-        assertFalse(model.getCurrentState() instanceof Build);
 
         assertTrue(model.getCurrentState() instanceof End);
     }

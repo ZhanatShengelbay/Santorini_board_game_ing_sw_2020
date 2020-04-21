@@ -1,32 +1,20 @@
 package it.polimi.ingsw.model.State;
 
 
+import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
-/**
- * in this class one of main actions of the game is described.
- */
-
 public class Move implements State {
-    /**
-     * class attribute that represents chosen coordinate
-     */
-    Coordinate choice;
 
-    /**
-     * This constructor sets passed coordinate to choice
-     * @param coordinate passed
-     */
-    public Move(Coordinate coordinate){
-        this.choice = coordinate;
+
+    @Override
+    public boolean handle(Coordinate choice, Model model){
+       return model.getCurrentPlayer().makeMovement(model,choice);
     }
 
-    /**
-     * getter mehod of type Coordinate to access the chosen coordinate
-     * @return chosen coordinate
-     */
-    public Coordinate getChoice() {
-        return choice;
+    @Override
+    public String questionMessage() {
+        return null;
     }
 
 }

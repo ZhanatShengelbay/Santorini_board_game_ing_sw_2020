@@ -10,16 +10,15 @@ public class Prometheus extends Player{
     boolean isActive;
 
     /**
-     * @param workers
      * @param playerID
      */
-    public Prometheus(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Prometheus(String playerID) {
+        super( playerID);
     }
 
     @Override
-    public void makeMovement(Model model, Move move) {
-        Coordinate destination = move.getChoice();
+    public boolean makeMovement(Model model, Coordinate destination) {
+
         Coordinate from = model.getCurrentWorker();
         if(isActive)
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible(0));
@@ -32,9 +31,9 @@ public class Prometheus extends Player{
             else {
                 nextPhase(model);
 
-
             }
-        } else return;
+            return true;
+        } else return false;
 
 
     }
@@ -44,30 +43,43 @@ public class Prometheus extends Player{
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
-            nextState=new Choice();
+            nextState=new Power();
         else if(currentState instanceof Build)
             if (isActive) {
-                nextState = new Move(null);
+                nextState = new Move();
                 isActive = false;
             } else nextState = new End();
         else if(currentState instanceof Move)
-            nextState=new Build(null);
+            nextState=new Build();
         model.setCurrentState(nextState);
 
 
     }
 
     @Override
-    public void makePower(Model model, Choice choice) {
-        if(choice.getState() instanceof Move) {
-            model.setCurrentState(choice.getState());
-            makeMovement(model,(Move)choice.getState());
+    public boolean makePower(Model model, Coordinate destination) {
+        if(isActive()){
+            model.setCurrentState(new Build());
+            setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
+            if (containsInValidCoordinate(destination)) {
+                model.getGrid().getTile(destination).levelUp();
+                nextPhase(model);
+                return true;
+            } else {
+                model.setCurrentState(new Build());
+                return false;
+            }
         }
         else{
-            isActive=true;
-            makeBuild(model,(Build)choice.getState());
-
-
+            model.setCurrentState(new Move());
+            boolean result= makeMovement(model,destination);
+            if(result){
+                nextPhase(model);
+            }
+            else{
+                model.setCurrentState(new Power());
+            }
+            return result;
         }
 
     }

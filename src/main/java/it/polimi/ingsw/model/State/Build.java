@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.State;
 
+import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
 /**
@@ -9,24 +10,15 @@ import it.polimi.ingsw.utility.Coordinate;
  */
 
 public class Build implements State {
-   /**
-    * The class attribute field where choice values of type Coordinate are stored
-    */
-    Coordinate choice;
 
-    /**
-     * this constructor sets the current choice to the coordinate of worker that we are using
-     * @param coordinate value to be passed
-     */
-    public Build(Coordinate coordinate){
-        this.choice = coordinate;
+    @Override
+    public boolean handle(Coordinate choice, Model model) {
+       return model.getCurrentPlayer().makeBuild(model, choice);
+
     }
 
-    /**
-     *method returns the Coordinate value that was chosen
-     * @return choice that was set Build
-     */
-    public Coordinate getChoice() {
-        return choice;
+    @Override
+    public String questionMessage() {
+        return null;
     }
 }

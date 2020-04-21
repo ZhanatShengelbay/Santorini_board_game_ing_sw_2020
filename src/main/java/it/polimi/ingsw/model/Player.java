@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * The player is used by the controller to change the model between a Strategy pattern's approach:
@@ -19,17 +20,26 @@ public abstract class Player {
     private List<Worker> workers;
     private String playerID;
     private List<Coordinate> validCoordinate;  //is always calculated in the previous action
+    boolean power=false;
 
     /**
      *
-     * @param workers
      * @param playerID
      */
-    public Player(List<Worker> workers, String playerID) {
-        this.workers = workers;
+    public Player (String playerID) {
+
         this.playerID = playerID;
-        for (Worker worker : workers)
-            worker.setPlayer(this);
+        this.workers= new ArrayList<>();
+
+    }
+
+    public Worker addWorker(){
+        if(workers.size()<2){
+        Worker worker=new Worker(this,workers.size());
+        this.workers.add(worker);
+        return worker;
+        }
+        else return null;
     }
 
     /**
@@ -66,30 +76,34 @@ public abstract class Player {
     /**
      * Method locates the worker in the working area (game board) if there is no worker at chosen point
      * @param model
-     * @param posWorker
+     * @param destination
+     * @return
      */
-    public void positionWorker(Model model, PositionWorkers posWorker) {
-        Tile destination = model.getGrid().getTile(posWorker.getChoice());
-        if (destination.getWorker() == null) {
-            destination.setWorker(workers.get(posWorker.getNum()));
+    public boolean positionWorker(Model model, Coordinate destination) {
+
+
+        if (!model.getGrid().getTile(destination).isWorker()) {
+            model.getGrid().getTile(destination).setWorker(addWorker());
+            return true;
         }
+        else return false;
     }
 
     /**
-     * 
+     *
+     * @param selection
      * @param model
-     * @param select
+     * @return
      */
-    public void makeSelection(Model model, Select select) {
-        Coordinate selection = select.getChoice();
+    public boolean makeSelection(Model model, Coordinate selection) {
         Worker workerTmp = model.getGrid().getTile(selection).getWorker();
 
         if (workerTmp!=null &&  workerTmp.getPlayer().equals(this)) {
             model.setCurrentWorker(selection);
             nextPhase(model);
-            setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
+            return true;
 
-        } else return;
+        } else return false;
 
 
     }
@@ -97,12 +111,12 @@ public abstract class Player {
     /**
      * Make the condition to check if the movement is available and call the move worker function
      * @param model The model where the movement happened
-     * @param move The Move state that contains input choice
+     * @param destination The input choice
+     * @return
      */
-    public void makeMovement(Model model, Move move) {
-        Coordinate destination = move.getChoice();
+    public boolean makeMovement(Model model, Coordinate destination) {
         Coordinate from = model.getCurrentWorker();
-        setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
+        setValidCoordinate(new Checks(model,from).isNotWorker().isNotDome().isRisible());
         if (validCoordinate.contains(destination)) {
 
             moveWorker(model,destination);
@@ -110,9 +124,9 @@ public abstract class Player {
             else {
                 nextPhase(model);
 
-
             }
-        } else return;
+            return true;
+        } else return false;
 
 
     }
@@ -126,13 +140,13 @@ public abstract class Player {
 
     }
 
-    public void makeBuild(Model model, Build build) {
-        Coordinate destination = build.getChoice();
+    public boolean makeBuild(Model model, Coordinate destination) {
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
         if (validCoordinate.contains(destination)) {
             model.getGrid().getTile(destination).levelUp();
             nextPhase(model);
-        } else return;
+            return true;
+        } else return false;
     }
 
     public boolean winCondition(Model model, Coordinate from, Coordinate destination) {
@@ -142,6 +156,17 @@ public abstract class Player {
         return tileFrom.getHeight().equals(TypeBlock.SECOND) && tileDestination.getHeight().equals(TypeBlock.THIRD);
     }
 
+    public boolean isActive(){
+        return power;
+    }
+
+    public void togglePower(){
+        if(power)
+            power=false;
+        else power=true;
+    }
+
+
     /**
      * This function needs an implementation of the FSM structure which describe game's round for each kind of god.
      * For each state, the function had to decide the next state, depends also if the power is active or not.
@@ -149,9 +174,9 @@ public abstract class Player {
      */
     public abstract void nextPhase(Model model);
 
-    public abstract void makePower(Model model, Choice choice);
+    public abstract boolean makePower(Model model, Coordinate destination);
 
-    public final boolean containsValidCoordinate(Coordinate coordinate){
+    public final boolean containsInValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 

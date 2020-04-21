@@ -10,8 +10,8 @@ public class Coordinate {
     /**
      * Instance variables, x - abscissa, y - ordinate, both hold integer values
      */
-    int x;
-    int y;
+    private int x;
+    private int y;
 
     /**
      * Constructor is created to set entered x and y integer values to respectively first and second coordinates of a point in coordinate system
@@ -22,6 +22,12 @@ public class Coordinate {
 
         this.x = x;
         this.y = y;
+    }
+
+
+    public Coordinate(Coordinate coordinate){
+        this.x= coordinate.getX();
+        this.y= coordinate.getY();
     }
 
     /**

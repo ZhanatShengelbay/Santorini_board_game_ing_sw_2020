@@ -7,30 +7,29 @@ import java.util.List;
 
 public class Atlas extends Player {
 
-    boolean isActive;
     /**
-     * @param workers
      * @param playerID
      */
-    public Atlas(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Atlas( String playerID) {
+        super( playerID);
     }
 
     @Override
-    public void makeBuild(Model model, Build build) {
-        Coordinate destination = build.getChoice();
+    public boolean makeBuild(Model model, Coordinate destination) {
+
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
         if (containsInValidCoordinate(destination)) {
-            if(isActive){
+            if(isActive()){
                 int height=model.getGrid().getTile(destination).getHeight().ordinal();
                 while(height<TypeBlock.DOME.ordinal())
                     model.getGrid().getTile(destination).levelUp();
-                isActive=false;
+                togglePower();
             }
             else
             model.getGrid().getTile(destination).levelUp();
             nextPhase(model);
-        } else return;
+            return true;
+        } else return false;
     }
 
     @Override
@@ -38,9 +37,9 @@ public class Atlas extends Player {
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
-            nextState=new Move(null);
+            nextState=new Move();
         else if(currentState instanceof Move)
-            nextState=new Build(null);
+            nextState=new Power();
         else if(currentState instanceof Build)
             nextState=new End();
         model.setCurrentState(nextState);
@@ -48,8 +47,11 @@ public class Atlas extends Player {
     }
 
     @Override
-    public void makePower(Model model, Choice choice) {
-
+    public boolean makePower(Model model, Coordinate destination)  {
+        model.setCurrentState(new Build());
+        boolean result = super.makeBuild(model, destination);
+        if(!result)model.setCurrentState(new Power());
+        return result;
 
     }
 }

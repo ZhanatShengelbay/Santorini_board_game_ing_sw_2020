@@ -17,11 +17,11 @@ import java.util.List;
 public class Apollo extends Player {
     /**
      * Constructor to set that player from the parent class owns the Apollo's power
-     * @param workers worker list of the player
+     *
      * @param playerID
      */
-    public Apollo(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Apollo( String playerID) {
+        super( playerID);
     }
 
     /**
@@ -33,9 +33,9 @@ public class Apollo extends Player {
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
-            nextState=new Move(null);
+            nextState=new Move();
         else if(currentState instanceof Move)
-            nextState=new Build(null);
+            nextState=new Build();
         else if(currentState instanceof Build)
             nextState=new End();
         model.setCurrentState(nextState);
@@ -43,33 +43,34 @@ public class Apollo extends Player {
     }
 
     @Override
-    public void makeMovement(Model model, Move move) {
-        Coordinate destination = move.getChoice();
+    public boolean makeMovement(Model model, Coordinate destination) {
         Coordinate from = model.getCurrentWorker();
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotDome().isRisible());
-        if (containsValidCoordinate(destination)) {
+        if (containsInValidCoordinate(destination)) {
             Worker wrkDestination = model.getGrid().getTile(destination).getWorker();
 
             if(wrkDestination==null)
                 moveWorker(model,destination);
             else if(!wrkDestination.getPlayer().equals(this)) {
 
-                Worker wrkFrom = model.getGrid().getTile(model.getCurrentWorker()).getWorker();
-                model.getGrid().getTile(destination).setWorker(wrkFrom);
-                model.getGrid().getTile(model.getCurrentWorker()).setWorker(wrkDestination);
+                model.getGrid().getTile(model.getCurrentWorker()).swapWorker(model.getGrid().getTile(destination));
                 model.setCurrentWorker(destination);
-                if (winCondition(model, from, destination)) model.setCurrentState(new Win());
-                else
-                    nextPhase(model);
-            }else return;
-        } else return;
+
+            }else return false;
+
+            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+            else
+                nextPhase(model);
+            return true;
+        }else return false;
     }
 
 
 
     @Override
-    public void makePower(Model model, Choice choice) {
+    public boolean makePower(Model model, Coordinate destination) {
         throw new IllegalStateException();
 
     }
+
 }

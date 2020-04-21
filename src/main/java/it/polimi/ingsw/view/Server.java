@@ -1,11 +1,9 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.SetUpController;
 import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.Grid;
-import it.polimi.ingsw.model.State.Init;
-import it.polimi.ingsw.model.State.SelectGods;
+import it.polimi.ingsw.model.State.GameStart;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -37,47 +35,30 @@ public class Server {
     }
 
     public synchronized void createGame(List<Connection> connectionList){
-        if(connectionList.size()==2){
-            Connection c1 = connectionList.get(0);
-            Connection c2 = connectionList.get(1);
-            List<String> players = new ArrayList<>();
-            players.add(c1.getID());
-            players.add(c2.getID());
-            RemoteView player1view = new RemoteView(c1);
-            RemoteView player2view = new RemoteView(c2);
-            Grid grid = new Grid();
-            Model model = new Model(grid);
-            SetUpController controller = new SetUpController(model, players);
-            model.addObserver(player1view);
-            model.addObserver(player2view);
-            player1view.addObserver(controller);
-            player2view.addObserver(controller);
-            model.setCurrentState(new Init());
-            controller.startGame();
+        Connection c1 = connectionList.get(0);
+        Connection c2 = connectionList.get(1);
+        List<String> players = new ArrayList<>();
+        players.add(c1.getID());
+        players.add(c2.getID());
+        RemoteView player1view = new RemoteView(c1);
+        RemoteView player2view = new RemoteView(c2);
+        Model model = new Model();
+        Controller controller = new SetUpController(model, players);
+        model.addObserver(player1view);
+        model.addObserver(player2view);
+        player1view.addObserver(controller);
+        player2view.addObserver(controller);
+
+        if(connectionList.size()==3) {
+          Connection c3 = connectionList.get(2);
+          players.add(c3.getID());
+          RemoteView player3view = new RemoteView(c3);
+          model.addObserver(player3view);
+          player3view.addObserver(controller);
         }
-        else if(connectionList.size()==3){
-            Connection c1 = connectionList.get(0);
-            Connection c2 = connectionList.get(1);
-            Connection c3 = connectionList.get(2);
-            List<String> players = new ArrayList<>();
-            players.add(c1.getID());
-            players.add(c2.getID());
-            players.add(c3.getID());
-            RemoteView player1view = new RemoteView(c1);
-            RemoteView player2view = new RemoteView(c2);
-            RemoteView player3view = new RemoteView(c3);
-            Grid grid = new Grid();
-            Model model = new Model(grid);
-            SetUpController controller = new SetUpController(model, players);
-            model.addObserver(player1view);
-            model.addObserver(player2view);
-            model.addObserver(player3view);
-            player1view.addObserver(controller);
-            player2view.addObserver(controller);
-            player3view.addObserver(controller);
-            model.setCurrentState(new Init());
-            controller.startGame();
-        }
+        //model.setCurrentState(new GameStart());
+        //controller.startGame();
+        
     }
 
     public synchronized void lobby(Connection c){

@@ -3,20 +3,13 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
-/**
- * In this class the end of the game is described
- */
-public class End implements State {
-
-    /**
-     * Overriden getter method not to allow the choice of coordinate
-     * @return null
-     */
+public class Power implements State{
 
 
     @Override
     public boolean handle(Coordinate choice, Model model) {
-        return false;
+       return model.getCurrentPlayer().makePower(model,choice);
+
     }
 
     @Override

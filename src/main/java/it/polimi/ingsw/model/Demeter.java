@@ -16,33 +16,29 @@ public class Demeter extends Player {
      * Class attributes: iff isActive is true, power can be used
      */
 
-    private boolean isActive;
-    private Coordinate destination;
+    private Coordinate firstBuild;
 
 
     /**
      * Constructor to keep the info of the player
-     * @param workers list of workers belonging to the player
+     *
      * @param playerID name of the player
      */
-    public Demeter(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Demeter( String playerID) {
+        super( playerID);
     }
 
-    /**
-     * Method is overridden in order to keep the destination that is used to prevent selecting the same building coordinate
-     * @param model
-     * @param select selected coordinate
-     */
     @Override
-    public void makeSelection(Model model, Select select) {
-        super.makeSelection(model, select);
-        destination = select.getChoice();
+    public boolean makeBuild(Model model, Coordinate destination) {
+        boolean result = super.makeBuild(model, destination);
+        if (result) firstBuild = destination;
+        return result;
     }
 
     /**
      * Method describes the behavior of demeter. The current state received from the model is assigned to current state and
      * next state is first defined as null, later depending on the current state respective new next state info is assigned
+     *
      * @param model sets the new current State
      */
     @Override
@@ -50,17 +46,17 @@ public class Demeter extends Player {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
-            nextState = new Move(null);
+            nextState = new Move();
         else if (currentState instanceof Move)
-            nextState = new Build(null);
-        else if (currentState instanceof Build){
-            if (isActive){
+            nextState = new Build();
+        else if (currentState instanceof Build) {
+            if (isActive()) {
                 nextState = new End();
-                isActive = false;
-            }else
-                nextState = new Choice();
-        }else
-        nextState = new End();
+                togglePower();
+            } else
+                nextState = new Power();
+        } else
+            nextState = new End();
         model.setCurrentState(nextState);
 
     }
@@ -70,21 +66,30 @@ public class Demeter extends Player {
      * if after the building first time player that owns demeter decides to use its power,
      * player chooses the coordinate to build (should NOT be the same coordinate),
      * if there is any valid coordinate to build, builds otherwise goes to the next phase, i.e to the end
+     *
      * @param model
-     * @param choice
+     * @param destination
      */
     @Override
-    public void makePower(Model model, Choice choice) {
-        if (choice.getState() instanceof End) {
-            return;
-        } else {
-            model.setCurrentState(new Build(null));
-            Coordinate newBuild = choice.getState().getChoice();
-            setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome().remove(destination));
-            if (containsValidCoordinate(newBuild)) {
-                model.getGrid().getTile(newBuild).levelUp();
+    public boolean makePower(Model model, Coordinate destination) {
+
+        if (isActive()) {
+            model.setCurrentState(new Build());
+            setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome().remove(this.firstBuild));
+            if (containsInValidCoordinate(destination)) {
+                model.getGrid().getTile(destination).levelUp();
                 nextPhase(model);
-            } else nextPhase(model);
+                return true;
+            } else {
+                model.setCurrentState(new Power());
+                return false;
+            }
+        } else {
+            model.setCurrentState(new End());
+            return true;
+
         }
+
+
     }
 }

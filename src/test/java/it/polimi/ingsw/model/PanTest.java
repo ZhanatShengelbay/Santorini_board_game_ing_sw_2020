@@ -20,27 +20,23 @@ public class PanTest {
     @Test
     public void usePowerToWinTest(){
 
-        List<Worker> workerList = new ArrayList<>();
-        Worker worker1 = new Worker();
-        Worker worker2 = new Worker();
-        workerList.add(worker1);
-        workerList.add(worker2);
-        pan = new Pan(workerList, "panTest");
-        boolean isActive = true;
+        pan = new Pan( "panTest");
+        pan.addWorker();
+        pan.addWorker();
 
-        model = new Model(new Grid());
-        model.getGrid().getTile(new Coordinate(1,1)).levelUp().levelUp().levelUp().setWorker(worker1);
+        model = new Model();
+        model.getGrid().getTile(new Coordinate(1,1)).levelUp().levelUp().levelUp().setWorker(pan.getWorker(0));
         model.getGrid().getTile(new Coordinate(2, 0)).levelUp();
-        model.getGrid().getTile(new Coordinate(2,3)).levelUp().levelUp().setWorker(worker2);
+        model.getGrid().getTile(new Coordinate(2,3)).levelUp().levelUp().setWorker(pan.getWorker(1));
 
-        model.setCurrentState(new Select(null));
+        model.setCurrentState(new Select());
         Coordinate from = new Coordinate(1,1);
-        pan.makeSelection(model, new Select(from));
+        pan.makeSelection(model, from);
         assertTrue(model.getCurrentState() instanceof Move);
         Coordinate destination = new Coordinate(2,0);
-        pan.makeMovement(model, new Move(destination));
+        pan.makeMovement(model,destination);
         assertEquals("pan should be moved", pan, model.getGrid().getTile(destination).getWorker().getPlayer());
-        assertEquals("pan should win",null, model.getCurrentState().getChoice());
+        assertTrue("pan should win", model.getCurrentState() instanceof Win);
 
     }
 

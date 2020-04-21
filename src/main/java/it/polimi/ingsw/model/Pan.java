@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,18 +10,13 @@ import java.util.List;
  */
 public class Pan extends Player {
 
-    private boolean isActive;
-    private Coordinate destination;
-    private Coordinate from;
-
 
     /**
      * Constructor to set the player's info
-     * @param workers
      * @param playerID
      */
-    public Pan(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Pan( String playerID) {
+        super( playerID);
     }
 
     /**
@@ -50,10 +44,10 @@ public class Pan extends Player {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
-            nextState = new Move(null);
+            nextState = new Move();
 
         else if (currentState instanceof Move)
-            nextState = new Build(null);
+            nextState = new Build();
 
         else if (currentState instanceof Build)
             nextState = new End();
@@ -61,24 +55,15 @@ public class Pan extends Player {
 
     }
 
+
     /**
      * Power of Pan is used if it's active checks immediately if he wins, otherwise moves into the next phase of model
      * @param model
-     * @param choice
+     * @param destination
      */
     @Override
-    public void makePower(Model model, Choice choice) {
-//        if (choice.getState() instanceof Build) {
-//            model.setCurrentState(choice.getState());
-//            makeBuild(model, (Build) choice.getState());
-//        } else {
-           if (isActive == true){
-            if (winCondition(model, from, destination))
-                model.setCurrentState(new Win());
-            else {
-                nextPhase(model);
-            }
-        }
+    public boolean makePower(Model model,Coordinate destination) {
+        throw new IllegalArgumentException();
 
     }
 }

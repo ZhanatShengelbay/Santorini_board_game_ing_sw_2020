@@ -16,20 +16,17 @@ public class ArtemisTest {
     @Before
     public void gridSetUp(){
 
-        List<Worker> workers = new ArrayList<Worker>();
-        Worker worker1 = new Worker();
-        Worker worker2 = new Worker();
-        workers.add(worker1);
-        workers.add(worker2);
-        artemis=new Artemis(workers, "playertest");
+        artemis=new Artemis("playertest");
+        artemis.addWorker();
+        artemis.addWorker();
 
 
-        model=new Model(new Grid());
+        model=new Model();
         model.getGrid().getTile(new Coordinate(2,0)).levelUp();
-        model.getGrid().getTile(new Coordinate(2,0)).setWorker(worker1);
+        model.getGrid().getTile(new Coordinate(2,0)).setWorker(artemis.getWorker(0));
         model.getGrid().getTile(new Coordinate(1,1)).levelUp().levelUp().levelUp().levelUp();
         model.getGrid().getTile(new Coordinate(2,1)).levelUp().levelUp();
-        model.getGrid().getTile(new Coordinate(3,1)).levelUp().setWorker(worker2);
+        model.getGrid().getTile(new Coordinate(3,1)).levelUp().setWorker(artemis.getWorker(1));
         model.getGrid().getTile(new Coordinate(3,0)).levelUp().levelUp();
 
 
@@ -37,21 +34,20 @@ public class ArtemisTest {
 
     @Test
     public void FirstMove(){
-        model.setCurrentState(new Select(null));
+        model.setCurrentState(new Select());
         Coordinate from = new Coordinate(2,0);
-        artemis.makeSelection(model, new Select(from));
+        artemis.makeSelection(model,(from));
         assertTrue(model.getCurrentState() instanceof Move);
-        artemis.makeMovement(model,new Move(new Coordinate(3,0)));
+        artemis.makeMovement(model,(new Coordinate(3,0)));
         assertEquals(model.getGrid().getTile(new Coordinate(3, 0)).getWorker().getPlayer(), artemis);
-        assertTrue(model.getCurrentState() instanceof Choice);
-        Choice result = new Choice();
-        result.setState(new Move(new Coordinate(2,1)));
-        artemis.makePower(model,result);
+        assertTrue(model.getCurrentState() instanceof Power);
+        artemis.togglePower();
+        artemis.makePower(model,new Coordinate(2,1));
         assertFalse(artemis.containsInValidCoordinate(from));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 1)).getWorker().getPlayer(), artemis);
         assertTrue(model.getCurrentState() instanceof Build);
         int tmp= model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal();
-        artemis.makeBuild(model,new Build(new Coordinate(2,0)));
+        artemis.makeBuild(model,(new Coordinate(2,0)));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 0)).getHeight().ordinal(), tmp+1);
         assertTrue(model.getCurrentState() instanceof End);
 

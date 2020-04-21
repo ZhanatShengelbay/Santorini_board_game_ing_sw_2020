@@ -14,16 +14,18 @@ public class Model extends Subject<Model> implements Cloneable {
     private State currentState;
     private List<GroundEffect>groundEffects;
     private List<Player> players;
+    private Player currentPlayer;
 
     public Model clone(){
-        Model model = new Model(grid);
+        Model model = new Model();
         model.grid=this.grid;
         return model;
     }
 
-    public Model(Grid grid){
-        this.grid = grid;
+    public Model(){
+        this.grid = new Grid();
         this.groundEffects=new ArrayList<>();
+        this.players=new ArrayList<>();
     }
 
     @Override
@@ -33,6 +35,14 @@ public class Model extends Subject<Model> implements Cloneable {
 
     protected Grid getGrid() {
         return grid;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public Coordinate getCurrentWorker() {
@@ -64,8 +74,14 @@ public class Model extends Subject<Model> implements Cloneable {
             List<Worker> workers = new ArrayList<>();
             workers.add(new Worker());
             workers.add(new Worker());
-            players.add(new Apollo(workers, id));
+            players.add(new Apollo(id));
         }
+    }
+
+    public void nextPlayer(){
+        int index= players.indexOf(currentPlayer);
+        if(index==players.size()-1)index=0;
+        this.currentPlayer=players.get(index);
     }
 }
 

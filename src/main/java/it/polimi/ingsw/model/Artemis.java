@@ -15,76 +15,89 @@ public class Artemis extends Player {
      * Class attributes
      */
     private Coordinate from;
-    private boolean isActive;
+
 
     /**
      * Constructor of the class to initialize player's  values
-     * @param workers list of workers
+     *
+     *
      * @param playerID name of the player
      */
-    public Artemis(List<Worker> workers, String playerID) {
-        super(workers, playerID);
+    public Artemis( String playerID) {
+        super(playerID);
     }
 
     /**
      * Method is overridden in order to keep the value of initial space
+     *
+     * @param selection
      * @param model
-     * @param select
+     * @return
      */
     @Override
-    public void makeSelection(Model model, Select select) {
-        super.makeSelection(model, select);
-        from = select.getChoice();
+    public boolean makeSelection(Model model, Coordinate selection) {
+
+        boolean result = super.makeSelection(model, selection);
+        if (result) from = selection;
+        return result;
+
+
     }
 
     /**
      * Method defines the behavior of the Artemis' turn
+     *
      * @param model The model where set the new current State
      */
     @Override
     public void nextPhase(Model model) {
-        State currentState=model.getCurrentState();
-        State nextState=null;
-        if(currentState instanceof Select)
-            nextState=new Move(null);
+        State currentState = model.getCurrentState();
+        State nextState = null;
+        if (currentState instanceof Select)
+            nextState = new Move();
 
-        else if(currentState instanceof Move)
-            if (isActive) { 
-                nextState = new Build(null);
-                isActive = false;
-            } else nextState = new Choice();
-        else if(currentState instanceof Build)
-            nextState=new End();
+        else if (currentState instanceof Move)
+            if (isActive()) {
+                nextState = new Build();
+                togglePower();
+            } else nextState = new Power();
+        else if (currentState instanceof Build)
+            nextState = new End();
         model.setCurrentState(nextState);
 
     }
 
     /**
      * In the method the description of power is defined, i.e. how power behaves while it's off and ongit
+     *
      * @param model
-     * @param choice
+     * @param destination
+     * @return
      */
     @Override
-    public void makePower(Model model, Choice choice) {
-        if(choice.getState() instanceof Build) {
-            model.setCurrentState(choice.getState());
-            makeBuild(model, (Build) choice.getState());
-        }
-        else{
-            isActive=true;
-            model.setCurrentState(choice.getState());
-            Coordinate destination = choice.getState().getChoice();
-            setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible().remove(from));
-            if (containsValidCoordinate(destination)) {
-                moveWorker(model,destination);
+    public boolean makePower(Model model, Coordinate destination) {
+
+        if (isActive()) {
+            model.setCurrentState(new Move());
+            Coordinate from = model.getCurrentWorker();
+            setValidCoordinate(new Checks(model, from).isNotWorker().isNotDome().isRisible().remove(this.from));
+            if (containsInValidCoordinate(destination)) {
+
+                moveWorker(model, destination);
                 if (winCondition(model, from, destination)) model.setCurrentState(new Win());
                 else {
                     nextPhase(model);
+
                 }
-            } else return;
+                return true;
+            } else return false;
 
 
+        } else {
+            model.setCurrentState(new Move());
+            return makeBuild(model, destination);
         }
 
     }
 }
+

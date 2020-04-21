@@ -7,10 +7,9 @@ import it.polimi.ingsw.model.playerChoice.GameChoice;
 import it.polimi.ingsw.model.playerChoice.PlayerChoice;
 import it.polimi.ingsw.utility.Observer;
 
-import java.lang.invoke.WrongMethodTypeException;
 
 
-public class GameController implements Observer<PlayerChoice>, Controller {
+public class GameController implements Controller {
 
     Model model;
     Player currentPlayer;
@@ -25,55 +24,32 @@ public class GameController implements Observer<PlayerChoice>, Controller {
         handler(message);
     }
 
-    private void handler(PlayerChoice message){
-        try{
-            if(model.getCurrentState() instanceof Select){
 
-            }
-            else if (model.getCurrentState() instanceof PositionWorkers) {
+    private void handler(PlayerChoice message) {
+        if(!(message instanceof GameChoice))
+            return;
 
-            }
-            else if (model.getCurrentState() instanceof Move) {
 
-            }
-            else if (model.getCurrentState() instanceof Build){
 
-            }
-        }catch (WrongMethodTypeException e){
-            model.setCurrentState(model.getCurrentState());
+        if(model.getCurrentState() instanceof Power && ((GameChoice) message).powerIsActive()) {
+            model.getCurrentPlayer().togglePower();
         }
 
-    }
-
-    public void positionWorker(PositionWorkers posWorker){
-        currentPlayer.positionWorker(model, posWorker);
-    }
-
-    public void makeSelection(Select select){
-        currentPlayer.makeSelection(model, select);
-        model.notify(model.clone());
-    }
-
-    public void makeMovement(Move move){
-        currentPlayer.makeMovement(model, move);
-        model.notify(model.clone());
-    }
-    public void makeBuild(Build build){
-        currentPlayer.makeBuild(model, build);
-        model.notify(model.clone());
-
-    }
-
-    public void makeChoice(Choice choice){
         try {
-            currentPlayer.makePower(model, choice);
-        }catch (IllegalArgumentException e){
+            boolean result  =  model.getCurrentState().handle(((GameChoice)message).getChoice(),model);
+            if(result) {
+                model.notify(model.clone());
+                message.getView().showMessage(model.getCurrentState().questionMessage());
+            }
+            else message.getView().showError("Wrong action, retry");
 
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            message.getView().showError("Illegal argument");
         }
-        model.notify(model.clone());
+
 
     }
-
 
 
 }

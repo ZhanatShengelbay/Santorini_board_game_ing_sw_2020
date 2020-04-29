@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.State.GameStart;
 import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Subject;
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class Model extends Subject<Model> implements Cloneable {
         this.grid = new Grid();
         this.groundEffects=new ArrayList<>();
         this.players=new ArrayList<>();
+        this.currentState = new GameStart();
     }
 
     @Override
@@ -69,12 +72,19 @@ public class Model extends Subject<Model> implements Cloneable {
         return players.get(index);
     }
 
+    // THE GOD NAME NEEDS TO BE THE SAME AS THE CLASS
     public void createPlayer(String god, String id){
-        if(god.toUpperCase().compareTo("APOLLO") == 1){
-            List<Worker> workers = new ArrayList<>();
-            workers.add(new Worker());
-            workers.add(new Worker());
-            players.add(new Apollo(id));
+        String godStandard = god.substring(0, 1).toUpperCase() + god.substring(1).toLowerCase();
+        try {
+            Class [] classes = {String.class};
+            Player new_player = (Player)Class.forName("it.polimi.ingsw.model." + godStandard).getDeclaredConstructor(classes).newInstance(id);
+            players.add(new_player);
+            for(int i=0; i<2; i++){
+                new_player.addWorker();
+            }
+            System.out.println("PLAYER CREATED");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 

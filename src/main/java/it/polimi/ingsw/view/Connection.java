@@ -34,10 +34,6 @@ public class Connection extends Subject<String> implements Runnable {
         return active;
     }
 
-    public String receive(){
-        return in.nextLine();
-    }
-
     public void send(String message){
         out.println(message);
         out.flush();
@@ -69,6 +65,7 @@ public class Connection extends Subject<String> implements Runnable {
         System.out.println("Done!");
     }
 
+    // Manage in.nextLine errors
     @Override
     public void run() {
         try{
@@ -80,6 +77,7 @@ public class Connection extends Subject<String> implements Runnable {
             this.numOfPlayers = Integer.parseInt(in.nextLine());
             server.lobby(this);
             while(isActive()){
+                send("Next Input");
                 String read = in.nextLine();
                 notify(read);
             }

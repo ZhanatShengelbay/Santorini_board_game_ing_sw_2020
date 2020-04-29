@@ -40,9 +40,9 @@ public class Server {
         List<String> players = new ArrayList<>();
         players.add(c1.getID());
         players.add(c2.getID());
-        RemoteView player1view = new RemoteView(c1);
-        RemoteView player2view = new RemoteView(c2);
         Model model = new Model();
+        RemoteView player1view = new RemoteView(c1, model);
+        RemoteView player2view = new RemoteView(c2, model);
         Controller controller = new SetUpController(model, players);
         model.addObserver(player1view);
         model.addObserver(player2view);
@@ -50,48 +50,46 @@ public class Server {
         player2view.addObserver(controller);
 
         if(connectionList.size()==3) {
-          Connection c3 = connectionList.get(2);
-          players.add(c3.getID());
-          RemoteView player3view = new RemoteView(c3);
-          model.addObserver(player3view);
-          player3view.addObserver(controller);
+            Connection c3 = connectionList.get(2);
+            players.add(c3.getID());
+            RemoteView player3view = new RemoteView(c3, model);
+            model.addObserver(player3view);
+            player3view.addObserver(controller);
         }
-        //model.setCurrentState(new GameStart());
-        //controller.startGame();
-        
     }
 
     public synchronized void lobby(Connection c){
+        int j = 0, k = 0;
         waitingConnections.put(c, c.getNumOfPlayers());
-        int i = 0, k = 0;
-        List<Connection> tmpConnections2 = new ArrayList<>();
-        List<Connection> tmpConnections3 = new ArrayList<>();
         for (Map.Entry<Connection, Integer> entry : waitingConnections.entrySet()) {
             if(entry.getValue() == 2){
-                i++;
-                tmpConnections2.add(entry.getKey());
-                if (i==2){
-                    playingConnections.add(tmpConnections2);
-                    for(int j=0; j < tmpConnections2.size(); j++){
-                        waitingConnections.remove(tmpConnections2.get(j));
-                        createGame(tmpConnections2);
+                j++;
+                if(j == 2){
+                    List<Connection> tmp = new ArrayList<>();
+                    for (Map.Entry<Connection, Integer> hash : waitingConnections.entrySet()){
+                        if(hash.getValue() == 2){
+                            tmp.add(hash.getKey());
+                        }
                     }
+                    playingConnections.add(tmp);
+                    createGame(tmp);
                 }
             }
             if(entry.getValue() == 3){
                 k++;
-                tmpConnections3.add(entry.getKey());
-                if (k==3){
-                    playingConnections.add(tmpConnections3);
-                    for(int j=0; j < tmpConnections3.size(); j++){
-                        waitingConnections.remove(tmpConnections2.get(j));
-                        createGame(tmpConnections3);
+                if(k == 3){
+                    List<Connection> tmp = new ArrayList<>();
+                    for (Map.Entry<Connection, Integer> hash : waitingConnections.entrySet()){
+                        if(hash.getValue() == 3){
+                            tmp.add(hash.getKey());
+                        }
                     }
+                    playingConnections.add(tmp);
+                    createGame(tmp);
                 }
             }
         }
     }
-
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);

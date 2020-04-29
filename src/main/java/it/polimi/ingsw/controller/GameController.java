@@ -24,12 +24,9 @@ public class GameController implements Controller {
         handler(message);
     }
 
-
     private void handler(PlayerChoice message) {
         if(!(message instanceof GameChoice))
             return;
-
-
 
         if(model.getCurrentState() instanceof Power && ((GameChoice) message).powerIsActive()) {
             model.getCurrentPlayer().togglePower();

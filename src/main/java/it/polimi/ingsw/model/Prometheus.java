@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Prometheus extends Player{
 
-    boolean isActive;
 
     /**
      * @param playerID
@@ -20,7 +19,7 @@ public class Prometheus extends Player{
     public boolean makeMovement(Model model, Coordinate destination) {
 
         Coordinate from = model.getCurrentWorker();
-        if(isActive)
+        if(isActive())
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible(0));
         else
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
@@ -45,12 +44,13 @@ public class Prometheus extends Player{
         if(currentState instanceof Select)
             nextState=new Power();
         else if(currentState instanceof Build)
-            if (isActive) {
+            if (isActive()) {
                 nextState = new Move();
-                isActive = false;
             } else nextState = new End();
-        else if(currentState instanceof Move)
+        else if(currentState instanceof Move){
             nextState=new Build();
+            if(isActive())togglePower();
+        }
         model.setCurrentState(nextState);
 
 
@@ -73,10 +73,7 @@ public class Prometheus extends Player{
         else{
             model.setCurrentState(new Move());
             boolean result= makeMovement(model,destination);
-            if(result){
-                nextPhase(model);
-            }
-            else{
+            if(!result){
                 model.setCurrentState(new Power());
             }
             return result;

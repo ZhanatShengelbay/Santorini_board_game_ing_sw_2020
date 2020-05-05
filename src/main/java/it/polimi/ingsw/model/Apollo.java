@@ -44,26 +44,31 @@ public class Apollo extends Player {
 
     @Override
     public boolean makeMovement(Model model, Coordinate destination) {
+        Worker wrkDestination = model.getGrid().getTile(destination).getWorker();
+        if(wrkDestination==null || wrkDestination.getPlayer().equals(this))
+            return super.makeMovement(model,destination);
+        //This block was made to avoid synergy problem with Aphrodite's power
+        //Do first the movement and after check if this action is possible: if not, back to the initial condition
         Coordinate from = model.getCurrentWorker();
+        Worker wrkFrom = model.getGrid().getTile(model.getCurrentWorker()).getWorker();
+        model.getGrid().getTile(from).setWorker(wrkDestination);
+
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotDome().isRisible());
         if (containsInValidCoordinate(destination)) {
-            Worker wrkDestination = model.getGrid().getTile(destination).getWorker();
-
-            if(wrkDestination==null)
-                moveWorker(model,destination);
-            else if(!wrkDestination.getPlayer().equals(this)) {
-
-                model.getGrid().getTile(model.getCurrentWorker()).swapWorker(model.getGrid().getTile(destination));
+                model.getGrid().getTile(destination).setWorker(wrkFrom);
                 model.setCurrentWorker(destination);
-
-            }else return false;
-
             if (winCondition(model, from, destination)) model.setCurrentState(new Win());
             else
                 nextPhase(model);
             return true;
-        }else return false;
+        }else {
+            model.getGrid().getTile(destination).setWorker(wrkDestination);
+            model.getGrid().getTile(from).setWorker(wrkFrom);
+            return false;
+        }
+
     }
+
 
 
 

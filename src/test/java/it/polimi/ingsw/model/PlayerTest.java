@@ -5,9 +5,6 @@ import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 
@@ -19,10 +16,6 @@ class AbstractPlayer extends Player{
         super( playerID);
     }
 
-    @Override
-    public void nextPhase(Model model) {
-
-    }
 
     @Override
     public boolean makePower(Model model, Coordinate destination) {
@@ -35,55 +28,82 @@ class AbstractPlayer extends Player{
 public class PlayerTest {
 
     private Model model;
-    private Grid grid;
+
     private Player player;
-    private List<Worker> workers = new ArrayList<Worker>();
-    private Coordinate coordinate;
-    private Coordinate tmpCoordinate;
-    private Coordinate moveCoordinate;
-    private int worker_index;
-    private PositionWorkers posWorker;
-    private Select select;
-    private Move move;
-    private Build build;
-/*
+
+    private Player opponent;
+
+    boolean extTest=false;
+
+    private Coordinate positionWorker;
+
+
+
+    /*public PlayerTest(Player player){
+        this.player=player;
+        extTest=true;
+    }*/
+
     @Before
     public void setUp(){
 
-        grid = new Grid();
-        model = new Model(grid);
-        player = new AbstractPlayer( "testplayer");
-        player.addWorker();
-        player.addWorker();
-        coordinate = new Coordinate(2, 3);
-        moveCoordinate = new Coordinate(1,3);
-        tmpCoordinate = new Coordinate(0,0);
-        Coordinate buildCoordinate = new Coordinate(2, 4);
-        posWorker = new PositionWorkers(coordinate, worker_index);
-        select = new Select(coordinate);
-        move = new Move(moveCoordinate);
-        build = new Build(buildCoordinate);
+        model = new Model();
+        if(!extTest)
+            player = new AbstractPlayer( "opponent");
+        player.positionWorker(model,new Coordinate(1,0));
+        player.positionWorker(model,new Coordinate(0,1));
+        assertFalse(player.positionWorker(model,new Coordinate(1,0)));
+        assertTrue(model.getGrid().getTile(1,0).getWorker().equals(player.getWorker(0)));
+        opponent = new AbstractPlayer( "opponent");
+        opponent.positionWorker(model,new Coordinate(1,2));
+        model.getGrid().getTile(1,1).levelUp().levelUp();
+        model.getGrid().getTile(2,1).levelUp();
+        model.setCurrentPlayer(player);
+
+
+
     }
 
     @Test
+    public void simpleGameRound(){
+        model.setCurrentState(new Select());
+        assertFalse(player.makeSelection(model,new Coordinate(1,1)));
+        Coordinate selection=new Coordinate(1,0);
+        assertTrue(player.makeSelection(model,selection));
+        assertEquals(model.getGrid().getTile(model.getCurrentWorker()),model.getGrid().getTile(selection));
+        assertFalse(player.makeMovement(model,new Coordinate(1,1)));
+        assertFalse("impossible to reach,but possible to the other worker",player.makeMovement(model,new Coordinate(0,2)));
+        Coordinate move= new Coordinate(2,1);
+        assertTrue(player.makeMovement(model,move));
+        assertEquals(model.getGrid().getTile(model.getCurrentWorker()),model.getGrid().getTile(move));
+        Coordinate build= new Coordinate(1,1);
+        int height= model.getGrid().getTile(build).getHeight().ordinal();
+        assertTrue(player.makeBuild(model,build));
+        assertEquals(height+1,model.getGrid().getTile(build).getHeight().ordinal());
+        assertTrue(model.getCurrentState()instanceof End);
+
+    }
+
+
+
+
     public void testPositionWorker(){
-        player.positionWorker(model, coordinate);
-        assertEquals(grid.getTile(coordinate).getWorker(), player.getWorker(worker_index));
-        for(int i = 0; i < 5 && i!=coordinate.getX(); i++){
-            for(int j = 0; j < 5 && j!=coordinate.getY(); j++){
-                tmpCoordinate.setX(i);
-                tmpCoordinate.setY(j);
-                assertNull(grid.getTile(tmpCoordinate).getWorker());
+        player.positionWorker(model, new Coordinate(2, 3));
+        assertEquals(model.getGrid().getTile(positionWorker).getWorker(), player.getWorker(0));
+        for(int i = 0; i < 5 && i!= positionWorker.getX(); i++){
+            for(int j = 0; j < 5 && j!= positionWorker.getY(); j++){
+                Coordinate c= new Coordinate(i,j);
+                assertNull(model.getGrid().getTile(c).getWorker());
             }
         }
     }
-
+/*
     @Test
     public void testMakeSelection(){
-        player.positionWorker(model, posWorker);
-        player.makeSelection(model, select);
-        assertEquals(grid.getTile(model.getCurrentWorker()).getWorker(), grid.getTile(coordinate).getWorker());
-        assertEquals(model.getCurrentWorker(), select.getChoice());
+        player.positionWorker(model, positionWorker);
+        player.makeSelection(model, positionWorker);
+        assertEquals(model.getGrid().getTile(model.getCurrentWorker()).getWorker(), player.getWorker(0));
+        assertEquals(model.getCurrentWorker(), positionWorker);
     }
 
     @Test

@@ -42,6 +42,7 @@ public class ArtemisTest {
         assertEquals(model.getGrid().getTile(new Coordinate(3, 0)).getWorker().getPlayer(), artemis);
         assertTrue(model.getCurrentState() instanceof Power);
         artemis.togglePower();
+        assertFalse("cannot move back",artemis.makePower(model,from));
         artemis.makePower(model,new Coordinate(2,1));
         assertFalse(artemis.containsInValidCoordinate(from));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 1)).getWorker().getPlayer(), artemis);

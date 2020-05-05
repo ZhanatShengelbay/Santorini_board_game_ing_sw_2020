@@ -104,7 +104,7 @@ public class Grid {
      * @return integer value of level difference
      */
     public int HeightDifference(Coordinate from, Coordinate destination) {
-        return getTile(from).getHeight().ordinal() - getTile(destination).getHeight().ordinal();
+        return getTile(destination).getHeight().ordinal()-getTile(from).getHeight().ordinal();
 
     }
 

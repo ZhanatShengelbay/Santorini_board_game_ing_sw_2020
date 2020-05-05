@@ -30,6 +30,30 @@ public enum Cardinal {
         return Enum.valueOf(Cardinal.class, input.toUpperCase());
     }
 
+
+    public static Cardinal getDirection(Coordinate from, Coordinate destination) {
+        int x=destination.getX()-from.getX();
+        int y=destination.getY()-from.getY();
+        Cardinal result=null;
+        switch(x){
+            case 0:
+                if(y==1) result=N;
+                else result=S;
+                break;
+            case 1:
+                if(y==1) result=NE;
+                else if(y==0) result=E;
+                else if(y==-1) result=SE;
+                break;
+            case -1:
+                if(y==1) result=NW;
+                else if(y==0) result=W;
+                else if(y==-1) result=SW;
+                break;
+
+        }
+        return result;
+    }
     /**
      * Getter method to access the abscissa when cardinal system is used
      *

@@ -28,9 +28,15 @@ public class Checks {
     public Checks( Model model, Coordinate from, Coordinate destination) {
         this.model=model;
         this.from = from;
-        this.destinations=new ArrayList<>();
-        this.destinations.add(destination);
-        result=new ArrayList<>(Collections.nCopies(destinations.size(), false));
+        this.destinations = new ArrayList<>();
+        if(model.getGrid().contains(destination)) {
+            this.destinations.add(destination);
+            result = new ArrayList<>(Collections.nCopies(destinations.size(), true));
+        }else{
+            //WIP
+            this.destinations.add(from);
+            result = new ArrayList<>(Collections.nCopies(destinations.size(), false));
+        }
 
     }
 
@@ -100,7 +106,7 @@ public class Checks {
 
     /**
      * method deletes the coordinate that is never reachable from the corresponding index of the destination array
-     * @param alwaysFalseCoordinate i.e the coordinate containing Dome
+     * @param alwaysFalseCoordinate i.e the coordinate that is impossible to reach
      * @return current object instance
      */
     public Checks remove(Coordinate alwaysFalseCoordinate){
@@ -117,18 +123,27 @@ public class Checks {
      * @return the array containing the accessible destination
      */
     public List<Coordinate> getResult() {
-        List<GroundEffect> tmp = model.getGroundEffects();
+        List<PlayerWithGroundEffect> tmp = model.getGroundEffects();
         List<Coordinate> returnList = new ArrayList<>();
 
 
         for(Coordinate destination : destinations) {
-            if(result.get(destinations.indexOf(destination)))   returnList.add(destination);
-            if(!tmp.isEmpty())
-                for(GroundEffect g : tmp){
-                    if(g.respectEffect(model, from, destination))    destinations.remove(destination);
+            if (result.get(destinations.indexOf(destination))) {
+                returnList.add(destination);
+                if (!tmp.isEmpty()) {
+                    for (PlayerWithGroundEffect g : tmp) {
+                        if(!g.equals(model.getCurrentPlayer()))
+                            if (g.respectEffect(model, from, destination)) returnList.remove(destination);
+                    }
                 }
-         }
+            }
+        }
         return returnList;
+    }
+
+    public boolean simpleGetResult(){
+        if(result==null||result.size()>1) return false; //wrong function
+        else return result.get(0);
     }
 
 }

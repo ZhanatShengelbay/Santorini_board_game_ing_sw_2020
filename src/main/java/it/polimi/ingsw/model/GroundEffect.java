@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Coordinate;
 
 /**
@@ -12,19 +10,10 @@ import it.polimi.ingsw.utility.Coordinate;
 
 public interface GroundEffect {
 
-     /**
-      * It is called if one of the players possesses Athena's power
-      * @param model
-      * @param destination ending point of tile
-      * @param from starting point of tile
-      * @return
-      */
-     boolean respectEffect(Model model, Coordinate destination, Coordinate from);
 
-     /**
-      * adds affect to model
-      * @param model
-      */
+     boolean respectEffect(Model model, Coordinate from, Coordinate destination);
+
+
      void addEffect(Model model);
 
 

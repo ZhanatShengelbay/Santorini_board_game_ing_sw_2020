@@ -14,7 +14,7 @@ public class Model extends Subject<Model> implements Cloneable {
     private Grid grid;
     private Coordinate currentWorker;
     private State currentState;
-    private List<GroundEffect>groundEffects;
+    private List<PlayerWithGroundEffect>groundEffects;
     private List<Player> players;
     private Player currentPlayer;
 
@@ -28,7 +28,7 @@ public class Model extends Subject<Model> implements Cloneable {
         this.grid = new Grid();
         this.groundEffects=new ArrayList<>();
         this.players=new ArrayList<>();
-        this.currentState = new GameStart();
+        //this.currentState = new GameStart();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Model extends Subject<Model> implements Cloneable {
         this.currentState = currentState;
     }
 
-    protected List<GroundEffect> getGroundEffects() {
+    protected List<PlayerWithGroundEffect> getGroundEffects() {
         return groundEffects;
     }
 

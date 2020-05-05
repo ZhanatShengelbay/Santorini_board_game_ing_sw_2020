@@ -10,5 +10,7 @@ public enum EnumDivinity {
     HERMES,
     MINOTAUR,
     PAN,
-    PROMETHEUS
+    PROMETHEUS,
+    APHRODITE,
+    ARES
 }

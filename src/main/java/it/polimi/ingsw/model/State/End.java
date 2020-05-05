@@ -16,7 +16,10 @@ public class End implements State {
 
     @Override
     public boolean handle(Coordinate choice, Model model) {
-        return false;
+        if (model.getCurrentPlayer().isActive())
+            model.getCurrentPlayer().togglePower();
+        model.nextPlayer();
+        return true;
     }
 
     @Override

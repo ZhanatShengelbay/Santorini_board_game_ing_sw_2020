@@ -4,6 +4,7 @@ import it.polimi.ingsw.utility.Cardinal;
 import it.polimi.ingsw.utility.Coordinate;
 
 import javax.management.openmbean.TabularDataSupport;
+import java.io.Serializable;
 import java.util.*;
 import java.util.jar.Attributes;
 
@@ -13,10 +14,11 @@ import java.util.jar.Attributes;
  * @author CG51
  * @version 0.1
  */
-public class Grid {
+public class Grid  implements Serializable {
     /**
      * This field holds information of the size of game board. The grid contains 5 rows and 5 columns. The operation place is defined by tile.
      */
+    private static final long serialVersionUID = 2L;
     public static final int N_ROWS = 5;
     public static final int N_COLS = 5;
     private final Tile[][] grid = new Tile[5][5];
@@ -106,6 +108,32 @@ public class Grid {
     public int HeightDifference(Coordinate from, Coordinate destination) {
         return getTile(from).getHeight().ordinal() - getTile(destination).getHeight().ordinal();
 
+    }
+
+    public void print(){
+        for (int i=0; i<5; i++){
+            for (int j=0; j<5; j++){
+                if(getTile(i, j).getWorker() == null){
+                    if(getTile(i, j).getHeight() == TypeBlock.FLOOR){
+                        System.out.print("O");
+                    }
+                    else if(getTile(i, j).getHeight() == TypeBlock.FIRST){
+                        System.out.print("1");
+                    }
+                    else if(getTile(i, j).getHeight() == TypeBlock.SECOND){
+                        System.out.print("2");
+                    }
+                    else if(getTile(i, j).getHeight() == TypeBlock.THIRD){
+                        System.out.print("3");
+                    }
+                    else if(getTile(i, j).getHeight() == TypeBlock.DOME){
+                        System.out.print("D");
+                    }
+                }
+                else System.out.print("+");
+                if(j==4) System.out.print("\n");
+            }
+        }
     }
 
 

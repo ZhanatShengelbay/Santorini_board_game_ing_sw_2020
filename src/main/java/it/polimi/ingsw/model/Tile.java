@@ -2,15 +2,18 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.io.Serializable;
+
 /**
  * This class describes the tile fragment of action
  * @author CG51
  * @version 0.1
  */
-public class Tile {
+public class Tile implements Serializable {
     /**
      *Instance variables block of type TypeBlock and worker of type Worker
      */
+    private static final long serialVersionUID = 3L;
     private TypeBlock block;
     private Worker worker;
 

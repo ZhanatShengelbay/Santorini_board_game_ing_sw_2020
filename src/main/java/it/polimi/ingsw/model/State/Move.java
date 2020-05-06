@@ -4,8 +4,11 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
-public class Move implements State {
+import java.io.Serializable;
 
+public class Move implements State, Serializable {
+
+    private static final long serialVersionUID = 8L;
 
     @Override
     public boolean handle(Coordinate choice, Model model){

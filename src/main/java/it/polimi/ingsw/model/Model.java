@@ -5,16 +5,18 @@ import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Subject;
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model extends Subject<Model> implements Cloneable {
+public class Model extends Subject<Model> implements Cloneable, Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Grid grid;
     private Coordinate currentWorker;
     private State currentState;
-    private List<GroundEffect>groundEffects;
+    private List<GroundEffect> groundEffects;
     private List<Player> players;
     private Player currentPlayer;
 
@@ -36,7 +38,7 @@ public class Model extends Subject<Model> implements Cloneable {
         return super.toString();
     }
 
-    protected Grid getGrid() {
+    public Grid getGrid() {
         return grid;
     }
 
@@ -79,12 +81,11 @@ public class Model extends Subject<Model> implements Cloneable {
             Class [] classes = {String.class};
             Player new_player = (Player)Class.forName("it.polimi.ingsw.model." + godStandard).getDeclaredConstructor(classes).newInstance(id);
             players.add(new_player);
-            for(int i=0; i<2; i++){
-                new_player.addWorker();
-            }
-            System.out.println("PLAYER CREATED");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
+        }
+        if(players.size() == 1){
+            currentPlayer = players.get(0);
         }
     }
 

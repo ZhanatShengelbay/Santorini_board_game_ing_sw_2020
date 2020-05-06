@@ -8,9 +8,6 @@ public class GameChoice extends PlayerChoice {
 
     Coordinate coordinate;
     boolean power;
-    RemoteView view;
-    String playerId;
-
 
     public GameChoice(int x, int y,String playerId, RemoteView view) {
         super(playerId,view);
@@ -19,7 +16,6 @@ public class GameChoice extends PlayerChoice {
         if(0 > x || x >= Grid.N_ROWS || 0 > y || y >= Grid.N_COLS)
             throw new IllegalArgumentException();
         else this.coordinate=new Coordinate(x,y);
-
     }
 
     public void activePower(){power=true;}

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Enum class TypeBlock represents building blocks with indicated levels.
  * Blocks are buildable in ascending order, 1 at a time (special cases are specified in god powers)
@@ -7,12 +9,14 @@ package it.polimi.ingsw.model;
  *  @author CG51
  *  @version 0.1
  */
-public enum TypeBlock {
+public enum TypeBlock implements Serializable {
     FLOOR (0),
     FIRST(1),
     SECOND(2),
     THIRD(3),
     DOME(4);
+
+    private static final long serialVersionUID = 14L;
 
     //ToString da implementare
     /**

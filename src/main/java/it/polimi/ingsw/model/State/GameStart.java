@@ -5,24 +5,11 @@ import it.polimi.ingsw.controller.SetUpController;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
-public class GameStart implements State {
+import java.io.Serializable;
 
-    //WARNING CLASS WIP
-    GameController newController;
-    SetUpController oldController;
+public class GameStart implements State, Serializable {
 
-    public GameStart(GameController newController, SetUpController oldController){
-        this.newController = newController;
-        this.oldController = oldController;
-    }
-
-    public GameController getNewController() {
-        return newController;
-    }
-
-    public SetUpController getOldController() {
-        return oldController;
-    }
+    private static final long serialVersionUID = 7L;
 
     @Override
     public boolean handle(Coordinate choice, Model model) {

@@ -9,8 +9,12 @@ import it.polimi.ingsw.model.playerChoice.SetUpChoice;
 import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.utility.Subject;
 
+import java.io.*;
+
 public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>{
 
+    ByteArrayOutputStream os;
+    ObjectOutputStream out;
     private Connection connection;
     State currentState;
     Model model;
@@ -32,6 +36,13 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         this.model = model;
         this.connection = connection;
         connection.addObserver(new MessageReceiver());
+        try{
+            os = new ByteArrayOutputStream();
+            out = new ObjectOutputStream(os);
+        }
+        catch (IOException e){
+            showError("Serialization setup error");
+        }
     }
 
     public String getPlayerID(){
@@ -105,7 +116,8 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
     }
 
     @Override
-    public void update(Model model) {
+    public void update(Model model){
         this.currentState = model.getCurrentState();
+        connection.send(model);
     }
 }

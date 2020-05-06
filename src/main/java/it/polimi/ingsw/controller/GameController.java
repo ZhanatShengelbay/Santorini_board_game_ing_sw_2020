@@ -21,7 +21,11 @@ public class GameController implements Controller {
 
     @Override // Add view to parameters
     public void update(PlayerChoice message) {
-        handler(message);
+        this.currentPlayer = model.getCurrentPlayer();
+        if(message.getPlayer() == currentPlayer.getPlayerID()){
+            handler(message);
+        }
+        else message.getView().showError("Not your turn");
     }
 
     private void handler(PlayerChoice message) {
@@ -35,7 +39,8 @@ public class GameController implements Controller {
         try {
             boolean result  =  model.getCurrentState().handle(((GameChoice)message).getChoice(),model);
             if(result) {
-                model.notify(model.clone());
+                model.getGrid().print();
+                model.notify(model);
                 message.getView().showMessage(model.getCurrentState().questionMessage());
             }
             else message.getView().showError("Wrong action, retry");

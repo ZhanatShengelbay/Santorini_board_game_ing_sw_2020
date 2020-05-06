@@ -3,6 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.utility.Subject;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Connection extends Subject<String> implements Runnable {
 
     private Socket socket;
     private Scanner in;
-    private PrintWriter out;
+    private ObjectOutputStream out;
     private Server server;
     private String name;
     private int numOfPlayers;
@@ -34,12 +35,17 @@ public class Connection extends Subject<String> implements Runnable {
         return active;
     }
 
-    public void send(String message){
-        out.println(message);
-        out.flush();
+    public void send(Object message){
+        try {
+            out.reset();
+            out.writeObject(message);
+            out.flush();
+        } catch(IOException e){
+            System.err.println(e.getMessage());
+        }
     }
 
-    public void asyncSend(final String message){
+    public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -69,8 +75,9 @@ public class Connection extends Subject<String> implements Runnable {
     @Override
     public void run() {
         try{
+            String read;
             in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
             send("Welcome! What's your name?");
             this.name = in.nextLine();
             send("Choose number of player");
@@ -78,7 +85,7 @@ public class Connection extends Subject<String> implements Runnable {
             server.lobby(this);
             while(isActive()){
                 send("Next Input");
-                String read = in.nextLine();
+                read = in.nextLine();
                 notify(read);
             }
         } catch(IOException e){

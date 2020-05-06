@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.io.Serializable;
+
 /**
  * Interface class GroundEffect specifies the effect of God Athena's power, i.e. If the player possessing Athena moved up on of his/her worker, opponent can not
  * @author CG51

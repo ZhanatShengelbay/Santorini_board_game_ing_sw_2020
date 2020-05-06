@@ -3,10 +3,14 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.io.Serializable;
+
 /**
  * This class describes what happens when the game is in "WIN" status.
  */
-public class Win implements State {
+public class Win implements State, Serializable {
+
+    private static final long serialVersionUID = 12L;
 
     /**
      * Overriden getter method that does not allow the choice of coordinate while there is a winner in the game

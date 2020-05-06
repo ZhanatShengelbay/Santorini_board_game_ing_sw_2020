@@ -3,8 +3,11 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
-public class Power implements State{
+import java.io.Serializable;
 
+public class Power implements State, Serializable {
+
+    private static final long serialVersionUID = 10L;
 
     @Override
     public boolean handle(Coordinate choice, Model model) {

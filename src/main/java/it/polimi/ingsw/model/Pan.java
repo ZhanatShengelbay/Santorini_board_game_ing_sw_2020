@@ -52,7 +52,6 @@ public class Pan extends Player {
         else if (currentState instanceof Build)
             nextState = new End();
         model.setCurrentState(nextState);
-
     }
 
 

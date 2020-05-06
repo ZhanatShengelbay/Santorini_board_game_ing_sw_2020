@@ -18,7 +18,7 @@ public class Server {
 
     private int numOfPlayers;
 
-    private ExecutorService executor = Executors.newFixedThreadPool(3);
+    private ExecutorService executor = Executors.newFixedThreadPool(10);
 
     private List<Connection> connections = new ArrayList<>();
     private HashMap<Connection, Integer> waitingConnections = new HashMap<>();
@@ -58,7 +58,7 @@ public class Server {
         }
     }
 
-    public synchronized void lobby(Connection c){
+    public synchronized void lobby(Connection c) throws Error{
         int j = 0, k = 0;
         waitingConnections.put(c, c.getNumOfPlayers());
         for (Map.Entry<Connection, Integer> entry : waitingConnections.entrySet()) {
@@ -73,6 +73,9 @@ public class Server {
                     }
                     playingConnections.add(tmp);
                     createGame(tmp);
+                    for(Connection connection : tmp){
+                        waitingConnections.remove(connection);
+                    }
                 }
             }
             if(entry.getValue() == 3){
@@ -86,6 +89,9 @@ public class Server {
                     }
                     playingConnections.add(tmp);
                     createGame(tmp);
+                    for(Connection connection : tmp){
+                        waitingConnections.remove(connection);
+                    }
                 }
             }
         }

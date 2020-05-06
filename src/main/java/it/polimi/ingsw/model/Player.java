@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -13,10 +14,10 @@ import java.util.List;
  * The class is abstract because it needs an implementation depending on which God the user decides to use during the game.
  */
 
-public abstract class Player {
+public abstract class Player implements Serializable{
 
 
-
+    private static final long serialVersionUID = 13L;
     private List<Worker> workers;
     private String playerID;
     private List<Coordinate> validCoordinate;  //is always calculated in the previous action
@@ -80,7 +81,6 @@ public abstract class Player {
      * @return
      */
     public boolean positionWorker(Model model, Coordinate destination) {
-
 
         if (!model.getGrid().getTile(destination).isWorker()) {
             model.getGrid().getTile(destination).setWorker(addWorker());

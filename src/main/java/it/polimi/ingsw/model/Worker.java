@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utility.Coordinate;
 
+import java.io.Serializable;
+
 /**
  * The class Worker represents workers of the game
  * @author CG51
@@ -10,11 +12,12 @@ import it.polimi.ingsw.utility.Coordinate;
 
 
 
-public class Worker {
+public class Worker implements Serializable {
 
     /**
      * class attribute player, i.e. who owns the worker
      */
+    private static final long serialVersionUID = 4L;
     private Player player;
     private int num;
 

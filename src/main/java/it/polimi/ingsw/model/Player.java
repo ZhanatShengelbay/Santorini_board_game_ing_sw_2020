@@ -188,7 +188,7 @@ public abstract class Player {
 
     public abstract boolean makePower(Model model, Coordinate destination);
 
-    public final boolean containsInValidCoordinate(Coordinate coordinate){
+    public final boolean containsValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 

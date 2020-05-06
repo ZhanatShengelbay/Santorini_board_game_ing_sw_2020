@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
 /**
  *  The power of god Artemis is described in this class. Player holding this god may move 1 more additional time,
  *  but not back to its initial space
@@ -81,7 +80,7 @@ public class Artemis extends Player {
             model.setCurrentState(new Move());
             Coordinate from = model.getCurrentWorker();
             setValidCoordinate(new Checks(model, from).isNotWorker().isNotDome().isRisible().remove(this.from));
-            if (containsInValidCoordinate(destination)) {
+            if (containsValidCoordinate(destination)) {
 
                 moveWorker(model, destination);
                 if (winCondition(model, from, destination)) model.setCurrentState(new Win());

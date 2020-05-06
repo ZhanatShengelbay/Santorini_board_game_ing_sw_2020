@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArtemisTest {
     Model model;
     Player artemis;
@@ -44,7 +41,7 @@ public class ArtemisTest {
         artemis.togglePower();
         assertFalse("cannot move back",artemis.makePower(model,from));
         artemis.makePower(model,new Coordinate(2,1));
-        assertFalse(artemis.containsInValidCoordinate(from));
+        assertFalse(artemis.containsValidCoordinate(from));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 1)).getWorker().getPlayer(), artemis);
         assertTrue(model.getCurrentState() instanceof Build);
         int tmp= model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal();

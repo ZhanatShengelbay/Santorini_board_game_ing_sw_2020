@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
 /**
  *  Class describes the power of Demeter. Player owning the Demeter can build 1 additional time, but not at the same place
  *  @author CG51
@@ -28,6 +27,12 @@ public class Demeter extends Player {
         super( playerID);
     }
 
+    /**
+     * Overridden to keep the last built coordinate, it is used in the makePower method
+     * @param model
+     * @param destination
+     * @return true or false depending on the condition's result
+     */
     @Override
     public boolean makeBuild(Model model, Coordinate destination) {
         boolean result = super.makeBuild(model, destination);
@@ -76,7 +81,7 @@ public class Demeter extends Player {
         if (isActive()) {
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome().remove(this.firstBuild));
-            if (containsInValidCoordinate(destination)) {
+            if (containsValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
                 nextPhase(model);
                 return true;

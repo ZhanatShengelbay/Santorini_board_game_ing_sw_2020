@@ -6,8 +6,17 @@ import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
 public class GameStart implements State {
+    @Override
+    public boolean handle(Coordinate choice, Model model) {
+        return false;
+    }
 
-    //WARNING CLASS WIP
+    @Override
+    public String questionMessage() {
+        return null;
+    }
+
+    /*//WARNING CLASS WIP
     GameController newController;
     SetUpController oldController;
 
@@ -22,15 +31,6 @@ public class GameStart implements State {
 
     public SetUpController getOldController() {
         return oldController;
-    }
+    }*/
 
-    @Override
-    public boolean handle(Coordinate choice, Model model) {
-        return false;
-    }
-
-    @Override
-    public String questionMessage() {
-        return null;
-    }
 }

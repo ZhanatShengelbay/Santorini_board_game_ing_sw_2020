@@ -19,7 +19,7 @@ public class GameController implements Controller {
         this.currentPlayer = model.getPlayer(0);
     }
 
-    @Override // Add view to parameters
+    @Override
     public void update(PlayerChoice message) {
         handler(message);
     }

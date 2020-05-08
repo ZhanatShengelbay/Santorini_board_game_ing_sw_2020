@@ -35,7 +35,7 @@ public class Prometheus extends Player{
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible(0));
         else
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
-        if (containsValidCoordinate(destination)) {
+        if (containsInValidCoordinate(destination)) {
 
             moveWorker(model,destination);
             if (winCondition(model, from, destination)) model.setCurrentState(new Win());
@@ -87,7 +87,7 @@ public class Prometheus extends Player{
         if(isActive()){
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
-            if (containsValidCoordinate(destination)) {
+            if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
                 nextPhase(model);
                 return true;

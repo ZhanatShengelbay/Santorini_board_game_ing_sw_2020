@@ -6,11 +6,13 @@ public class Ares extends Player {
 
     private Coordinate wrkPosition;
 
-    @Override
-    public boolean positionWorker(Model model, Coordinate destination) {
-        return super.positionWorker(model, destination);
-        wrkPosition = super.positionWorker(destination;
+    /**
+     * @param playerID
+     */
+    public Ares(String playerID) {
+        super(playerID);
     }
+
 
     @Override
     public void nextPhase(Model model) {

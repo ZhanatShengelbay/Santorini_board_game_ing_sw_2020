@@ -80,7 +80,7 @@ public class Artemis extends Player {
             model.setCurrentState(new Move());
             Coordinate from = model.getCurrentWorker();
             setValidCoordinate(new Checks(model, from).isNotWorker().isNotDome().isRisible().remove(this.from));
-            if (containsValidCoordinate(destination)) {
+            if (containsInValidCoordinate(destination)) {
 
                 moveWorker(model, destination);
                 if (winCondition(model, from, destination)) model.setCurrentState(new Win());

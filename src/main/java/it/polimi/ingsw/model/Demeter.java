@@ -81,7 +81,7 @@ public class Demeter extends Player {
         if (isActive()) {
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome().remove(this.firstBuild));
-            if (containsValidCoordinate(destination)) {
+            if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
                 nextPhase(model);
                 return true;

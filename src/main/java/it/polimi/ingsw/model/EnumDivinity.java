@@ -7,7 +7,6 @@ public enum EnumDivinity {
     ATLAS,
     DEMETER,
     HEPHAESTUS,
-    HERMES,
     MINOTAUR,
     PAN,
     PROMETHEUS,

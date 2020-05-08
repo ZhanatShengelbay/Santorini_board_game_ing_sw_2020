@@ -97,11 +97,6 @@ public class Tile {
 
     }
 
-    public void swapWorker(Tile t){
-        Worker wrkTmp= this.worker;
-        this.setWorker(t.getWorker());
-        t.setWorker(wrkTmp);
-    }
 
 
 }

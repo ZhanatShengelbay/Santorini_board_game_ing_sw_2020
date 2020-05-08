@@ -35,7 +35,7 @@ public class Aphrodite extends PlayerWithGroundEffect {
             List<Coordinate> aroundTile = model.getGrid().validTileAround(from);
             for (Coordinate c : aroundTile) {
                 Worker wrkNearFrom = model.getGrid().getTile(c).getWorker();
-                //this trigger the searching of an aphrodite worker near the destination tile
+                //this trigger the search of an aphrodite worker near the destination tile
                 if (wrkNearFrom != null && wrkNearFrom.getPlayer().equals(this)) {
                     List<Coordinate> aroundDestination = model.getGrid().validTileAround(destination);
                     for (Coordinate d : aroundDestination) {

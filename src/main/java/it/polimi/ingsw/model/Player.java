@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -64,8 +65,9 @@ public abstract class Player {
      * @param checks to be verified
      */
     public final void setValidCoordinate(Checks checks) {
-        this.validCoordinate= checks.getResult();
+        this.validCoordinate = checks.getResult();
         if(this.validCoordinate.isEmpty())defeatHandler();
+        
     }
 
     protected void defeatHandler(){
@@ -188,7 +190,7 @@ public abstract class Player {
 
     public abstract boolean makePower(Model model, Coordinate destination);
 
-    public final boolean containsValidCoordinate(Coordinate coordinate){
+    public final boolean containsInValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 

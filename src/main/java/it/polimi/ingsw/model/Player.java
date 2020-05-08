@@ -173,11 +173,23 @@ public abstract class Player implements Serializable{
      * For each state, the function had to decide the next state, depends also if the power is active or not.
      * @param model The model where set the new current State
      */
-    public abstract void nextPhase(Model model);
+    public void nextPhase(Model model){
+        State currentState = model.getCurrentState();
+        State nextState = null;
+        if (currentState instanceof Select)
+            nextState = new Move();
+
+        else if (currentState instanceof Move)
+            nextState = new Build();
+
+        else if (currentState instanceof Build)
+            nextState = new End();
+        model.setCurrentState(nextState);
+    }
 
     public abstract boolean makePower(Model model, Coordinate destination);
 
-    public final boolean containsInValidCoordinate(Coordinate coordinate){
+    public final boolean containsValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 

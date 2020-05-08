@@ -29,30 +29,12 @@ public class Pan extends Player {
     @Override
     public boolean winCondition(Model model, Coordinate from, Coordinate destination) {
         int heightDiff = model.getGrid().HeightDifference(from, destination);
-        if (heightDiff >= 2) {
+        if (heightDiff <= -2) {
             return true;
         }
         return super.winCondition(model, from, destination);
     }
 
-    /**
-     * Method defines how Pan's turn is carried out
-     * @param model to set the new current state
-     */
-    @Override
-    public void nextPhase(Model model) {
-        State currentState = model.getCurrentState();
-        State nextState = null;
-        if (currentState instanceof Select)
-            nextState = new Move();
-
-        else if (currentState instanceof Move)
-            nextState = new Build();
-
-        else if (currentState instanceof Build)
-            nextState = new End();
-        model.setCurrentState(nextState);
-    }
 
 
     /**

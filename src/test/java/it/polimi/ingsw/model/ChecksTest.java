@@ -45,11 +45,4 @@ public class ChecksTest {
     }
 
 
-     @Test
-    public void getResultTest(){
-         List<Coordinate> result= new Checks(model,new Coordinate(2,-1)).isRisible().getResult();
-         assertTrue(result.isEmpty());
-
-     }
-
 }

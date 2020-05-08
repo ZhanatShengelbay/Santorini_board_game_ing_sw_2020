@@ -16,7 +16,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
     private Grid grid;
     private Coordinate currentWorker;
     private State currentState;
-    private List<GroundEffect> groundEffects;
+    private List<PlayerWithGroundEffect>groundEffects;
     private List<Player> players;
     private Player currentPlayer;
 
@@ -40,7 +40,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
 
     public int getNumOfPlayers(){return players.size();}
 
-    public Grid getGrid() {
+    protected Grid getGrid() {
         return grid;
     }
 
@@ -68,7 +68,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
         this.currentState = currentState;
     }
 
-    protected List<GroundEffect> getGroundEffects() {
+    protected List<PlayerWithGroundEffect> getGroundEffects() {
         return groundEffects;
     }
 
@@ -96,7 +96,6 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
         if(index==players.size()-1)index=0;
         else index++;
         this.currentPlayer=players.get(index);
-        System.out.println("NEXT PLAYER DONE: " + currentPlayer.getPlayerID());
     }
 }
 

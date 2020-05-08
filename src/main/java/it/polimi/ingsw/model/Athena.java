@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
-
 /**
  *  power of Athena is described in this class. if player owns the Athena, if s/he moved up any of her/his workers,
  *  on opponent's turn opponent can NOT move up
@@ -14,6 +12,7 @@ import java.util.List;
 
 public class Athena extends PlayerWithGroundEffect {
 
+    private Model model;
     private Coordinate from;
 
     /**
@@ -21,8 +20,9 @@ public class Athena extends PlayerWithGroundEffect {
      *
      * @param playerID players name
      */
-    public Athena( String playerID) {
+    public Athena(String playerID) {
         super(playerID);
+
     }
 
     /**
@@ -32,6 +32,7 @@ public class Athena extends PlayerWithGroundEffect {
      */
     @Override
     public boolean makeSelection(Model model, Coordinate selection) {
+        model.getGroundEffects().remove(this);
         boolean result = super.makeSelection(model, selection);
         if(result)from = selection;
         return result;
@@ -57,19 +58,7 @@ public class Athena extends PlayerWithGroundEffect {
      * method defines the behavior of Athena
      * @param model sets new current State
      */
-    @Override
-    public void nextPhase(Model model) {
-        State currentState=model.getCurrentState();
-        State nextState=null;
-        if(currentState instanceof Select)
-            nextState=new Move();
-        else if(currentState instanceof Move)
-            nextState=new Build();
-        else if(currentState instanceof Build)
-            nextState=new End();
-        model.setCurrentState(nextState);
 
-    }
 
     /**
      * Method throws exception according to the power of Athena, in case he opponent tries to move up
@@ -88,10 +77,11 @@ public class Athena extends PlayerWithGroundEffect {
      * @param model
      * @param from starting point of tile
      * @param destination ending point of tile
+     *
      * @return
      */
     @Override
-    public boolean respectEffect(Model model,Coordinate from, Coordinate destination) {
+    public boolean respectEffect(Model model, Coordinate from,Coordinate destination) {
         if(model.getCurrentState() instanceof Move)
             return model.getGrid().HeightDifference(from, destination) > 0;
         else return false;

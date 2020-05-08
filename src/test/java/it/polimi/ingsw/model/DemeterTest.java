@@ -48,11 +48,17 @@ public class DemeterTest {
         assertEquals(bld+1, model.getGrid().getTile(bldPlace).getHeight().ordinal());
         assertTrue( model.getCurrentState() instanceof Power);
         int newBld = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
+
+        demeter.makePower(model,new Coordinate(5,5));
+        assertTrue( model.getCurrentState() instanceof End);
+        //this action is possible
+        model.setCurrentState(new Power());
         demeter.togglePower();
         Coordinate newDest=(new Coordinate(2,1));
         boolean result = demeter.makePower(model, newDest);
         assertFalse(result);
         assertEquals(newBld, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
+
         assertTrue(model.getCurrentState() instanceof Power);
         newDest=(new Coordinate(1,1));
         demeter.makePower(model, newDest);

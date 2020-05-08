@@ -3,28 +3,39 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
-
+/**
+ * This class describes the behaviour of the player's turn, if s/he owns
+ * the power of Prometheus - Titan Benefactor of Mankind.
+ * This God gives the ability of building both BEFORE and AFTER moving
+ * to the player IF the player's worker does NOT move UP, i.e., player can build first
+ * and move on the same level or down, but not UP and again build
+ */
 public class Prometheus extends Player{
 
-    boolean isActive;
 
     /**
+     * Constructor to keep the player's information from the super class
      * @param playerID
      */
     public Prometheus(String playerID) {
         super( playerID);
     }
 
+    /**
+     * Overridden in a way to redefine the usual movement of super class Player
+     * @param model The model where the movement happened
+     * @param destination The input choice
+     * @return true or false depending on the result
+     */
     @Override
     public boolean makeMovement(Model model, Coordinate destination) {
 
         Coordinate from = model.getCurrentWorker();
-        if(isActive)
+        if(isActive())
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible(0));
         else
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
-        if (containsInValidCoordinate(destination)) {
+        if (containsValidCoordinate(destination)) {
 
             moveWorker(model,destination);
             if (winCondition(model, from, destination)) model.setCurrentState(new Win());
@@ -38,6 +49,10 @@ public class Prometheus extends Player{
 
     }
 
+    /**
+     * To set the model in accordance with Prometheus' power
+     * @param model The model where set the new current State
+     */
     @Override
     public void nextPhase(Model model) {
         State currentState=model.getCurrentState();
@@ -45,23 +60,34 @@ public class Prometheus extends Player{
         if(currentState instanceof Select)
             nextState=new Power();
         else if(currentState instanceof Build)
-            if (isActive) {
+            if (isActive()) {
                 nextState = new Move();
-                isActive = false;
             } else nextState = new End();
-        else if(currentState instanceof Move)
+        else if(currentState instanceof Move){
             nextState=new Build();
+            if(isActive())togglePower();
+        }
         model.setCurrentState(nextState);
 
 
     }
 
+    /**
+     * The actual power of Prometheus is described.
+     * Takes as a parameter model, and coordinate when the player wants to use her/his power
+     * In case the power is active, checks the validity of the passed place and if valid builds,
+     * if not valid sets the current state to Build and returns false
+     * If power if not active sets the current state to Move and checks the makeMovements result.
+     * @param model
+     * @param destination
+     * @return
+     */
     @Override
     public boolean makePower(Model model, Coordinate destination) {
         if(isActive()){
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
-            if (containsInValidCoordinate(destination)) {
+            if (containsValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
                 nextPhase(model);
                 return true;
@@ -73,10 +99,7 @@ public class Prometheus extends Player{
         else{
             model.setCurrentState(new Move());
             boolean result= makeMovement(model,destination);
-            if(result){
-                nextPhase(model);
-            }
-            else{
+            if(!result){
                 model.setCurrentState(new Power());
             }
             return result;

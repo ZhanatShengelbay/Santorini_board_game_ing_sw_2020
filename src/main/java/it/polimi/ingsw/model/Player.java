@@ -81,9 +81,10 @@ public abstract class Player implements Serializable{
      * @return
      */
     public boolean positionWorker(Model model, Coordinate destination) {
-
         if (!model.getGrid().getTile(destination).isWorker()) {
             model.getGrid().getTile(destination).setWorker(addWorker());
+            if(workers.size() == 2 && model.getPlayer(model.getNumOfPlayers() - 1) == this) model.setCurrentState(new Move());
+            else if(workers.size() == 2) model.setCurrentState(new PositionWorkers());
             return true;
         }
         else return false;

@@ -11,8 +11,8 @@ public class GameChoice extends PlayerChoice {
 
     public GameChoice(int x, int y,String playerId, RemoteView view) {
         super(playerId,view);
-        x--;
-        y--;
+//        x--;
+//        y--;
         if(0 > x || x >= Grid.N_ROWS || 0 > y || y >= Grid.N_COLS)
             throw new IllegalArgumentException();
         else this.coordinate=new Coordinate(x,y);

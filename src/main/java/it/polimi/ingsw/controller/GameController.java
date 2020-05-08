@@ -39,9 +39,8 @@ public class GameController implements Controller {
         try {
             boolean result  =  model.getCurrentState().handle(((GameChoice)message).getChoice(),model);
             if(result) {
-                model.getGrid().print();
                 model.notify(model);
-                message.getView().showMessage(model.getCurrentState().questionMessage());
+                //message.getView().showMessage(model.getCurrentState().questionMessage());
             }
             else message.getView().showError("Wrong action, retry");
 

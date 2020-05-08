@@ -1,9 +1,9 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.view.Client;
-import it.polimi.ingsw.view.Server;
+        import it.polimi.ingsw.view.Client;
+        import it.polimi.ingsw.view.Server;
 
-import java.io.IOException;
+        import java.io.IOException;
 
 public class ClientApp
 {

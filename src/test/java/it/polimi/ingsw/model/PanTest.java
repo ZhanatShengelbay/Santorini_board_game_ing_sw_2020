@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.State.Select;
 import it.polimi.ingsw.model.State.Win;
 import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 import java.util.List;

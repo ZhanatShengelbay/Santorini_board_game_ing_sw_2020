@@ -38,6 +38,8 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
         return super.toString();
     }
 
+    public int getNumOfPlayers(){return players.size();}
+
     public Grid getGrid() {
         return grid;
     }
@@ -92,7 +94,9 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
     public void nextPlayer(){
         int index= players.indexOf(currentPlayer);
         if(index==players.size()-1)index=0;
+        else index++;
         this.currentPlayer=players.get(index);
+        System.out.println("NEXT PLAYER DONE: " + currentPlayer.getPlayerID());
     }
 }
 

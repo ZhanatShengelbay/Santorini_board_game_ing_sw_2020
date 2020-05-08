@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Checks;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.State.State;
+import it.polimi.ingsw.model.playerChoice.GameChoice;
 import it.polimi.ingsw.utility.Coordinate;
 
 import java.io.PrintStream;

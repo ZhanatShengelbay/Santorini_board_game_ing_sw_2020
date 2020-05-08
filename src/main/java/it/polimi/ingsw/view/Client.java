@@ -45,7 +45,10 @@ public class Client {
                         }
                     }
                 } catch (Exception e){
+                    e.printStackTrace();
                     setActive(false);
+                } catch (Error e){
+                    e.printStackTrace();
                 }
             }
         });

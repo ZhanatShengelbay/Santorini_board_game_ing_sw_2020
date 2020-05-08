@@ -40,7 +40,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
 
     public int getNumOfPlayers(){return players.size();}
 
-    protected Grid getGrid() {
+    public Grid getGrid() {
         return grid;
     }
 

@@ -83,7 +83,7 @@ public abstract class Player implements Serializable{
     public boolean positionWorker(Model model, Coordinate destination) {
         if (!model.getGrid().getTile(destination).isWorker()) {
             model.getGrid().getTile(destination).setWorker(addWorker());
-            if(workers.size() == 2 && model.getPlayer(model.getNumOfPlayers() - 1) == this) model.setCurrentState(new Move());
+            if(workers.size() == 2 && model.getPlayer(model.getNumOfPlayers() - 1) == this) model.setCurrentState(new Select());
             else if(workers.size() == 2) model.setCurrentState(new PositionWorkers());
             return true;
         }
@@ -182,14 +182,17 @@ public abstract class Player implements Serializable{
         else if (currentState instanceof Move)
             nextState = new Build();
 
-        else if (currentState instanceof Build)
-            nextState = new End();
+        else if (currentState instanceof Build){
+            nextState = new Select();
+            model.nextPlayer();
+        }
+
         model.setCurrentState(nextState);
     }
 
     public abstract boolean makePower(Model model, Coordinate destination);
 
-    public final boolean containsValidCoordinate(Coordinate coordinate){
+    public final boolean containsInValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);
     }
 

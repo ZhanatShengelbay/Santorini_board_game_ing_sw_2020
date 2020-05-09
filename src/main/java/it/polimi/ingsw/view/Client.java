@@ -36,12 +36,14 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        if(inputObject instanceof String){
-                            System.out.println((String)inputObject);
-                        } else if (inputObject instanceof Model){
-                            ((Model)inputObject).getGrid().print();
-                        } else {
-                            throw new IllegalArgumentException();
+                        if (inputObject != null){
+                            if(inputObject instanceof String){
+                                System.out.println((String)inputObject);
+                            } else if (inputObject instanceof Model){
+                                ((Model)inputObject).getGrid().print();
+                            } else {
+                                throw new IllegalArgumentException();
+                            }
                         }
                     }
                 } catch (Exception e){
@@ -63,8 +65,10 @@ public class Client {
                 try {
                     while (isActive()) {
                         String inputLine = stdin.nextLine();
-                        socketOut.println(inputLine);
-                        socketOut.flush();
+                        if(inputLine != null){
+                            socketOut.println(inputLine);
+                            socketOut.flush();
+                        }
                     }
                 }catch(Exception e){
                     setActive(false);

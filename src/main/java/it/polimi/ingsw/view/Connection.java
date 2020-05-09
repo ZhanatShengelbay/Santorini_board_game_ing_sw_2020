@@ -84,7 +84,7 @@ public class Connection extends Subject<String> implements Runnable {
             this.numOfPlayers = Integer.parseInt(in.nextLine());
             server.lobby(this);
             while(isActive()){
-                send("Next Input");
+                asyncSend("Next Input");
                 read = in.nextLine();
                 notify(read);
             }

@@ -56,7 +56,16 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         catch (Error e){
             System.out.println("INPUT ERROR");
         }
-        if (model.getCurrentState() instanceof GameStart){
+        if (model.getCurrentState() instanceof Power){
+            GameChoice choice;
+            if(inputs[0].toLowerCase().compareTo("@") == 0) {
+                choice = new GameChoice(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2]), connection.getID(), this);
+                choice.activePower();
+            }
+            else  choice = new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]), connection.getID(), this);
+            notify(choice);
+        }
+        else if (model.getCurrentState() instanceof GameStart){
             String[] stdInputs = new String[inputs.length];
             for(int i=0; i<inputs.length; i++){
                 stdInputs[i] = inputs[i].substring(0, 1).toUpperCase() + inputs[i].substring(1).toLowerCase();
@@ -103,7 +112,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
     }
 
     public void showMessage(String message){
-        connection.asyncSend(message);
+        connection.send(message);
     }
 
     public void showError(String error){
@@ -118,6 +127,6 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
     @Override
     public void update(Model model){
         this.currentState = model.getCurrentState();
-        connection.asyncSend(model);
+        connection.send(model);
     }
 }

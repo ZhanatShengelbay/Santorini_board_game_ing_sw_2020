@@ -1,12 +1,16 @@
 package it.polimi.ingsw.utility;
 
+import java.io.Serializable;
+
 /**
  * Class describes how the Coordinate is used
  * @author CG51
  * @version 0.1
  */
 
-public class Coordinate {
+public class Coordinate implements Serializable {
+
+    private static final long serialVersionUID = 20L;
     /**
      * Instance variables, x - abscissa, y - ordinate, both hold integer values
      */

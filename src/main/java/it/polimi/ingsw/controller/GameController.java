@@ -24,6 +24,8 @@ public class GameController implements Controller {
         this.currentPlayer = model.getCurrentPlayer();
         if(message.getPlayer() == currentPlayer.getPlayerID()){
             handler(message);
+            System.out.println("CURRENT PLAYER: " + model.getCurrentPlayer().getPlayerID());
+            System.out.println("CURRENT STATE: " + model.getCurrentState().getClass().getName());
         }
         else message.getView().showError("Not your turn");
     }
@@ -48,8 +50,6 @@ public class GameController implements Controller {
             e.printStackTrace();
             message.getView().showError("Illegal argument");
         }
-
-
     }
 
 

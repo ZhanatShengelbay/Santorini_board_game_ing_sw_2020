@@ -60,8 +60,10 @@ public class Artemis extends Player {
                 nextState = new Build();
                 togglePower();
             } else nextState = new Power();
-        else if (currentState instanceof Build)
-            nextState = new End();
+        else if (currentState instanceof Build){
+            nextState = new Select();
+            model.nextPlayer();
+        }
         model.setCurrentState(nextState);
     }
 
@@ -79,7 +81,7 @@ public class Artemis extends Player {
             model.setCurrentState(new Move());
             Coordinate from = model.getCurrentWorker();
             setValidCoordinate(new Checks(model, from).isNotWorker().isNotDome().isRisible().remove(this.from));
-            if (containsValidCoordinate(destination)) {
+            if (containsInValidCoordinate(destination)) {
 
                 moveWorker(model, destination);
                 if (winCondition(model, from, destination)) model.setCurrentState(new Win());
@@ -92,7 +94,7 @@ public class Artemis extends Player {
 
 
         } else {
-            model.setCurrentState(new Move());
+            model.setCurrentState(new Build());
             return makeBuild(model, destination);
         }
 

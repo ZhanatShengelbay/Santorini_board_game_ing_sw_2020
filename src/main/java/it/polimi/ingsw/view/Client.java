@@ -65,10 +65,11 @@ public class Client {
                 try {
                     while (isActive()) {
                         String inputLine = stdin.nextLine();
-                        if(inputLine != null){
+                        if(!inputLine.isEmpty()){
                             socketOut.println(inputLine);
                             socketOut.flush();
                         }
+                        else System.out.println("Can't send empty strings");
                     }
                 }catch(Exception e){
                     setActive(false);

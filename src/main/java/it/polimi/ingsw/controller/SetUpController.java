@@ -28,13 +28,17 @@ public class SetUpController implements Controller {
         System.out.println("STARTING PLAYER: " + players.get(current_player) + " " + current_player);
     }
 
+    public void addPlayer(String player){
+        players.add(player);
+        numOfPlayerToCreate++;
+    }
+
     public void handle(PlayerChoice message) throws Error{
 
             if (init){
                 if(((SetUpChoice)message).getInputs().length == 3){
                     for(int i=0; i < ((SetUpChoice)message).getInputs().length; i++){
                         gods.add(i,((SetUpChoice)message).getInputs()[i]);
-                        //error handler
                     }
                     init=false;
                 }
@@ -44,12 +48,18 @@ public class SetUpController implements Controller {
                 }
             }
             else {
-                //WIP
+                if(model.getNumOfPlayers() != 0){
+                    for(int i = 0; i < model.getNumOfPlayers(); i++){
+                        if(((SetUpChoice)message).getInputs()[0].compareTo(model.getPlayer(i).getClass().getSimpleName()) == 0){
+                            message.getView().showError("God already selected");
+                            throw new Error();
+                        }
+                    }
+                }
                 if(gods.contains(((SetUpChoice)message).getInputs()[0])){
                     model.createPlayer(((SetUpChoice)message).getInputs()[0], players.get(current_player));
                     if(nextController == null)
                         this.nextController= new GameController(model);
-                //error handler
                     message.getView().removeObserver(this);
                     message.getView().addObserver(nextController);
                     numOfPlayerToCreate--;

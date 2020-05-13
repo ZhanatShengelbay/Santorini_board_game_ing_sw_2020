@@ -54,7 +54,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
             checkInput(inputs);
         }
         catch (Error e){
-            System.out.println("INPUT ERROR");
+            return;
         }
         if (model.getCurrentState() instanceof Power){
             GameChoice choice;
@@ -76,8 +76,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
             notify(new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]),connection.getID(), this));
         }
     }
-
-    // Better to substitute Strings with errors objects, even custom ones
+    // include error strings in error object and then show it in client?
     private void checkInput(String[] inputs) throws Error{
         boolean godFound;
         if (model.getCurrentState() instanceof GameStart){
@@ -94,21 +93,41 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
                 }
             }
         }
-        else if(model.getCurrentState() instanceof Power){
-
-        }
         else{
-            if(inputs.length > 2){
-                showError("Expected 2 arguments, received " + inputs.length);
-                throw new Error();
-            }
-            else {
-                if(Integer.parseInt(inputs[0]) > 5 || Integer.parseInt(inputs[0]) < 0 || Integer.parseInt(inputs[1]) > 5 || Integer.parseInt(inputs[1]) < 0){
-                    showError("Coordinates not valid");
+            if(inputs.length == 3){
+                if(model.getCurrentState() instanceof Power){
+                    if(inputs[0].compareTo("@") != 0){
+                        showError("Need @ symbol to activate power");
+                        throw new Error();
+                    }
+                    if(!checkInputCoordinates(inputs[1], inputs[2])){
+                        showError("Wrong coordinates");
+                        throw new Error();
+                    }
+                }
+                else{
+                    showError("Wrong number of arguments");
                     throw new Error();
                 }
             }
+            else if(inputs.length == 2){
+                if(!checkInputCoordinates(inputs[0], inputs[1])){
+                    showError("Wrong coordinates");
+                    throw new Error();
+                }
+            }
+            else{
+                showError("Wrong number of arguments");
+                throw new Error();
+            }
         }
+    }
+
+    public boolean checkInputCoordinates(String c1, String c2){
+        if(Integer.parseInt(c1) > 5 || Integer.parseInt(c1) < 0 || Integer.parseInt(c2) > 5 || Integer.parseInt(c2) < 0) {
+            return false;
+        }
+        else return true;
     }
 
     public void showMessage(String message){

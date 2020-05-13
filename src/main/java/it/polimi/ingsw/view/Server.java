@@ -43,7 +43,7 @@ public class Server {
         Model model = new Model();
         RemoteView player1view = new RemoteView(c1, model);
         RemoteView player2view = new RemoteView(c2, model);
-        Controller controller = new SetUpController(model, players);
+        SetUpController controller = new SetUpController(model, players);
         model.addObserver(player1view);
         model.addObserver(player2view);
         player1view.addObserver(controller);
@@ -51,10 +51,10 @@ public class Server {
 
         if(connectionList.size()==3) {
             Connection c3 = connectionList.get(2);
-            players.add(c3.getID());
             RemoteView player3view = new RemoteView(c3, model);
             model.addObserver(player3view);
             player3view.addObserver(controller);
+            controller.addPlayer(c3.getID());
         }
     }
 

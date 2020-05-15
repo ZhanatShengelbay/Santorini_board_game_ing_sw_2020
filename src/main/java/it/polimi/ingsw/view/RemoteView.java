@@ -56,6 +56,10 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         catch (Error e){
             return;
         }
+        catch (Exception ex){
+            showError("Coordinates need to be numbers");
+            return;
+        }
         if (model.getCurrentState() instanceof Power){
             GameChoice choice;
             if(inputs[0].toLowerCase().compareTo("@") == 0) {
@@ -77,7 +81,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         }
     }
     // include error strings in error object and then show it in client?
-    private void checkInput(String[] inputs) throws Error{
+    private void checkInput(String[] inputs) throws Error, Exception{
         boolean godFound;
         if (model.getCurrentState() instanceof GameStart){
             for (String input : inputs){
@@ -123,7 +127,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         }
     }
 
-    public boolean checkInputCoordinates(String c1, String c2){
+    public boolean checkInputCoordinates(String c1, String c2) throws Exception{
         if(Integer.parseInt(c1) > 5 || Integer.parseInt(c1) < 0 || Integer.parseInt(c2) > 5 || Integer.parseInt(c2) < 0) {
             return false;
         }

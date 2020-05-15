@@ -37,7 +37,7 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if (inputObject != null){
-                            if(inputObject instanceof String){
+                            if(inputObject instanceof String && !((String)inputObject).isEmpty()){
                                 System.out.println((String)inputObject);
                             } else if (inputObject instanceof Model){
                                 ((Model)inputObject).getGrid().print();
@@ -65,7 +65,7 @@ public class Client {
                 try {
                     while (isActive()) {
                         String inputLine = stdin.nextLine();
-                        if(!inputLine.isEmpty()){
+                        if(!inputLine.replace(" ", "").isEmpty()){
                             socketOut.println(inputLine);
                             socketOut.flush();
                         }

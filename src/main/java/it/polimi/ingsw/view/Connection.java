@@ -76,12 +76,27 @@ public class Connection extends Subject<String> implements Runnable {
     public void run() {
         try{
             String read;
+            String[] splittedInput;
             in = new Scanner(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
             send("Welcome! What's your name?");
-            this.name = in.nextLine();
+            while(true){
+                read = in.nextLine();
+                if(read.length() < 20) break;
+                else send("Name too long, max 20 characters");
+            }
+            this.name = read;
             send("Choose number of player");
-            this.numOfPlayers = Integer.parseInt(in.nextLine());
+            while(true){
+                read = in.nextLine();
+                splittedInput = read.split(" ");
+                if(splittedInput.length == 1){
+                    if(splittedInput[0].compareTo("2") == 0 || splittedInput[0].compareTo("3") == 0) break;
+                    else send("Can select only 2 or 3 players");
+                }
+                else send("Only one argument required");
+            }
+            this.numOfPlayers = Integer.parseInt(read);
             server.lobby(this);
             while(isActive()){
                 asyncSend("Next Input");

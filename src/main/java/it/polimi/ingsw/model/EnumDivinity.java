@@ -52,5 +52,10 @@ public enum EnumDivinity {
     /**
      * @see it.polimi.ingsw.model.Ares
      */
-    ARES
+    ARES,
+    /**
+     * @see it.polimi.ingsw.model.Zeus
+     */
+    Zeus
 }
+

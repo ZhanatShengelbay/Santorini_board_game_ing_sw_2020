@@ -115,6 +115,11 @@ public class Checks {
         return this;
 
     }
+    public Checks add(Coordinate additionalValidCoordinate){
+        result.add(destinations.contains(additionalValidCoordinate));
+        destinations.add(additionalValidCoordinate);
+        return this;
+    }
 
     /**
      *  getter method to access the result array, verifies the destinations with accessible set of destinations,

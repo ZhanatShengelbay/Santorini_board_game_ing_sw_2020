@@ -97,6 +97,21 @@ public class Tile {
 
     }
 
-
+    public Tile reduceBlock() throws IllegalStateException {
+        switch (block) {
+            case THIRD:
+                this.block = TypeBlock.SECOND;
+                break;
+            case SECOND:
+                this.block = TypeBlock.FIRST;
+                break;
+            case FIRST:
+                this.block = TypeBlock.FLOOR;
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+        return this;
+    }
 
 }

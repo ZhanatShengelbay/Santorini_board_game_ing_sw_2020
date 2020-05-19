@@ -4,6 +4,9 @@ package it.polimi.ingsw.model.State;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
+/**
+ * Class name is self-explained, it has the following also self-explained methods:
+ */
 public class Move implements State {
 
 

@@ -6,6 +6,14 @@ import it.polimi.ingsw.model.State.Win;
 import it.polimi.ingsw.utility.Cardinal;
 import it.polimi.ingsw.utility.Coordinate;
 
+/**
+ * Class describes the turn of the player who has the Minotaur's power, Bull-headed Monster.
+ * The player holding Minotaur while moving, may move into the space of opponent's workers,
+ * If the opponent's worker can be forced one space straight backwards to an unoccupied space at any level.
+ * Class has the following methods:
+ * @author CG51
+ * @version 0.1
+ */
 public class Minotaur extends Player {
     /**
      * @param playerID

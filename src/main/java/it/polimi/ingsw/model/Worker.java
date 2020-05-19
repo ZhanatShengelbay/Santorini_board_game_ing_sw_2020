@@ -46,4 +46,9 @@ public class Worker {
     }
 
 
+    public int getNum(){
+        return num;
+    }
+
+
 }

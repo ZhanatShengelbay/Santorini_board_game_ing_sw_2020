@@ -5,7 +5,7 @@ import it.polimi.ingsw.utility.Coordinate;
 
 /**
  * Class contains 2 methods: handle() to manage the particular input and
- * second to send a message from Controller to View. This way View knows if it is her/his turn or not
+ * the second one, is used to send a message from Controller to View. This way View knows if it is her/his turn or not
  * @author CG51
  * @version 0.1
  */

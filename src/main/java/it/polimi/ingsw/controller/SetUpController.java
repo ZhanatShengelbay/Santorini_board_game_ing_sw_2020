@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.playerChoice.SetUpChoice;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * In this class the beginning of the game is described.
+ */
 public class SetUpController implements Controller {
 
     Model model;
@@ -28,6 +31,11 @@ public class SetUpController implements Controller {
         System.out.println("STARTING PLAYER: " + players.get(current_player) + " " + current_player);
     }
 
+    /**
+     *
+     * @param message
+     * @throws Error
+     */
     public void handle(PlayerChoice message) throws Error{
 
             if (init){

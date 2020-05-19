@@ -4,8 +4,17 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.util.List;
 
+/**
+ * Class is used for players if their God has an effect
+ * such as not allowing opponent to move up or should move to neighboring space (Athena, Aphrodite).
+ * This class inherits all features of the Player and adds specified effects, these effects are exploited in appropriate God classes
+ * @author CG51
+ * @version 0.1
+ */
 public abstract class PlayerWithGroundEffect extends Player{
+
     /**
+     * Constructor for the players owning groud effect
      * @param playerID
      */
     public PlayerWithGroundEffect( String playerID) {
@@ -13,7 +22,7 @@ public abstract class PlayerWithGroundEffect extends Player{
     }
 
     /**
-     * adds affect to model
+     * adds effect to the model
      * @param model
      */
     public void addEffect(Model model) {
@@ -25,7 +34,7 @@ public abstract class PlayerWithGroundEffect extends Player{
      * @param model
      * @param from starting point of tile
      * @param destination ending point of tile
-     * @return
+     * @return true or false
      */
     abstract  public boolean respectEffect(Model model, Coordinate destination, Coordinate from);
 }

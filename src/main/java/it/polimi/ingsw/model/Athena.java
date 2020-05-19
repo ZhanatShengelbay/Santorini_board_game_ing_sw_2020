@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
 /**
- *  power of Athena is described in this class. if player owns the Athena, if s/he moved up any of her/his workers,
- *  on opponent's turn opponent can NOT move up
+ *  Class describes the power of Athena is described in this class. if player owns the Athena, if s/he moved up any of her/his workers,
+ *  on opponent's turn opponent can NOT move up, it is carried out through an abstract class that is extended
  *  @author CG51
  *  @version 0.1
  */
@@ -17,7 +17,6 @@ public class Athena extends PlayerWithGroundEffect {
 
     /**
      * Constructor is used to initialize the object.
-     *
      * @param playerID players name
      */
     public Athena(String playerID) {
@@ -40,7 +39,7 @@ public class Athena extends PlayerWithGroundEffect {
     }
 
     /**
-     * Method is overridden to active the ground effect if player moved UP
+     * Method is overridden to activate the ground effect if player moved UP
      * @param destination The input choice
      * @param model The model where the movement happened
      * @return
@@ -54,14 +53,11 @@ public class Athena extends PlayerWithGroundEffect {
         return result;
     }
 
-    /**
-     * method defines the behavior of Athena
-     * @param model sets new current State
-     */
+
 
 
     /**
-     * Method throws exception according to the power of Athena, in case he opponent tries to move up
+     * Method throws exception according to the power of Athena when opponent tries to move up
      * @param model
      * @param destination
      * @return

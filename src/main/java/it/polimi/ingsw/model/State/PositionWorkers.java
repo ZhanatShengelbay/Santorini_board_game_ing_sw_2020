@@ -15,10 +15,19 @@ public class PositionWorkers implements State {
 
     int numOfWorkerToBePlaced;
 
+    /**
+     * Class constructor indicating that each player has exactly 2 workers
+     */
     public PositionWorkers() {
         this.numOfWorkerToBePlaced = 2;
     }
 
+    /**
+     *
+     * @param choice
+     * @param model
+     * @return
+     */
     @Override
     public boolean handle(Coordinate choice, Model model) {
         boolean result = model.getCurrentPlayer().makeMovement(model,choice);

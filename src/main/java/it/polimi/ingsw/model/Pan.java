@@ -7,6 +7,11 @@ import java.util.List;
 
 /**
  * This class describes one of gods - Pan's power during the game;
+ * Its power makes the player holding Pan to be able to win, in addition to
+ * the normal win condition - moving up from the 2nd level to 3rd,
+ * also if one of the Pan's worker moves down 2 or more levels
+ * @author CG51
+ * @version 0.1
  */
 public class Pan extends Player {
 

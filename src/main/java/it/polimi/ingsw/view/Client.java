@@ -1,20 +1,22 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Grid;
-import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.utility.Observer;
+import it.polimi.ingsw.utility.Subject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
-public class Client {
+public class Client extends Subject<Object> implements Observer<String>, Runnable {
 
     private String ip;
     private int port;
     private boolean active = true;
+    Socket socket;
+    ObjectInputStream socketIn;
+    PrintWriter socketOut;
+
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -29,6 +31,17 @@ public class Client {
         this.active = active;
     }
 
+    public synchronized void closeSocket(){
+        try {
+            setActive(false);
+            socketIn.close();
+            socketOut.close();
+            socket.close();
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -37,20 +50,12 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if (inputObject != null){
-                            if(inputObject instanceof String && !((String)inputObject).isEmpty()){
-                                System.out.println((String)inputObject);
-                            } else if (inputObject instanceof Model){
-                                ((Model)inputObject).getGrid().print();
-                            } else {
-                                throw new IllegalArgumentException();
-                            }
+                            Client.this.notify(inputObject);
                         }
                     }
                 } catch (Exception e){
                     e.printStackTrace();
-                    setActive(false);
-                } catch (Error e){
-                    e.printStackTrace();
+                    closeSocket();
                 }
             }
         });
@@ -58,47 +63,34 @@ public class Client {
         return t;
     }
 
-    public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isActive()) {
-                        String inputLine = stdin.nextLine();
-                        if(!inputLine.replace(" ", "").isEmpty()){
-                            socketOut.println(inputLine);
-                            socketOut.flush();
-                        }
-                        else System.out.println("Can't send empty strings");
-                    }
-                }catch(Exception e){
-                    setActive(false);
-                }
-            }
-        });
-        t.start();
-        return t;
-    }
-
-    public void run() throws IOException {
-        Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
-        ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-        Scanner stdin = new Scanner(System.in);
+    @Override
+    public void run() {
         try{
+            socket = new Socket(ip, port);
+            System.out.println("Connection established");
+            socketIn = new ObjectInputStream(socket.getInputStream());
+            socketOut = new PrintWriter(socket.getOutputStream());
             Thread t0 = asyncReadFromSocket(socketIn);
-            Thread t1 = asyncWriteToSocket(stdin, socketOut);
             t0.join();
-            t1.join();
-        } catch(NoSuchElementException | InterruptedException e){
+        } catch (Exception ex){
             System.out.println("Connection closed from the client side");
         } finally {
-            stdin.close();
-            socketIn.close();
-            socketOut.close();
-            socket.close();
+            closeSocket();
         }
     }
 
+    @Override
+    public void update(String message) {
+        if(message.compareTo("quit") == 0){
+            System.out.println("CLIENT CLOSING");
+            closeSocket();
+        }
+        try{
+            socketOut.println(message);
+            socketOut.flush();
+        }
+        catch(Exception e){
+            closeSocket();
+        }
+    }
 }

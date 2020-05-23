@@ -16,8 +16,6 @@ public class Server {
     private static final int PORT= 12345;
     private ServerSocket serverSocket;
 
-    private int numOfPlayers;
-
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
     private List<Connection> connections = new ArrayList<>();

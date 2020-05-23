@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.utility.Subject;
 
 import java.io.IOException;
@@ -8,32 +7,22 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client extends Subject<Object> implements Observer<String>, Runnable {
+public class Client extends Subject<Object> implements Runnable {
 
     private String ip;
     private int port;
-    private boolean active = true;
     Socket socket;
     ObjectInputStream socketIn;
     PrintWriter socketOut;
-
+    Thread t0;
 
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
 
-    public synchronized boolean isActive(){
-        return active;
-    }
-
-    public synchronized void setActive(boolean active){
-        this.active = active;
-    }
-
     public synchronized void closeSocket(){
         try {
-            setActive(false);
             socketIn.close();
             socketOut.close();
             socket.close();
@@ -42,12 +31,25 @@ public class Client extends Subject<Object> implements Observer<String>, Runnabl
         }
     }
 
+    public void send(String message){
+        if(message.toUpperCase().compareTo("QUIT") == 0){
+            t0.stop();
+        }
+        try{
+            socketOut.println(message);
+            socketOut.flush();
+        }
+        catch(Exception e){
+            t0.stop();
+        }
+    }
+
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (isActive()) {
+                    while (true) {
                         Object inputObject = socketIn.readObject();
                         if (inputObject != null){
                             Client.this.notify(inputObject);
@@ -55,7 +57,6 @@ public class Client extends Subject<Object> implements Observer<String>, Runnabl
                     }
                 } catch (Exception e){
                     e.printStackTrace();
-                    closeSocket();
                 }
             }
         });
@@ -70,27 +71,11 @@ public class Client extends Subject<Object> implements Observer<String>, Runnabl
             System.out.println("Connection established");
             socketIn = new ObjectInputStream(socket.getInputStream());
             socketOut = new PrintWriter(socket.getOutputStream());
-            Thread t0 = asyncReadFromSocket(socketIn);
+            t0 = asyncReadFromSocket(socketIn);
             t0.join();
+            closeSocket();
         } catch (Exception ex){
             System.out.println("Connection closed from the client side");
-        } finally {
-            closeSocket();
-        }
-    }
-
-    @Override
-    public void update(String message) {
-        if(message.compareTo("quit") == 0){
-            System.out.println("CLIENT CLOSING");
-            closeSocket();
-        }
-        try{
-            socketOut.println(message);
-            socketOut.flush();
-        }
-        catch(Exception e){
-            closeSocket();
         }
     }
 }

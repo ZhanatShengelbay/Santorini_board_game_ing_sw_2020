@@ -4,7 +4,6 @@ import it.polimi.ingsw.utility.Subject;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -43,15 +42,6 @@ public class Connection extends Subject<String> implements Runnable {
         } catch(IOException e){
             System.err.println(e.getMessage());
         }
-    }
-
-    public void asyncSend(final Object message){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                send(message);
-            }
-        }).start();
     }
 
     public synchronized void closeConnection(){
@@ -99,7 +89,7 @@ public class Connection extends Subject<String> implements Runnable {
             this.numOfPlayers = Integer.parseInt(read);
             server.lobby(this);
             while(isActive()){
-                asyncSend("Next Input");
+                send("Next Input");
                 read = in.nextLine();
                 notify(read);
             }

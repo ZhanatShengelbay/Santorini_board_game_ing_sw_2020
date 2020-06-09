@@ -10,14 +10,13 @@ import java.util.List;
 
 public class SetUpController implements Controller {
 
-    Model model;
-    List<String> players;
-    int current_player;
-    List<String> gods = new ArrayList<>();
-    boolean init;
-    Controller nextController;
-    int numOfPlayerToCreate;
-
+    public Model model;
+    public List<String> players;
+    public int current_player;
+    public List<String> gods = new ArrayList<>();
+    public boolean init;
+    public Controller nextController;
+    public int numOfPlayerToCreate;
 
     public SetUpController(Model model, List<String> players){
         this.model = model;

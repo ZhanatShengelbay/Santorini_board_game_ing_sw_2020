@@ -14,6 +14,10 @@ public class GameController implements Controller {
     Model model;
     Player currentPlayer;
 
+    // For testing
+
+    public PlayerChoice lastChoice;
+
     public GameController(Model model) {
         this.model = model;
         this.currentPlayer = model.getPlayer(0);
@@ -22,7 +26,8 @@ public class GameController implements Controller {
     @Override // Add view to parameters
     public void update(PlayerChoice message) {
         this.currentPlayer = model.getCurrentPlayer();
-        if(message.getPlayer() == currentPlayer.getPlayerID()){
+        this.lastChoice = message;
+        if(currentPlayer.getPlayerID().compareTo(message.getPlayer())==0){
             handler(message);
             System.out.println("CURRENT PLAYER: " + model.getCurrentPlayer().getPlayerID());
             System.out.println("CURRENT STATE: " + model.getCurrentState().getClass().getName());
@@ -30,7 +35,7 @@ public class GameController implements Controller {
         else message.getView().showError("Not your turn");
     }
 
-    private void handler(PlayerChoice message) {
+    void handler(PlayerChoice message) {
         if(!(message instanceof GameChoice))
             return;
 

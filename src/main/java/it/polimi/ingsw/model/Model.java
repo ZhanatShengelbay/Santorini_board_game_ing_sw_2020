@@ -17,7 +17,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
     private Coordinate currentWorker;
     private State currentState;
     private List<PlayerWithGroundEffect>groundEffects;
-    private List<Player> players;
+    public List<Player> players;
     private Player currentPlayer;
 
     public Model clone(){
@@ -56,7 +56,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
         return currentWorker;
     }
 
-    protected void setCurrentWorker(Coordinate worker) {
+    public void setCurrentWorker(Coordinate worker) {
         this.currentWorker = worker;
     }
 

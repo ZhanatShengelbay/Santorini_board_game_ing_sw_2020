@@ -110,30 +110,4 @@ public class Grid  implements Serializable {
 
     }
 
-//    public void print(){
-//        for (int i=0; i<5; i++){
-//            for (int j=0; j<5; j++){
-//                if(getTile(i, j).getWorker() == null){
-//                    if(getTile(i, j).getHeight() == TypeBlock.FLOOR){
-//                        System.out.print("O");
-//                    }
-//                    else if(getTile(i, j).getHeight() == TypeBlock.FIRST){
-//                        System.out.print("1");
-//                    }
-//                    else if(getTile(i, j).getHeight() == TypeBlock.SECOND){
-//                        System.out.print("2");
-//                    }
-//                    else if(getTile(i, j).getHeight() == TypeBlock.THIRD){
-//                        System.out.print("3");
-//                    }
-//                    else if(getTile(i, j).getHeight() == TypeBlock.DOME){
-//                        System.out.print("D");
-//                    }
-//                }
-//                else System.out.print("+");
-//                if(j==4) System.out.print("\n");
-//            }
-//        }
-//    }
-
 }

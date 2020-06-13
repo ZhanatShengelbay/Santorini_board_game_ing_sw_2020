@@ -23,6 +23,6 @@ public class Build implements State, Serializable {
 
     @Override
     public String questionMessage() {
-        return null;
+        return "Choose the coordinate where you want to increase the build";
     }
 }

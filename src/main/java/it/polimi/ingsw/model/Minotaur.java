@@ -30,7 +30,7 @@ public class Minotaur extends Player {
 
         Coordinate from = model.getCurrentWorker();
         Coordinate opponentDestination= destination.shift(Cardinal.getDirection(from,destination));
-        if(!new Checks(model,destination,opponentDestination).isNotDome().isNotWorker().simpleGetResult())return false;
+        if(new Checks(model,destination,opponentDestination).isNotDome().isNotWorker().simpleGetResult())return false;
         //This block was made to avoid synergy problem with Aphrodite's power
         //Do first the movement and after check if this action is possible: if not, back to the initial condition
 

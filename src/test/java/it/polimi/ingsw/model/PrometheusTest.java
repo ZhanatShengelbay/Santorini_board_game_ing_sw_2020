@@ -26,6 +26,7 @@ public class PrometheusTest {
     @Test
     public void firstTest(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(prometheus);
         prometheus.makeSelection(model,new Coordinate(1,0));
         assertTrue(model.getCurrentState() instanceof Power);
         prometheus.togglePower();
@@ -41,6 +42,7 @@ public class PrometheusTest {
     @Test
     public void secondTest(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(prometheus);
         model.getGrid().getTile(new Coordinate(1,1)).levelUp();
 
         prometheus.makeSelection(model,new Coordinate(1,0));

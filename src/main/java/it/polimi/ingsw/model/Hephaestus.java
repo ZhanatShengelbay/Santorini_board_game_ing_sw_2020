@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
-
 /**
  * The power of god Hephaestus is described in this class.
  * The player who owns the god may build 1 additional block, but NOT DOME, on top of the first block

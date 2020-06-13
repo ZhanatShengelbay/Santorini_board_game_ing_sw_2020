@@ -36,5 +36,5 @@ public abstract class PlayerWithGroundEffect extends Player{
      * @param destination ending point of tile
      * @return true or false
      */
-    abstract  public boolean respectEffect(Model model, Coordinate destination, Coordinate from);
+    abstract  public boolean respectEffect(Model model, Coordinate from, Coordinate destination);
 }

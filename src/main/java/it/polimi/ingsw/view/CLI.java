@@ -1,6 +1,10 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.client.Graphic;
+import it.polimi.ingsw.controller.Event;
+import it.polimi.ingsw.model.EnumDivinity;
 import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utility.Observer;
 
@@ -79,7 +83,9 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
         System.out.println(string);
     }
 
-    public void handle(Model model){
+    public void handle(ModelView model){
+        if(model.getMessage()!=null)
+            handle(model.getMessage());
         for(int i=0; i < 5; i++){
             for(int j=0; j < 5; j++){
                 if(model.getGrid().getTile(i, j).getHeight() == TypeBlock.FLOOR){
@@ -100,9 +106,9 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
 
                 if(model.getGrid().getTile(i, j).getWorker() != null){
                     for(int c=0; c < model.getNumOfPlayers(); c++){
-                        if(model.getGrid().getTile(i, j).getWorker().getPlayer() == model.getPlayer(c) && c==0) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_RED;
-                        if(model.getGrid().getTile(i, j).getWorker().getPlayer() == model.getPlayer(c) && c==1) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_BLUE;
-                        if(model.getGrid().getTile(i, j).getWorker().getPlayer() == model.getPlayer(c) && c==2) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_PURPLE;
+                        if(model.getGrid().getTile(i, j).getWorker().getPlayer().getPlayerID().equals(model.getPlayer(c)) && c==0) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_RED;
+                        if(model.getGrid().getTile(i, j).getWorker().getPlayer().getPlayerID().equals(model.getPlayer(c)) && c==1) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_BLUE;
+                        if(model.getGrid().getTile(i, j).getWorker().getPlayer().getPlayerID().equals(model.getPlayer(c)) && c==2) board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + ANSI_PURPLE;
                     }
                     board[xFromGridToBoard(i)][yFromGridToBoard(j)] = board[xFromGridToBoard(i)][yFromGridToBoard(j)] + "&";
                 }
@@ -114,6 +120,21 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
         printBoard();
     }
 
+    public void handle(Event event){
+        switch (event){
+            case SETUP:
+                System.out.println("Select gods for you and your opponent from this list:\n");
+                for(EnumDivinity s : EnumDivinity.values()){
+                    System.out.println(" "+s.name()+"\n");
+                }
+                break;
+
+            case GODCHOICE:
+                System.out.println("Select gods from this list:\n");
+                break;
+
+        }
+    }
     public Thread asyncReadFromConsole(){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -153,6 +174,8 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
     @Override
     public void update(Object message) {
         if(message instanceof String) handle((String)message);
-        else if(message instanceof Model) handle((Model)message);
+        else if(message instanceof ModelView) handle((ModelView)message);
+        else if(message instanceof Event)handle((Event)message);
     }
+
 }

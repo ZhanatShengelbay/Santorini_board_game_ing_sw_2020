@@ -1,7 +1,9 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Event;
 import it.polimi.ingsw.model.EnumDivinity;
 import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.model.playerChoice.GameChoice;
 import it.polimi.ingsw.model.playerChoice.PlayerChoice;
@@ -11,13 +13,13 @@ import it.polimi.ingsw.utility.Subject;
 
 import java.io.*;
 
-public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>{
+public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelView>{
 
     ByteArrayOutputStream os;
     ObjectOutputStream out;
     private Connection connection;
-    State currentState;
-    Model model;
+    //State currentState;
+    private Model model;
 
     private class MessageReceiver implements Observer<String> {
 
@@ -138,6 +140,11 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
         connection.send(message);
     }
 
+    public void showEvent(Event event){
+        connection.send(event);
+
+    }
+
     public void showError(String error){
         showMessage(error);
         //something else
@@ -148,8 +155,12 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<Model>
     }
 
     @Override
-    public void update(Model model){
-        this.currentState = model.getCurrentState();
+    public void update(ModelView model){
         connection.send(model);
+        if(model.getState().equals("select")&&model.getCurrentPlayer().equals(getPlayerID()))
+            showMessage("Select the worker you want to move\n");
+        if(model.getState().equals("positionworkers")&&model.getCurrentPlayer().equals(getPlayerID()))
+            showMessage("Place your worker\n");
+
     }
 }

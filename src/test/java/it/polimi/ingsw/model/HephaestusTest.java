@@ -36,6 +36,7 @@ public class HephaestusTest {
     @Test
     public void NotDomeSecondBuildTest(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(hephaestus);
         hephaestus.makeSelection(model, new Coordinate(4,0));
         Coordinate destination = new Coordinate(3,1);
         assertTrue(model.getCurrentState() instanceof Move);
@@ -56,6 +57,7 @@ public class HephaestusTest {
     @Test
     public void hephaestusPowerTest(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(hephaestus);
         hephaestus.makeSelection(model, new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,0);
         assertTrue(model.getCurrentState() instanceof Move);
@@ -77,6 +79,7 @@ public class HephaestusTest {
     @Test
     public void differentDestinationTest(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(hephaestus);
         hephaestus.makeSelection(model, new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,0);
         assertTrue(model.getCurrentState() instanceof Move);

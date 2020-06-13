@@ -21,7 +21,8 @@ public abstract class Player implements Serializable{
     private List<Worker> workers;
     private String playerID;
     private List<Coordinate> validCoordinate;  //is always calculated in the previous action
-    boolean power=false;
+    private boolean power=false;
+    private String classname;
 
     /**
      *
@@ -33,6 +34,16 @@ public abstract class Player implements Serializable{
         this.workers= new ArrayList<>();
 
     }
+
+    public Player (String playerID,String classname) {
+        this.classname=classname;
+        this.playerID = playerID;
+        this.workers= new ArrayList<>();
+
+    }
+
+
+
 
     public Worker addWorker(){
         if(workers.size()<2){
@@ -183,8 +194,7 @@ public abstract class Player implements Serializable{
             nextState = new Build();
 
         else if (currentState instanceof Build){
-            nextState = new Select();
-            model.nextPlayer();
+            nextState = new End();
         }
 
         model.setCurrentState(nextState);

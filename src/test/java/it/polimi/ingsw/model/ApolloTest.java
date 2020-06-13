@@ -34,6 +34,7 @@ public class ApolloTest {
     @Test
     public void TestPower(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(apollo);
         apollo.makeSelection(model,new Coordinate(2,0));
         Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
@@ -43,7 +44,7 @@ public class ApolloTest {
         assertEquals("opponent's worker is now in the selection tile",opponent.getWorker(0),model.getGrid().getTile(new Coordinate(2,0)).getWorker());
         assertTrue(model.getCurrentState() instanceof Build);
         apollo.makeBuild(model,new Coordinate(2,2));
-        assertTrue(model.getCurrentState() instanceof End);
+
 
 
     }

@@ -35,33 +35,29 @@ public class DemeterTest {
     public void twiceBuildingTest(){
 
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(demeter);
         demeter.makeSelection(model,new Coordinate(1,1));
         Coordinate destination = new Coordinate(2,0);
         assertTrue(model.getCurrentState() instanceof Move);
         demeter.makeMovement(model, destination);
         assertEquals("demeter should move", demeter, model.getGrid().getTile(destination).getWorker().getPlayer());
 
-        assertTrue(model.getCurrentState() instanceof Build);
+        assertTrue(model.getCurrentState() instanceof Power);
         Coordinate bldPlace = new Coordinate(2,1);
         int bld = model.getGrid().getTile(bldPlace).getHeight().ordinal();
-        demeter.makeBuild(model,bldPlace);
+        demeter.togglePower();
+        demeter.makePower(model,bldPlace);
         assertEquals(bld+1, model.getGrid().getTile(bldPlace).getHeight().ordinal());
-        assertTrue( model.getCurrentState() instanceof Power);
+        assertTrue( model.getCurrentState() instanceof Build);
         int newBld = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
 
-        demeter.makePower(model,new Coordinate(5,5));
-        assertTrue( model.getCurrentState() instanceof End);
+        assertFalse(demeter.makeBuild(model,new Coordinate(2,1)));
+        assertTrue( model.getCurrentState() instanceof Build);
         //this action is possible
-        model.setCurrentState(new Power());
-        demeter.togglePower();
-        Coordinate newDest=(new Coordinate(2,1));
-        boolean result = demeter.makePower(model, newDest);
-        assertFalse(result);
-        assertEquals(newBld, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
-        assertTrue(model.getCurrentState() instanceof Power);
+        Coordinate newDest;
         newDest=(new Coordinate(1,1));
-        demeter.makePower(model, newDest);
+        demeter.makeBuild(model, newDest);
         assertEquals(newBld+1, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
 

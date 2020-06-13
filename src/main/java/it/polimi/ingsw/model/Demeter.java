@@ -16,6 +16,7 @@ public class Demeter extends Player {
      */
 
     private Coordinate firstBuild;
+    boolean doubleBuild;
 
 
     /**
@@ -35,9 +36,18 @@ public class Demeter extends Player {
      */
     @Override
     public boolean makeBuild(Model model, Coordinate destination) {
-        boolean result = super.makeBuild(model, destination);
-        if (result) firstBuild = destination;
-        return result;
+        Checks tmp =new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome();
+        if(doubleBuild)
+            tmp.remove(firstBuild);
+        setValidCoordinate(tmp);
+        if (containsInValidCoordinate(destination)) {
+            model.getGrid().getTile(destination).levelUp();
+            nextPhase(model);
+            doubleBuild=false;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -53,13 +63,9 @@ public class Demeter extends Player {
         if (currentState instanceof Select)
             nextState = new Move();
         else if (currentState instanceof Move)
-            nextState = new Build();
+            nextState = new Power();
         else if (currentState instanceof Build) {
-            if (isActive()) {
                 nextState = new End();
-                togglePower();
-            } else
-                nextState = new Power();
         } else
             nextState = new End();
         model.setCurrentState(nextState);
@@ -75,11 +81,12 @@ public class Demeter extends Player {
      * @param model
      * @param destination
      */
-    @Override
+    /*@Override
     public boolean makePower(Model model, Coordinate destination) {
 
         if (isActive()) {
             model.setCurrentState(new Build());
+
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome().remove(this.firstBuild));
             if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
@@ -96,5 +103,31 @@ public class Demeter extends Player {
         }
 
 
+    }
+      */
+    @Override
+    public boolean makePower(Model model, Coordinate destination){
+        if(isActive()){
+            model.setCurrentState(new Build());
+            setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
+            if (containsInValidCoordinate(destination)) {
+                doubleBuild=true;
+                model.getGrid().getTile(destination).levelUp();
+                firstBuild=destination;
+                return true;
+            } else {
+                model.setCurrentState(new Power());
+                return false;
+            }
+        }
+        else{
+            model.setCurrentState(new Build());
+            boolean result=makeBuild(model,destination);
+            if(result){
+                model.setCurrentState(new End());
+            }
+            return result;
+
+        }
     }
 }

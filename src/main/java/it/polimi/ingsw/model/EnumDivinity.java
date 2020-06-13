@@ -49,6 +49,8 @@ public enum EnumDivinity {
      * @see it.polimi.ingsw.model.Aphrodite
      */
     APHRODITE,
+    LIMUS,
+    TRITON,
     /**
      * @see it.polimi.ingsw.model.Ares
      */
@@ -56,6 +58,6 @@ public enum EnumDivinity {
     /**
      * @see it.polimi.ingsw.model.Zeus
      */
-    Zeus
+    ZEUS;
 }
 

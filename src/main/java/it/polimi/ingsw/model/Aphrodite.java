@@ -22,9 +22,19 @@ public class Aphrodite extends PlayerWithGroundEffect {
      * @param model to be added an effect
      */
 
-    public Aphrodite(String playerID, Model model) {
+    public Aphrodite(String playerID) {
         super(playerID);
-        addEffect(model);
+
+    }
+
+
+
+    @Override
+    public boolean positionWorker(Model model, Coordinate destination) {
+        //Add in the ground effect this player
+        if(!model.getGroundEffects().contains(this))
+            model.getGroundEffects().add(this);
+        return super.positionWorker(model, destination);
     }
 
     /**

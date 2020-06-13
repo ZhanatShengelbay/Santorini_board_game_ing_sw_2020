@@ -71,7 +71,7 @@ public class AresTest {
 
         int bfrHght = model.getGrid().getTile(new Coordinate(3,3)).getHeight().ordinal();
         assertTrue(model.getCurrentState() instanceof Power);
-
+        ares.togglePower();
         ares.makePower(model, new Coordinate(3,3));
         int unmovedWrkNum = model.getGrid().getTile(new Coordinate(3,4)).getWorker().getNum();
         assertNotEquals("workers' nums should be different", movedWrkNum, unmovedWrkNum );

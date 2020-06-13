@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.utility.Coordinate;
 
-import java.util.List;
-
 /**
  * This class describes the rules while one of the players has Apollo god card that are different from standard case.
  * The player holding Apollo during his/her move may use the power of Apollo,

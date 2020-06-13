@@ -43,12 +43,12 @@ public class Checks {
     /**
      * overloading Checks construction to made up the valid coordinates in the tile as an array. It's instances are true boolean objects.
      * @param model current model
-     * @param from current coordinate
+     * @param coordinate current coordinate
      */
-    public Checks(Model model, Coordinate from){
+    public Checks(Model model, Coordinate coordinate){
         this.model=model;
-        this.from = from;
-        this.destinations=model.getGrid().validTileAround(from);
+        this.from = coordinate;
+        this.destinations=model.getGrid().validTileAround(coordinate);
         result=new ArrayList<>(Collections.nCopies(destinations.size(), true));
 
 
@@ -86,6 +86,16 @@ public class Checks {
                 result.set(destinations.indexOf(destination),false);
         }
 
+        return this;
+    }
+
+
+    public Checks isNotBuild(int height){
+        for(Coordinate destination : destinations) {
+
+            if (model.getGrid().getTile(destination).getHeight().ordinal()==(height))
+                result.set(destinations.indexOf(destination),false);
+        }
         return this;
     }
 
@@ -148,7 +158,7 @@ public class Checks {
 
     public boolean simpleGetResult(){
         if(result==null||result.size()>1) return false; //wrong function
-        else return result.get(0);
+        else return !result.get(0);
     }
 
 }

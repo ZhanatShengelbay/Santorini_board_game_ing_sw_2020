@@ -36,24 +36,29 @@ public class Server {
         Connection c1 = connectionList.get(0);
         Connection c2 = connectionList.get(1);
         List<String> players = new ArrayList<>();
+        List<RemoteView>views=new ArrayList<>();
         players.add(c1.getID());
         players.add(c2.getID());
         Model model = new Model();
         RemoteView player1view = new RemoteView(c1, model);
         RemoteView player2view = new RemoteView(c2, model);
-        SetUpController controller = new SetUpController(model, players);
+
         model.addObserver(player1view);
         model.addObserver(player2view);
-        player1view.addObserver(controller);
-        player2view.addObserver(controller);
+        views.add(player1view);
+        views.add(player2view);
 
         if(connectionList.size()==3) {
             Connection c3 = connectionList.get(2);
             RemoteView player3view = new RemoteView(c3, model);
             model.addObserver(player3view);
-            player3view.addObserver(controller);
-            controller.addPlayer(c3.getID());
+
+            players.add(c3.getID());
+            views.add(player3view);
         }
+        SetUpController controller = new SetUpController(model, players,views);
+
+
     }
 
     public synchronized void lobby(Connection c) throws Error{

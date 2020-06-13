@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.State.Move;
+import it.polimi.ingsw.model.State.PositionWorkers;
 import it.polimi.ingsw.model.State.Select;
 import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Before;
@@ -18,19 +19,26 @@ public class AphroditeTest {
     @Before
     public void testSetUpGrid() {
         model=new Model();
-        aphrodite =new Aphrodite("playertest", model);
-        aphrodite.addWorker();
-        aphrodite.addWorker();
+        model.createPlayer("aphrodite","player");
+        aphrodite=model.getPlayer(0);
+
         opponent=new Pan("opponent"); //normal nextPhase
         opponent.addWorker();
+        model.getPlayers().add(aphrodite);
+        model.getPlayers().add(opponent);
 
-        model.getGrid().getTile(new Coordinate(1, 0)).setWorker(aphrodite.getWorker(0));
-        model.getGrid().getTile(new Coordinate(3, 2)).setWorker(aphrodite.getWorker(1));
+        model.setCurrentPlayer(aphrodite);
+        model.setCurrentState(new PositionWorkers());
+        model.getCurrentState().handle(new Coordinate(1, 0),model);
+        model.getCurrentState().handle(new Coordinate(3, 2),model);
+
         model.getGrid().getTile(new Coordinate(2,0)).setWorker(opponent.getWorker(0));
     }
     @Test
     public void TestPower(){
+        assertTrue(aphrodite instanceof Aphrodite);
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(opponent);
         opponent.makeSelection(model,new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,1);
         assertTrue(model.getCurrentState() instanceof Move);

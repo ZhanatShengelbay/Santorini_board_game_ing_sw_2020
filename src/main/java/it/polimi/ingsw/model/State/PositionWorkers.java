@@ -37,12 +37,12 @@ public class PositionWorkers implements State, Serializable {
         if(result)
             if(numOfWorkerToBePlaced>1)numOfWorkerToBePlaced--;
             else model.nextPlayer();
-
         return result;
+
     }
 
     @Override
     public String questionMessage() {
-        return null;
+        return "";
     }
 }

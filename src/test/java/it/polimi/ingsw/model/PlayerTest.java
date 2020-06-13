@@ -50,6 +50,7 @@ public class PlayerTest {
         model = new Model();
         if(!extTest)
             player = new AbstractPlayer( "opponent");
+        model.getPlayers().add(player);
         player.positionWorker(model,new Coordinate(1,0));
         player.positionWorker(model,new Coordinate(0,1));
         assertFalse(player.positionWorker(model,new Coordinate(1,0)));
@@ -67,6 +68,7 @@ public class PlayerTest {
     @Test
     public void simpleGameRound(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(player);
         assertFalse(player.makeSelection(model,new Coordinate(1,1)));
         Coordinate selection=new Coordinate(1,0);
         assertTrue(player.makeSelection(model,selection));

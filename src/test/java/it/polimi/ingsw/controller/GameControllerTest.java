@@ -35,10 +35,10 @@ public class GameControllerTest{
         model = new Model();
         Atlas player1 = new Atlas("player1");
         Pan player2 = new Pan("player2");
-        players.add(player1);
-        players.add(player2);
-        model.players = players;
-        model.setCurrentPlayer(players.get(0));
+        model.getPlayers().add(player1);
+        model.getPlayers().add(player2);
+        //model.players = players;
+        model.setCurrentPlayer(model.getPlayer(0));
         controller = new GameController(model);
         rmView = new RemoteView[numOfPlayers];
         connection = new Connection[numOfPlayers];
@@ -117,7 +117,7 @@ public class GameControllerTest{
     @Test
     public void handleTestPower(){
         model.setCurrentState(new Power());
-        model.getGrid().getTile(1, 2).setWorker(new Worker(players.get(0), 0));
+        model.getGrid().getTile(1, 2).setWorker(new Worker(model.getPlayer(0), 0));
         model.setCurrentWorker(new Coordinate(1, 2));
         choice[0] = new GameChoice(2, 2, "player1", rmView[0]);
         ((GameChoice)choice[0]).activePower();
@@ -141,7 +141,7 @@ public class GameControllerTest{
     @Test
     public void handleTestWrongAction(){
         model.setCurrentState(new Move());
-        model.getGrid().getTile(1, 2).setWorker(new Worker(players.get(0), 0));
+        model.getGrid().getTile(1, 2).setWorker(new Worker(model.getPlayer(0), 0));
         model.setCurrentWorker(new Coordinate(1, 2));
         choice[0] = new GameChoice(3, 3, "player1", rmView[0]);
         try{

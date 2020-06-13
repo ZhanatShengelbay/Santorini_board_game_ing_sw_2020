@@ -8,12 +8,15 @@ import it.polimi.ingsw.view.Client;
 import it.polimi.ingsw.view.Connection;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.Server;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -40,13 +43,16 @@ public class SetUpControllerTest {
         choice = new PlayerChoice[10];
         players.add("player1");
         players.add("player2");
+
         model = new Model();
-        controller = new SetUpController(model, players);
+
         for(int i=0; i < numOfPlayers; i++) {
             socket[i] = new Socket();
             connection[i] = new Connection(socket[i], null);
             rmView[i] = new RemoteView(connection[i], model);
         }
+        List<RemoteView>viewlist= Arrays.asList(rmView);
+        controller = new SetUpController(model, players,viewlist);
 
 
 
@@ -56,13 +62,13 @@ public class SetUpControllerTest {
     public void UpdateTestCorrectPlayer(){
         assertTrue(controller.init);
         assertEquals(0, controller.current_player);
-        String[] inputs = {"Apollo", "Artemis", "Atlas"};
+        String[] inputs = {"Apollo", "Artemis"};
         choice[0] = new SetUpChoice(inputs, players.get(0), rmView[0]);
         controller.update(choice[0]);
         assertFalse(controller.init);
         assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
         assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+        //assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
         assertEquals(1, controller.current_player);
     }
 
@@ -70,7 +76,7 @@ public class SetUpControllerTest {
     public void UpdateTestWrongPlayer(){
         assertTrue(controller.init);
         assertEquals(0, controller.current_player);
-        String[] inputs = {"Apollo", "Artemis", "Atlas"};
+        String[] inputs = {"Apollo", "Artemis"};
         choice[0] = new SetUpChoice(inputs, players.get(1), rmView[0]);
         try{
             controller.update(choice[0]);
@@ -107,13 +113,13 @@ public class SetUpControllerTest {
         assertEquals(2, controller.numOfPlayerToCreate);
         assertTrue(controller.init);
         assertEquals(0, controller.current_player);
-        String[] inputs = {"Apollo", "Artemis", "Atlas"};
+        String[] inputs = {"Apollo", "Artemis"};
         choice[0] = new SetUpChoice(inputs, players.get(0), rmView[0]);
-        controller.handle(choice[0]);
+        controller.update(choice[0]);
         assertFalse(controller.init);
         assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
         assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+        //assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
         assertEquals(1, controller.current_player);
         assertEquals(2, controller.numOfPlayerToCreate);
     }
@@ -123,7 +129,7 @@ public class SetUpControllerTest {
         assertTrue(controller.init);
         assertEquals(2, controller.numOfPlayerToCreate);
         assertEquals(0, controller.current_player);
-        String[] inputs = {"Apollo", "Artemis"};
+        String[] inputs = {"Apollo", "Artemis","Atlas"};
         choice[0] = new SetUpChoice(inputs, players.get(0), rmView[0]);
         try{
             controller.handle(choice[0]);
@@ -155,9 +161,9 @@ public class SetUpControllerTest {
         }
         assertEquals(1, controller.model.getNumOfPlayers());
         assertEquals(0, controller.model.getPlayer(0).getClass().getSimpleName().compareTo("Apollo"));
-        assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
-        assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+        assertFalse( controller.gods.contains("Apollo"));
+        assertEquals(0, controller.gods.get(0).compareTo("Artemis"));
+
         assertEquals(0, controller.current_player);
         assertEquals(1, controller.numOfPlayerToCreate);
     }
@@ -178,7 +184,7 @@ public class SetUpControllerTest {
         assertFalse(controller.init);
         assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
         assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+       // assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
         assertEquals(1, controller.current_player);
         assertEquals(2, controller.numOfPlayerToCreate);
     }
@@ -196,9 +202,7 @@ public class SetUpControllerTest {
 
         }
         assertFalse(controller.init);
-        assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
-        assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+        assertTrue(controller.gods.isEmpty());
         assertEquals(1, controller.current_player);
         assertEquals(2, controller.model.getNumOfPlayers());
         assertEquals(0, controller.model.getPlayer(0).getClass().getSimpleName().compareTo("Apollo"));
@@ -219,9 +223,7 @@ public class SetUpControllerTest {
 
         }
         assertFalse(controller.init);
-        assertEquals(0, controller.gods.get(0).compareTo("Apollo"));
-        assertEquals(0, controller.gods.get(1).compareTo("Artemis"));
-        assertEquals(0, controller.gods.get(2).compareTo("Atlas"));
+        assertEquals(0, controller.gods.get(0).compareTo("Artemis"));
         assertEquals(0, controller.current_player);
         assertEquals(1, controller.model.getNumOfPlayers());
         assertEquals(0, controller.model.getPlayer(0).getClass().getSimpleName().compareTo("Apollo"));

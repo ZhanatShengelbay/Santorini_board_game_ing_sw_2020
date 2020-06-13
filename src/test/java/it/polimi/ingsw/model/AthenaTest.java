@@ -6,8 +6,7 @@ import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AthenaTest {
     Model model;
@@ -22,7 +21,8 @@ public class AthenaTest {
         athena.addWorker();
         opponent=new Pan("opponent"); //normal nextPhase
         opponent.addWorker();
-
+        model.getPlayers().add(athena);
+        model.getPlayers().add(opponent);
         model.getGrid().getTile(new Coordinate(1, 0)).setWorker(athena.getWorker(0));
         model.getGrid().getTile(new Coordinate(1, 1)).levelUp();
         model.getGrid().getTile(new Coordinate(1, 2)).levelUp();
@@ -33,15 +33,19 @@ public class AthenaTest {
     @Test
     public void test(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(athena);
         assertFalse(model.getGroundEffects().contains(athena));
         athena.makeSelection(model,new Coordinate(1, 0));
         athena.makeMovement(model,new Coordinate(1, 1));
         assertTrue(model.getGroundEffects().contains(athena));
         athena.makeBuild(model,new Coordinate(1, 2));
-        assertTrue(model.getCurrentState() instanceof End);
-        model.setCurrentState(new Select());
+        model.getCurrentState().handle(null,model);
+        assertTrue(model.getCurrentState() instanceof Select);
+        assertEquals(true, model.getCurrentPlayer().equals(opponent));
+
         opponent.makeSelection(model,new Coordinate(3, 1));
         assertFalse(opponent.makeMovement(model,new Coordinate(2, 1)));
+        assertTrue(opponent.makeMovement(model,new Coordinate(4, 1)));
         //i can change the player because i don t use the current player
         model.setCurrentState(new Select());
         athena.makeSelection(model,new Coordinate(1, 1));

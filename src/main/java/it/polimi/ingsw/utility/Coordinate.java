@@ -28,7 +28,7 @@ public class Coordinate implements Serializable {
         this.y = y;
     }
 
-
+    @Deprecated
     public Coordinate(Coordinate coordinate){
         this.x= coordinate.getX();
         this.y= coordinate.getY();

@@ -25,6 +25,7 @@ public class AtlasTest {
     @Test
     public void TestPower(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(atlas);
         atlas.makeSelection(model, new Coordinate(2, 0));
         Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
@@ -35,8 +36,27 @@ public class AtlasTest {
         atlas.makePower(model,destination);
         assertTrue(model.getCurrentState() instanceof End);
         assertEquals(model.getGrid().getTile(destination).getHeight().ordinal(),TypeBlock.DOME.ordinal());
-        assertTrue(atlas.isActive());
+        model.getCurrentState().handle(null,model);
+        assertFalse(atlas.isActive());
 
+
+
+    }
+
+    @Test
+    public void secondTest(){
+        model.setCurrentState(new Select());
+        model.setCurrentPlayer(atlas);
+        atlas.makeSelection(model, new Coordinate(2, 0));
+        Coordinate destination = new Coordinate(2,1);
+        assertTrue(model.getCurrentState() instanceof Move);
+        atlas.makeMovement(model, new Coordinate(3, 0));
+        assertTrue(model.getCurrentState() instanceof Power);
+        assertFalse(atlas.isActive());
+        assertEquals(model.getGrid().getTile(destination).getHeight().ordinal(),TypeBlock.FLOOR.ordinal());
+        atlas.makePower(model,destination);
+        assertTrue(model.getCurrentState() instanceof End);
+        assertEquals(model.getGrid().getTile(destination).getHeight().ordinal(),TypeBlock.FIRST.ordinal());
 
 
     }

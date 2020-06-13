@@ -46,14 +46,22 @@ public class GameController implements Controller {
         try {
             boolean result  =  model.getCurrentState().handle(((GameChoice)message).getChoice(),model);
             if(result) {
-                model.notify(model);
-                //message.getView().showMessage(model.getCurrentState().questionMessage());
+                if(model.getCurrentState() instanceof End){
+                    model.getCurrentState().handle(null,model);
+                }
+                    model.notify(model.updateState().setMessage("It's "+model.getCurrentPlayer().getPlayerID()+"'s turn."));
+                    message.getView().showMessage(model.getCurrentState().questionMessage());
+
+
             }
             else message.getView().showError("Wrong action, retry");
 
         }catch (IllegalArgumentException e){
             e.printStackTrace();
             message.getView().showError("Illegal argument");
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
         }
     }
 

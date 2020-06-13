@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.State.End;
 import it.polimi.ingsw.model.State.GameStart;
 import it.polimi.ingsw.model.State.State;
 import it.polimi.ingsw.utility.Subject;
@@ -8,25 +9,34 @@ import it.polimi.ingsw.utility.Coordinate;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Model extends Subject<Model> implements Cloneable, Serializable {
+public class Model extends Subject<ModelView> implements Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
     private Grid grid;
     private Coordinate currentWorker;
     private State currentState;
     private List<PlayerWithGroundEffect>groundEffects;
-    public List<Player> players;
+    private List<Player> players;
+    private Map<String,String> godsPlayer;
     private Player currentPlayer;
 
     public Model clone(){
         Model model = new Model();
         model.grid=this.grid;
+        model.players=this.players;
+        model.currentState=this.currentState;
+        model.godsPlayer=this.godsPlayer;
+        model.currentPlayer=this.currentPlayer;
+        model.currentWorker=this.currentWorker;
         return model;
     }
 
     public Model(){
+        this.godsPlayer=new HashMap<>();
         this.grid = new Grid();
         this.groundEffects=new ArrayList<>();
         this.players=new ArrayList<>();
@@ -76,6 +86,10 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
         return players.get(index);
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     // THE GOD NAME NEEDS TO BE THE SAME AS THE CLASS
     public void createPlayer(String god, String id){
         String godStandard = god.substring(0, 1).toUpperCase() + god.substring(1).toLowerCase();
@@ -83,6 +97,7 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
             Class [] classes = {String.class};
             Player new_player = (Player)Class.forName("it.polimi.ingsw.model." + godStandard).getDeclaredConstructor(classes).newInstance(id);
             players.add(new_player);
+            godsPlayer.put(id,god);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -92,10 +107,20 @@ public class Model extends Subject<Model> implements Cloneable, Serializable {
     }
 
     public void nextPlayer(){
+        //for test
+        if(players.size()==0)return;
         int index= players.indexOf(currentPlayer);
         if(index==players.size()-1)index=0;
         else index++;
         this.currentPlayer=players.get(index);
+    }
+
+    public Map<String, String> getGodsPlayer() {
+        return godsPlayer;
+    }
+
+    public ModelView updateState(){
+        return new ModelView(this);
     }
 }
 

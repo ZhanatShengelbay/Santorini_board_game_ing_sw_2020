@@ -25,6 +25,10 @@ public class Worker implements Serializable {
         //ONLY FOR TEST
     }
 
+    public int getNum() {
+        return num;
+    }
+
     public Worker(Player player, int num) {
         this.player = player;
         this.num = num;
@@ -49,9 +53,6 @@ public class Worker implements Serializable {
     }
 
 
-    public int getNum(){
-        return num;
-    }
 
 
 }

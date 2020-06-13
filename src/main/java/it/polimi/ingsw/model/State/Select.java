@@ -17,6 +17,6 @@ public class Select implements State, Serializable {
 
     @Override
     public String questionMessage() {
-        return null;
+        return "";
     }
 }

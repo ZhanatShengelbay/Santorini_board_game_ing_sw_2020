@@ -110,4 +110,9 @@ public class Grid  implements Serializable {
 
     }
 
+    public boolean perimeterTile(Coordinate coordinate){
+        if(!contains(coordinate)) return  false;
+        else return coordinate.getX() == 0 || coordinate.getX() == N_ROWS - 1 || coordinate.getY() == 0 || coordinate.getY() == N_COLS - 1;
+    }
+
 }

@@ -3,9 +3,15 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.Client;
 
-public class ClientApp
+import java.util.Scanner;
+
+public class ClientCliApp
 {
     public static void main(String[] args){
+        Scanner stdin= new Scanner(System.in);
+        System.out.println("Insert server ip\n");
+
+
         Client client = new Client("127.0.0.1", 12345);
         CLI cli = new CLI(client);
 

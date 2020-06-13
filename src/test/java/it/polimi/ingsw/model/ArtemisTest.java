@@ -32,6 +32,7 @@ public class ArtemisTest {
     @Test
     public void FirstMove(){
         model.setCurrentState(new Select());
+        model.setCurrentPlayer(artemis);
         Coordinate from = new Coordinate(2,0);
         artemis.makeSelection(model,(from));
         assertTrue(model.getCurrentState() instanceof Move);
@@ -47,7 +48,7 @@ public class ArtemisTest {
         int tmp= model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal();
         artemis.makeBuild(model,(new Coordinate(2,0)));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 0)).getHeight().ordinal(), tmp+1);
-        assertTrue(model.getCurrentState() instanceof End);
+        assertTrue(model.getCurrentState() instanceof Select);
 
 
 

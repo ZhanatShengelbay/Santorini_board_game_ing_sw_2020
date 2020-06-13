@@ -100,11 +100,21 @@ public class Tile implements Serializable {
 
     }
 
-    public void swapWorker(Tile t){
-        Worker wrkTmp= this.worker;
-        this.setWorker(t.getWorker());
-        t.setWorker(wrkTmp);
+    public Tile reduceBlock() throws IllegalStateException {
+        switch (block) {
+            case THIRD:
+                this.block = TypeBlock.SECOND;
+                break;
+            case SECOND:
+                this.block = TypeBlock.FIRST;
+                break;
+            case FIRST:
+                this.block = TypeBlock.FLOOR;
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+        return this;
     }
-
 
 }

@@ -22,6 +22,10 @@ public class GameChoice extends PlayerChoice {
 
     public Coordinate getChoice(){return coordinate;}
 
+    /**
+     * Method is used everytime when makePower() is called
+     * @return true or false depending on the power
+     */
     public boolean powerIsActive() {
         return power;
     }

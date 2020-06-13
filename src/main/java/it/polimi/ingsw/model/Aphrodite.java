@@ -5,10 +5,21 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.util.List;
 
+/**
+ * Class describes the power of Aphrodite, Goddess of love.
+ * Player holding the Aphrodite has an effect on opponent's move.
+ * During any move, if opponent's (any) worker starts its turn neighboring one of Aphrodite's workers,
+ * its (opponent's) last move must to be a space neighboring one of Aphrodite's workers
+ * Class has the following method to exploit described above power
+ * @author CG51
+ * @version 0.1
+ */
 public class Aphrodite extends PlayerWithGroundEffect {
 
     /**
-     * @param playerID
+     * Constructor to initialize Aphrodite object
+     * @param playerID possessing Aphrodite
+     * @param model to be added an effect
      */
 
     public Aphrodite(String playerID, Model model) {
@@ -16,11 +27,24 @@ public class Aphrodite extends PlayerWithGroundEffect {
         addEffect(model);
     }
 
+    /**
+     * Overridden to
+     * @param model
+     * @param selection
+     * @return
+     */
     @Override
     public boolean makeSelection(Model model, Coordinate selection) {
         model.getGroundEffects().remove(this);
         return super.makeSelection(model, selection);
     }
+
+    /**
+     *
+     * @param model
+     * @param destination
+     * @return
+     */
 
     @Override
     public boolean makeBuild(Model model, Coordinate destination) {
@@ -29,13 +53,20 @@ public class Aphrodite extends PlayerWithGroundEffect {
         return result;
     }
 
+    /**
+     *
+     * @param model
+     * @param from starting point of tile
+     * @param destination ending point of tile
+     * @return
+     */
     @Override
     public boolean respectEffect(Model model, Coordinate from, Coordinate destination) {
         if (model.getCurrentState() instanceof Move) {
             List<Coordinate> aroundTile = model.getGrid().validTileAround(from);
             for (Coordinate c : aroundTile) {
                 Worker wrkNearFrom = model.getGrid().getTile(c).getWorker();
-                //this trigger the searching of an aphrodite worker near the destination tile
+                //this trigger the search of an aphrodite worker near the destination tile
                 if (wrkNearFrom != null && wrkNearFrom.getPlayer().equals(this)) {
                     List<Coordinate> aroundDestination = model.getGrid().validTileAround(destination);
                     for (Coordinate d : aroundDestination) {

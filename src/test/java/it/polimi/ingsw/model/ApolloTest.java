@@ -37,10 +37,10 @@ public class ApolloTest {
         apollo.makeSelection(model,new Coordinate(2,0));
         Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        assertFalse("cannot move because is a apollo worker",apollo.makeMovement(model, new Coordinate(3,0)));
+        assertFalse("cannot move because there is a worker of apollo",apollo.makeMovement(model, new Coordinate(3,0)));
         apollo.makeMovement(model, destination);
         assertEquals("apollo should move", apollo.getWorker(0), model.getGrid().getTile(destination).getWorker());
-        assertEquals("opponent worker is now in the selection tile",opponent.getWorker(0),model.getGrid().getTile(new Coordinate(2,0)).getWorker());
+        assertEquals("opponent's worker is now in the selection tile",opponent.getWorker(0),model.getGrid().getTile(new Coordinate(2,0)).getWorker());
         assertTrue(model.getCurrentState() instanceof Build);
         apollo.makeBuild(model,new Coordinate(2,2));
         assertTrue(model.getCurrentState() instanceof End);

@@ -18,10 +18,19 @@ public class PositionWorkers implements State, Serializable {
     int numOfWorkerToBePlaced;
     private static final long serialVersionUID = 9L;
 
+    /**
+     * Class constructor indicating that each player has exactly 2 workers
+     */
     public PositionWorkers() {
         this.numOfWorkerToBePlaced = 2;
     }
 
+    /**
+     *
+     * @param choice
+     * @param model
+     * @return
+     */
     @Override
     public boolean handle(Coordinate choice, Model model) {
         boolean result = model.getCurrentPlayer().positionWorker(model,choice);

@@ -49,4 +49,9 @@ public class Worker implements Serializable {
     }
 
 
+    public int getNum(){
+        return num;
+    }
+
+
 }

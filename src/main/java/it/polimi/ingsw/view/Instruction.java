@@ -17,7 +17,7 @@ public class Instruction extends JFrame implements ActionListener {
         GridBagLayout gridBagLayout = new GridBagLayout();
         panel.setLayout(gridBagLayout);
 
-        ImageIcon imgpn = new ImageIcon("src/Images/smallinstr.gif");
+        ImageIcon imgpn = new ImageIcon("view/Images/smallinstr.gif");
         JLabel lblXmpl = new JLabel(imgpn);
         lblXmpl.setSize(690, 450);
 
@@ -30,7 +30,7 @@ public class Instruction extends JFrame implements ActionListener {
         c.gridheight = 2;
         panel.add(lblXmpl, c);
 
-        ImageIcon img = new ImageIcon("src/Images/tower.jpg");
+        ImageIcon img = new ImageIcon("view/Images/tower.jpg");
         JLabel lblTwr = new JLabel(img);
         lblTwr.setSize(200, 195);
 
@@ -44,7 +44,7 @@ public class Instruction extends JFrame implements ActionListener {
         c2.gridy = 0;
         panel.add(lblTwr, c2);
 
-        ImageIcon imgAcn = new ImageIcon("src/Images/santorini.gif");
+        ImageIcon imgAcn = new ImageIcon("view/Images/santorini.gif");
         JLabel label = new JLabel(imgAcn);
         label.setSize(700, 450);
 

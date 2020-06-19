@@ -13,7 +13,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         setSize(1900, 800);
         setLayout(new GridBagLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon("src/Images/Santorini.jpeg");
+        ImageIcon img = new ImageIcon("view/Images/Santorini.jpeg");
         bckg = new JLabel("", img, JLabel.CENTER);
         bckg.setBounds(0,0,1800, 800);
         add(bckg);

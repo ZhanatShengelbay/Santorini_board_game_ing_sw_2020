@@ -38,7 +38,7 @@ public class CreditsTo extends JFrame implements ActionListener{
         c.gridheight = 1;
         contents.add(lblTitle, c);
 
-        lblMarco = new JLabel(new ImageIcon("src/Images/marco.png"));
+        lblMarco = new JLabel(new ImageIcon("view/Images/marco.png"));
         lblMarco.setAlignmentX(LEFT_ALIGNMENT);
         lblMarco.setPreferredSize(new Dimension(300, 300));
 
@@ -64,7 +64,7 @@ public class CreditsTo extends JFrame implements ActionListener{
         c2.gridheight = 1;
         contents.add(lblMarcoLabel, c2);
 
-        lblJanet = new JLabel((new ImageIcon("src/Images/jan.png")));
+        lblJanet = new JLabel((new ImageIcon("view/Images/jan.png")));
         lblJanet.setAlignmentX(LEFT_ALIGNMENT);
         lblJanet.setPreferredSize(new Dimension(300, 300));
 
@@ -90,7 +90,7 @@ public class CreditsTo extends JFrame implements ActionListener{
         c4.gridheight = 1;
         contents.add(lblJanetLabel, c4);
 
-        lblLeo = new JLabel(new ImageIcon("src/Images/leo.png"));
+        lblLeo = new JLabel(new ImageIcon("view/Images/leo.png"));
         lblLeo.setAlignmentX(LEFT_ALIGNMENT);
         lblLeo.setPreferredSize(new Dimension(300, 300));
 

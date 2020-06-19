@@ -226,7 +226,7 @@ public class ThreePlayerGod extends JFrame implements ActionListener, ListSelect
             return;
         }
         String cardName = listGameGods.getSelectedValue();
-        cardName = "src/Images/" + cardName + ".png";
+        cardName = "view/Images/" + cardName + ".png";
         lblCard.setIcon(new ImageIcon(cardName));
     }
 

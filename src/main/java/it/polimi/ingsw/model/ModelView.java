@@ -18,13 +18,17 @@ public class ModelView implements Serializable {
     public ModelView(Model model) {
         Model clone = model.clone();
         this.grid = clone.getGrid();
-        this.currentPlayer = clone.getCurrentPlayer().getPlayerID();
+        if(!(clone.getPlayers().isEmpty()))
+            this.currentPlayer = clone.getCurrentPlayer().getPlayerID();
         this.players = clone.getPlayers();
         this.state = clone.getCurrentState().getClass().getSimpleName().toLowerCase();
         this.godsPlayer = clone.getGodsPlayer();
 
     }
 
+    public Map<String, String> getGodsPlayer() {
+        return godsPlayer;
+    }
 
     public ModelView(Model model, String message) {
         new ModelView(model).setMessage(message);
@@ -37,6 +41,10 @@ public class ModelView implements Serializable {
 
     public String getPlayer(int index) {
         return players.get(index).getPlayerID();
+    }
+
+    public int sizePlayers() {
+        return players.size();
     }
 
 

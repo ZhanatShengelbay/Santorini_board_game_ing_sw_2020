@@ -1,23 +1,24 @@
 package it.polimi.ingsw.client;
 
-import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class GraphicListener implements MouseListener {
 
-    GameGUI gameGui;
+    BoardGUI boardGui;
     ClientBackEnd model;
 
-    public GraphicListener(GameGUI gameGui, ClientBackEnd model) {
-        this.gameGui = gameGui;
+    public GraphicListener(BoardGUI boardGui, ClientBackEnd model) {
+        this.boardGui = boardGui;
         this.model=model;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        GraphicTile button = (GraphicTile)e.getSource();
-        gameGui.selectionTile(button);
+        GraphicTile tmp=(GraphicTile)e.getSource();
+        GraphicTile button = boardGui.getTile(tmp.getCoordinate());
+
+        boardGui.selectionTile(button);
         model.addInput(button.getCoordinate());
 
     }

@@ -75,7 +75,7 @@ public class Client extends Subject<Object> implements Runnable {
             t0.join();
             closeSocket();
         } catch (Exception ex){
-            System.out.println("Connection closed from the client side");
+            System.out.println("Connection closed from the it.polimi.ingsw.client side");
         }
     }
 }

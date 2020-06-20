@@ -56,7 +56,7 @@ public class Connection extends Subject<String> implements Runnable {
 
     private void close(){
         closeConnection();
-        System.out.println("Deregistering client...");
+        System.out.println("Deregistering it.polimi.ingsw.client...");
         server.deregisterConnection(this);
         System.out.println("Done!");
     }
@@ -89,7 +89,7 @@ public class Connection extends Subject<String> implements Runnable {
             this.numOfPlayers = Integer.parseInt(read);
             server.lobby(this);
             while(isActive()){
-                send("Next Input");
+                //send("Next Input");
                 read = in.nextLine();
                 notify(read);
             }

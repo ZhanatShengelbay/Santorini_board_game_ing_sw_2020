@@ -97,13 +97,13 @@ public class SetUpController implements Controller {
             if(numOfPlayerToCreate==0){
                 model.setCurrentState(new PositionWorkers());
                 model.notify(model.updateState().setMessage("Welcome in Santorini board\n"));
-                views.get(current_player).showMessage(model.getCurrentState().questionMessage());
+                //views.get(current_player).showMessage(model.getCurrentState().questionMessage());
             }
             else{
                 views.get(current_player).showEvent(Event.GODCHOICE);
-                for(String s : gods){
-                    views.get(current_player).showMessage(s);
-                }
+
+                    views.get(current_player).showMessage(gods.toArray(new String[0]));
+
             }
 
             System.out.println("CURRENT PLAYER: " + players.get(current_player) + " " + current_player);

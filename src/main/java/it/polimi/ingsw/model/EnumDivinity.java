@@ -29,10 +29,7 @@ public enum EnumDivinity {
      * @see it.polimi.ingsw.model.Hephaestus
      */
     HEPHAESTUS,
-    /**
-     * @see it.polimi.ingsw.model
-     */
-    HERMES,
+
     /**
      * @see it.polimi.ingsw.model.Minotaur
      */
@@ -49,7 +46,13 @@ public enum EnumDivinity {
      * @see it.polimi.ingsw.model.Aphrodite
      */
     APHRODITE,
+    /**
+     * @see it.polimi.ingsw.model.Limus
+     */
     LIMUS,
+    /**
+     * @see it.polimi.ingsw.model.Triton
+     */
     TRITON,
     /**
      * @see it.polimi.ingsw.model.Ares

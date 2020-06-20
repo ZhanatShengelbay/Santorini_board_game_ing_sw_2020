@@ -1,4 +1,6 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.client;
+
+import it.polimi.ingsw.model.EnumDivinity;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,13 +12,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectionListener, ItemListener {
+public class GodSetupUI extends JFrame implements ActionListener, ListSelectionListener, ItemListener {
+    JLabel bckg;
 
-    private JPanel contents;
+    int numOfPlayer;
+    ClientBackEnd backEnd;
+
     private JPanel panelCenter;
     private JPanel panelSouth;
 
-    private Border borderCenter = BorderFactory.createEmptyBorder(10,10,10,10);
+    private Border borderCenter = BorderFactory.createEmptyBorder(10, 10, 10, 10);
     private Border borderContent = BorderFactory.createEmptyBorder(0,0,10,0);
     private Border borderList = BorderFactory.createLineBorder(Color.gray, 1);
 
@@ -38,19 +43,40 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
     private JList<String> listAllGods;
     private JList<String> listGameGods;
 
-    private String [] allGods = {
-            "APOLLO", "ARTEMIS", "ATHENA", "ATLAS", "DEMETER", "HEPHAESTUS", "MINOTAUR", "PAN", "PROMETHEUS", "APHRODITE", "ARES", "ZEUS"};
+    private final Font fontBold = new Font(Font.DIALOG, Font.BOLD,18);
+    private final Font fontPlain = new Font(Font.DIALOG, Font.PLAIN, 18);
 
     private DefaultListModel<String> listModelAllGods = new DefaultListModel<>();
     private DefaultListModel<String> listModelGameGods = new DefaultListModel<>();
 
-    private final Font fontBold = new Font(Font.DIALOG, Font.BOLD,18);
-    private final Font fontPlain = new Font(Font.DIALOG, Font.PLAIN, 18);
-
-    public TwoPlayerGod(){
-        super("Gods");
+    public GodSetupUI(int numOfPlayer,ClientBackEnd backEnd){
+        this.numOfPlayer=numOfPlayer;
+        this.backEnd=backEnd;
+        backEnd.setSetupGui(this);
         setFonts();
-        contents = new JPanel();
+
+        setupSplash();
+
+
+    }
+    public void setupSplash(){
+        revalidate();
+        repaint();
+        setSize(1280, 720);
+        setLayout(new GridBagLayout());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        ImageIcon img = new ImageIcon("src/main/java/it/polimi/ingsw/view/Images/santorini_splash.jpg");
+        bckg = new JLabel("", img, JLabel.CENTER);
+        bckg.setBounds(0,0,1280, 720);
+        add(bckg);
+
+        this.setVisible(true);
+    }
+
+    public void createGodSetup(){
+        //this.removeAll();
+        this.setTitle("Gods select");
+        JPanel contents = new JPanel();
         contents.setBorder(borderContent);
         contents.setLayout(new BorderLayout());
         setContentPane(contents);
@@ -136,15 +162,18 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
         lblSelectedGameGods = new JLabel();
         JButton btnStartGame = new JButton("start the Game");
         btnStartGame.setSize(new Dimension(70, 30));
-        btnStartGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int gameGods = listModelGameGods.getSize();
-                if (gameGods == 2){
-                    setGameGods();
-                } else {
-                    JOptionPane.showMessageDialog(null,"for 2-player game exactly 2 Gods have to be selected, please, try again");
-                }
+        btnStartGame.addActionListener(e -> {
+            int gameGods = listModelGameGods.getSize();
+            if (gameGods == numOfPlayer){
+                setGameGods();
+               new GodSetupUI(numOfPlayer,backEnd);
+               this.dispose();
+
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Choose "+numOfPlayer+" gods for you and your opponent"+(numOfPlayer==3?"s":""));
             }
         });
 
@@ -160,7 +189,8 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
         listGameGods.addListSelectionListener(this);
         listAllGods.addListSelectionListener(this);
 
-        setSize(new Dimension(1600, 800));
+        this.revalidate();
+        setSize(new Dimension(1280, 720));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setLocationRelativeTo(null);
@@ -168,15 +198,152 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
 
     }
 
-    protected void setGameGods(){
-        //pass the game gods to setup controller
+    public void createGodChoice(String[] gods){
+        this.setTitle("Gods select");
+        JPanel contents = new JPanel();
+        contents.setBorder(borderContent);
+        contents.setLayout(new BorderLayout());
+        setContentPane(contents);
+
+        JLabel lblTitle = new JLabel("GODS: ", SwingConstants.CENTER);
+        lblTitle.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+        contents.add(lblTitle, BorderLayout.NORTH);
+
+        panelCenter = new JPanel();
+        panelCenter.setBorder(borderCenter);
+
+        lblListAllGods = new JLabel("ALL GODS: ");
+        lblListAllGods.setAlignmentX(LEFT_ALIGNMENT);
+
+
+        listAllGods = new JList<>(listModelAllGods);
+        listAllGods.setAlignmentX(LEFT_ALIGNMENT);
+        listAllGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listAllGods.setBorder(borderList);
+        JScrollPane scrollAllGods = new JScrollPane(listAllGods);
+        scrollAllGods.setAlignmentX(LEFT_ALIGNMENT);
+        scrollAllGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollAllGods.setPreferredSize(new Dimension(200,400));
+        boxListAllGods.add(lblListAllGods);
+        boxListAllGods.add(scrollAllGods);
+        panelCenter.add(boxListAllGods);
+
+        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));
+
+        btnAdd = new JButton("    ADD >    ");
+        btnAdd.addActionListener(this);
+        btnRemove = new JButton("   < REMOVE  ");
+        btnRemove.addActionListener(this);
+        btnRemoveAll = new JButton("<< REMOVE ALL");
+        btnRemoveAll.addActionListener(this);
+        btnAdd.setSize(new Dimension(50,30));
+        btnRemove.setSize(new Dimension(50,30));
+        btnRemoveAll.setSize(new Dimension(50,30));
+        boxButton.add(btnAdd);
+        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));
+        boxButton.add(btnRemove);
+        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));
+        boxButton.add(btnRemoveAll);
+        panelCenter.add(boxButton);
+
+        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));
+
+        lblListGameGods = new JLabel("GAME GODS: ");
+        lblListGameGods.setAlignmentX(LEFT_ALIGNMENT);
+
+        listGameGods = new JList<>(listModelGameGods);
+        listGameGods.setAlignmentX(LEFT_ALIGNMENT);
+        listGameGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listGameGods.setBorder(borderList);
+        JScrollPane scrollGameGods = new JScrollPane(listGameGods);
+        scrollGameGods.setPreferredSize(new Dimension(200, 400));
+        scrollGameGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollGameGods.setAlignmentX(LEFT_ALIGNMENT);
+        boxListGameGods.add(lblListGameGods);
+        boxListGameGods.add(scrollGameGods);
+        panelCenter.add(boxListGameGods);
+        contents.add(panelCenter, BorderLayout.CENTER);
+
+        panelCenter.add(Box.createRigidArea(new Dimension(20,1)));
+
+        JLabel lblGodCard = new JLabel("CARD: ");
+        lblGodCard.setAlignmentX(LEFT_ALIGNMENT);
+
+        lblCard = new JLabel(new ImageIcon());
+        lblCard.setAlignmentX(LEFT_ALIGNMENT);
+        lblCard.setPreferredSize(new Dimension(200,300));
+
+        boxPower.add(lblGodCard);
+        boxPower.add(Box.createRigidArea(new Dimension(100, 30)));
+        boxPower.add(lblCard);
+        panelCenter.add(boxPower);
+        contents.add(panelCenter, BorderLayout.CENTER);
+
+        panelSouth = new JPanel();
+        JLabel lblSelectedAllGodsLabel = new JLabel("Selected ALL GODS: ");
+        lblSelectedAllGods = new JLabel();
+        JLabel lblSelectedGameGodsLabel = new JLabel("Selected GAME GODS: ");
+        lblSelectedGameGods = new JLabel();
+        JButton btnStartGame = new JButton("start the Game");
+        btnStartGame.setSize(new Dimension(70, 30));
+        btnStartGame.addActionListener(e -> {
+            int gameGods = listModelGameGods.getSize();
+            if (gameGods == 1){
+                setGameGods();
+                backEnd.createBoardGui();
+                this.dispose();
+                backEnd.update("wait other players");
+            } else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Choose one god");
+            }
+        });
+
+        panelSouth.add(lblSelectedAllGodsLabel);
+        panelSouth.add(lblSelectedAllGods);
+        panelSouth.add(Box.createRigidArea(new Dimension(100,1)));
+        panelSouth.add(lblSelectedGameGodsLabel);
+        panelSouth.add(lblSelectedGameGods);
+        panelSouth.add(Box.createRigidArea(new Dimension(100, 1)));
+        panelSouth.add(btnStartGame);
+        contents.add(panelSouth, BorderLayout.SOUTH);
+
+        listGameGods.addListSelectionListener(this);
+        listAllGods.addListSelectionListener(this);
+
+        for(String s : gods){
+            listModelAllGods.addElement(s.toUpperCase());
+        }
+
+        setSize(new Dimension(1600, 800));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(true);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+
     }
 
     private void initAllGodsModel(){
-        for (String s: allGods){
-            listModelAllGods.addElement(s);
+        for(EnumDivinity s : EnumDivinity.values()){
+            listModelAllGods.addElement(s.toString());
         }
     }
+
+    protected void setGameGods(){
+        StringBuilder message=new StringBuilder();
+        for(int i=0;i<listModelGameGods.getSize();i++){
+            message.append(listModelGameGods.get(i));
+            message.append(" ");
+        }
+
+        backEnd.sendMessage(message.toString());
+
+    }
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -219,13 +386,24 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
         listModelGameGods.addElement(addedItem);
     }
 
-    private void changeCard(){
+    private void changeCardGame(){
         int selectedItem = listGameGods.getSelectedIndex();
         if (selectedItem == -1){
             lblCard.setIcon(null);
             return;
         }
         String cardName = listGameGods.getSelectedValue();
+        cardName = "src/main/java/it/polimi/ingsw/view/Images/" + cardName + ".png";
+        lblCard.setIcon(new ImageIcon(cardName));
+    }
+
+    private void changeCardAll(){
+        int selectedItem = listAllGods.getSelectedIndex();
+        if (selectedItem == -1){
+            lblCard.setIcon(null);
+            return;
+        }
+        String cardName = listAllGods.getSelectedValue();
         cardName = "src/main/java/it/polimi/ingsw/view/Images/" + cardName + ".png";
         lblCard.setIcon(new ImageIcon(cardName));
     }
@@ -287,11 +465,12 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
 
         Object source = e.getSource();
         if (source == listAllGods){
+            changeCardAll();
             displaySelectedItems();
             return;
         }
         if (source == listGameGods){
-            changeCard();
+            changeCardGame();
             displaySelectedItems();
             return;
         }
@@ -313,12 +492,4 @@ public class TwoPlayerGod extends JFrame implements ActionListener, ListSelectio
         UIManager.put("List.font", fontPlain);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TwoPlayerGod();
-            }
-        });
-    }
 }

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.client;
+
+import it.polimi.ingsw.client.MenuGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,7 +82,7 @@ public class Instruction extends JFrame implements ActionListener {
         JButton btn = new JButton("back to main");
         btn.setBackground(Color.orange);
         btn.addActionListener(e -> {
-            new MenuGUI();
+            frame.dispose();
         });
         panel.add(btn, c5);
 

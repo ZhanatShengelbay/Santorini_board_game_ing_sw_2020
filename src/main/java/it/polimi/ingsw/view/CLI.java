@@ -1,9 +1,10 @@
 package it.polimi.ingsw.view;
 
+
 import it.polimi.ingsw.client.Graphic;
 import it.polimi.ingsw.controller.Event;
 import it.polimi.ingsw.model.EnumDivinity;
-import it.polimi.ingsw.model.Model;
+
 import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utility.Observer;
@@ -20,7 +21,7 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
     public static final String ANSI_RED = "\033[1;31m";
     public static final String ANSI_PURPLE = "\033[1;35m";
     public static final String ANSI_BLUE = "\033[1;34m";
-    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[102m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";
     public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
@@ -84,6 +85,7 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
     }
 
     public void handle(ModelView model){
+
         if(model.getMessage()!=null)
             handle(model.getMessage());
         for(int i=0; i < 5; i++){
@@ -167,7 +169,7 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
             t0.join();
             stdin.close();
         } catch(InterruptedException e){
-            System.out.println("Connection closed from the client side");
+            System.out.println("Connection closed from the it.polimi.ingsw.client side");
         }
     }
 
@@ -176,6 +178,12 @@ public class CLI implements Graphic, Observer<Object>, Runnable {
         if(message instanceof String) handle((String)message);
         else if(message instanceof ModelView) handle((ModelView)message);
         else if(message instanceof Event)handle((Event)message);
+        else if(message instanceof String[]){
+            String [] input=(String[])message;
+            for(int i=0;i<input.length;i++){
+                handle(input[i]);
+            }
+        }
     }
 
 }

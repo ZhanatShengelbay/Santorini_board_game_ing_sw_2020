@@ -82,7 +82,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
             notify(new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]),connection.getID(), this));
         }
     }
-    // include error strings in error object and then show it in client?
+    // include error strings in error object and then show it in it.polimi.ingsw.client?
     private void checkInput(String[] inputs) throws Error, Exception{
         boolean godFound;
         if (model.getCurrentState() instanceof GameStart){
@@ -136,7 +136,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
         else return true;
     }
 
-    public void showMessage(String message){
+    public void showMessage(Object message){
         connection.send(message);
     }
 

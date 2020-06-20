@@ -66,6 +66,8 @@ public class Demeter extends Player {
             nextState = new Power();
         else if (currentState instanceof Build) {
                 nextState = new End();
+                doubleBuild=false;
+                firstBuild=null;
         } else
             nextState = new End();
         model.setCurrentState(nextState);

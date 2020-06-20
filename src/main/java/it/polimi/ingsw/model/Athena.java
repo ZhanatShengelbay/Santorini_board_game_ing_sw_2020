@@ -12,7 +12,6 @@ import it.polimi.ingsw.utility.Coordinate;
 
 public class Athena extends PlayerWithGroundEffect {
 
-    private Model model;
     private Coordinate from;
 
     /**

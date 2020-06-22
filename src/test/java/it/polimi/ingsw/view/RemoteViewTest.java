@@ -64,7 +64,7 @@ public class RemoteViewTest {
     @Test
     public void handleTestGameStart(){
         model.setCurrentState(new GameStart());
-        String[] inputs = {"aPollO", "artemis", "ATLAS"};
+        String[] inputs = {"aPollO", "artemis"};
         try{
             rmView[0].handleMove(inputs);
         } catch (Exception ex){
@@ -73,7 +73,6 @@ public class RemoteViewTest {
         assertTrue(controller.lastChoice instanceof SetUpChoice);
         assertEquals(0, ((SetUpChoice)controller.lastChoice).getInputs()[0].compareTo("Apollo"));
         assertEquals(0, ((SetUpChoice)controller.lastChoice).getInputs()[1].compareTo("Artemis"));
-        assertEquals(0, ((SetUpChoice)controller.lastChoice).getInputs()[2].compareTo("Atlas"));
     }
 
     @Test
@@ -87,8 +86,8 @@ public class RemoteViewTest {
         }
         assertTrue(controller.lastChoice instanceof GameChoice);
         assertTrue(((GameChoice)controller.lastChoice).powerIsActive());
-        assertEquals(1, ((GameChoice)controller.lastChoice).getChoice().getX());
-        assertEquals(4, ((GameChoice)controller.lastChoice).getChoice().getY());
+        assertEquals(0, ((GameChoice)controller.lastChoice).getChoice().getX());
+        assertEquals(3, ((GameChoice)controller.lastChoice).getChoice().getY());
     }
 
     @Test
@@ -102,8 +101,8 @@ public class RemoteViewTest {
         }
         assertTrue(controller.lastChoice instanceof GameChoice);
         assertFalse(((GameChoice)controller.lastChoice).powerIsActive());
-        assertEquals(1, ((GameChoice)controller.lastChoice).getChoice().getX());
-        assertEquals(4, ((GameChoice)controller.lastChoice).getChoice().getY());
+        assertEquals(0, ((GameChoice)controller.lastChoice).getChoice().getX());
+        assertEquals(3, ((GameChoice)controller.lastChoice).getChoice().getY());
     }
 
     @Test
@@ -117,8 +116,8 @@ public class RemoteViewTest {
         }
         assertTrue(controller.lastChoice instanceof GameChoice);
         assertFalse(((GameChoice)controller.lastChoice).powerIsActive());
-        assertEquals(1, ((GameChoice)controller.lastChoice).getChoice().getX());
-        assertEquals(4, ((GameChoice)controller.lastChoice).getChoice().getY());
+        assertEquals(0, ((GameChoice)controller.lastChoice).getChoice().getX());
+        assertEquals(3, ((GameChoice)controller.lastChoice).getChoice().getY());
     }
 
     @Test
@@ -136,7 +135,7 @@ public class RemoteViewTest {
     @Test
     public void handleTestCoordinateNotValid(){
         model.setCurrentState(new Build());
-        String[] inputs = {"5", "4"};
+        String[] inputs = {"6", "4"};
         try{
             rmView[0].handleMove(inputs);
         } catch (Exception ex){

@@ -59,7 +59,7 @@ public class GameControllerTest{
         for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++) {
                 assertSame(model.getGrid().getTile(i, j).getHeight(), TypeBlock.FLOOR);
-                if(i==2 && j==2){
+                if(i==1 && j==1){
                     assertTrue(model.getGrid().getTile(i, j).isWorker());
                 }
                 else{
@@ -105,7 +105,7 @@ public class GameControllerTest{
         for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++) {
                 assertSame(model.getGrid().getTile(i, j).getHeight(), TypeBlock.FLOOR);
-                if(i==2 && j==2){
+                if(i==1 && j==1){
                     assertTrue(model.getGrid().getTile(i, j).isWorker());
                 }
                 else{
@@ -128,7 +128,7 @@ public class GameControllerTest{
                     assertTrue(model.getGrid().getTile(i, j).isWorker());
                     assertSame(model.getGrid().getTile(i, j).getHeight(), TypeBlock.FLOOR);
                 }
-                else if(i==2 && j==2){
+                else if(i==1 && j==1){
                     assertFalse(model.getGrid().getTile(i, j).isWorker());
                     assertSame(model.getGrid().getTile(i, j).getHeight(), TypeBlock.DOME);
                 } else{
@@ -143,7 +143,7 @@ public class GameControllerTest{
         model.setCurrentState(new Move());
         model.getGrid().getTile(1, 2).setWorker(new Worker(model.getPlayer(0), 0));
         model.setCurrentWorker(new Coordinate(1, 2));
-        choice[0] = new GameChoice(3, 3, "player1", rmView[0]);
+        choice[0] = new GameChoice(4, 4, "player1", rmView[0]);
         try{
             controller.handler(choice[0]);
         } catch (Error e){

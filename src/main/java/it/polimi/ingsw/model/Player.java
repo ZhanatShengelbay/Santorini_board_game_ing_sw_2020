@@ -188,9 +188,7 @@ public abstract class Player implements Serializable{
     }
 
     public void togglePower(){
-        if(power)
-            power=false;
-        else power=true;
+        power= !power;
     }
 
 

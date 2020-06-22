@@ -2,59 +2,44 @@ package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.ModelView;
+import it.polimi.ingsw.view.Client;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static org.junit.Assert.assertTrue;
 
 public class GUITest {
 
     BackEndGui backEnd;
     Model model;
-    ModelView message;
 
 
 
     @Before
     public void setup(){
+        Client client=new Client("127.0.0.1",12345);
+        model=new Model();
+        model.createPlayer("ARES","playertest");
+        model.getGrid().getTile(0,0).levelUp();
+        backEnd=new BackEndGui(client);
+
+
 
 
     }
 
     @Test
     public void updateGrid(){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
 
-                BackEndGui model=new BackEndGui(null);
-                model.players=new ArrayList<>();
-                model.players.add("mar");
-                model.players.add("car");
-                model.players.add("tar");
-                HashMap<String,String> tmp=new HashMap<>();
-                tmp.put("mar","minotaur");
-                tmp.put("tar","zeus");
-                tmp.put("car","ares");
-                model.playersGods=tmp;
-                model.playersColor.put("mar", Color.PINK);
-                model.playersColor.put("car", Color.BLUE);
-                model.playersColor.put("tar", Color.GRAY);
-                model.getGui().playersPanel(model);
-                model.getGui().createGrid(model);
-
-
-
-            }
-        });
-        /*backEnd=new ClientBackEnd(null);
-        model=new Model();
-        model.getGrid().getTile(1,1).levelUp().levelUp();
-        model.getGrid().getTile(2,2).levelUp();
-        message=model.updateState();
-        //backEnd.update(message);*/
+        backEnd.createBoardGui();
+        assertTrue(backEnd.getGui().grid[0][0].getHeight()==0);
+        backEnd.update(model.updateState());
+        assertTrue(backEnd.getGui().grid[0][0].getHeight()==1);
     }
 }

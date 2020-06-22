@@ -12,13 +12,13 @@ public class Ares extends Player {
     /**
      * @param playerID
      */
-    public Ares(String playerID) {
-        super(playerID);
+    public Ares(String playerID, Model model) {
+        super(playerID, model);
     }
 
     @Override
-    public boolean makeSelection(Model model, Coordinate selection) {
-        boolean result= super.makeSelection(model, selection);
+    public boolean makeSelection(Coordinate selection) {
+        boolean result= super.makeSelection(selection);
         if(result) {
             numWrk = model.getGrid().getTile(model.getCurrentWorker()).getWorker().getNum();
             numWrk = 1 - numWrk;
@@ -27,7 +27,7 @@ public class Ares extends Player {
     }
 
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -43,14 +43,14 @@ public class Ares extends Player {
     }
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         if(isActive()){
             boolean result=false;
             List<Coordinate>tileAroundDestination=model.getGrid().validTileAround(destination);
             for(Coordinate c : tileAroundDestination){
                 Worker tmp= model.getGrid().getTile(c).getWorker();
                 if(tmp.equals(this.getWorker(numWrk))) {
-                    result = this.reduce(model, destination);
+                    result = this.reduce(destination);
                     break;
                 }
             }
@@ -66,7 +66,7 @@ public class Ares extends Player {
     }
 
 
-    public boolean reduce(Model model, Coordinate destination){
+    public boolean reduce(Coordinate destination){
         if(!new Checks(model,null,destination).isNotWorker().isNotDome().isNotBuild(0).simpleGetResult()) {
             model.getGrid().getTile(destination).reduceBlock();
             return true;

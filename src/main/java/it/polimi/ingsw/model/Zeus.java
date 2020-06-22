@@ -22,38 +22,36 @@ public class Zeus extends Player {
      * Constructor to keep the value of PlayerID holding Zeus, which is inherited from the super class
      * @param playerID
      */
-    public Zeus(String playerID){
-        super(playerID);
+    public Zeus(String playerID, Model model){
+        super(playerID, model);
     }
 
     /**
      * Along with normal movement, in case the movement actually carried out, it assigns to class variable the coordinate where the worker moved to
-     * @param model The model where the movement happened
      * @param destination The input choice
      * @return true or false
      */
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
-        boolean prevAnswer = super.makeMovement(model, destination);
+    public boolean makeMovement(Coordinate destination) {
+        boolean prevAnswer = super.makeMovement(destination);
         if (prevAnswer) selfPlace = destination;
         return prevAnswer;
     }
 
     /**
      * Overridden to exploit the power of Zeus, now method allows to build under itself, together with normal build case
-     * @param model which the building process is carrying out
      * @param destination input choice where to build
      * @return true or false
      */
     @Override
-    public boolean makeBuild(Model model, Coordinate destination) {
+    public boolean makeBuild(Coordinate destination) {
         if (destination != selfPlace) {
-           super.makeBuild(model, destination);
+           super.makeBuild(destination);
         } else {
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).add(this.selfPlace));
             if (model.getGrid().getTile(selfPlace).getHeight().ordinal() < TypeBlock.THIRD.ordinal()) {
                 model.getGrid().getTile(selfPlace).levelUp();
-                nextPhase(model);
+                nextPhase();
                 return true;
             } else return false;
         }
@@ -62,7 +60,7 @@ public class Zeus extends Player {
 
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         throw new IllegalArgumentException();
     }
 }

@@ -13,12 +13,12 @@ public class ArtemisTest {
     @Before
     public void gridSetUp(){
 
-        artemis=new Artemis("playertest");
-        artemis.addWorker();
-        artemis.addWorker();
-
-
         model=new Model();
+        artemis=new Artemis("playertest", model);
+        artemis.addWorker();
+        artemis.addWorker();
+
+
         model.getGrid().getTile(new Coordinate(2,0)).levelUp();
         model.getGrid().getTile(new Coordinate(2,0)).setWorker(artemis.getWorker(0));
         model.getGrid().getTile(new Coordinate(1,1)).levelUp().levelUp().levelUp().levelUp();
@@ -34,19 +34,19 @@ public class ArtemisTest {
         model.setCurrentState(new Select());
         model.setCurrentPlayer(artemis);
         Coordinate from = new Coordinate(2,0);
-        artemis.makeSelection(model,(from));
+        artemis.makeSelection(from);
         assertTrue(model.getCurrentState() instanceof Move);
-        artemis.makeMovement(model,(new Coordinate(3,0)));
+        artemis.makeMovement(new Coordinate(3,0));
         assertEquals(model.getGrid().getTile(new Coordinate(3, 0)).getWorker().getPlayer(), artemis);
         assertTrue(model.getCurrentState() instanceof Power);
         artemis.togglePower();
-        assertFalse("cannot move back",artemis.makePower(model,from));
-        artemis.makePower(model,new Coordinate(2,1));
+        assertFalse("cannot move back",artemis.makePower(from));
+        artemis.makePower(new Coordinate(2,1));
         assertFalse(artemis.containsInValidCoordinate(from));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 1)).getWorker().getPlayer(), artemis);
         assertTrue(model.getCurrentState() instanceof Build);
         int tmp= model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal();
-        artemis.makeBuild(model,(new Coordinate(2,0)));
+        artemis.makeBuild(new Coordinate(2,0));
         assertEquals(model.getGrid().getTile(new Coordinate(2, 0)).getHeight().ordinal(), tmp+1);
         assertTrue(model.getCurrentState() instanceof Select);
 

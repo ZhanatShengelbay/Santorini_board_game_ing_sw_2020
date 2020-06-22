@@ -18,15 +18,15 @@ public class Minotaur extends Player {
     /**
      * @param playerID
      */
-    public Minotaur(String playerID) {
-        super(playerID);
+    public Minotaur(String playerID, Model model) {
+        super(playerID, model);
     }
 
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
+    public boolean makeMovement(Coordinate destination) {
         Worker wrkDestination = model.getGrid().getTile(destination).getWorker();
         if(wrkDestination==null || wrkDestination.getPlayer().equals(this))
-            return super.makeMovement(model,destination);
+            return super.makeMovement(destination);
 
         Coordinate from = model.getCurrentWorker();
         Coordinate opponentDestination= destination.shift(Cardinal.getDirection(from,destination));
@@ -38,10 +38,10 @@ public class Minotaur extends Player {
 
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotDome().isRisible());
         if (containsInValidCoordinate(destination)) {
-            moveWorker(model, destination);
-            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+            moveWorker(destination);
+            if (winCondition(from, destination)) model.setCurrentState(new Win());
             else
-                nextPhase(model);
+                nextPhase();
             return true;
         }else {
             model.getGrid().getTile(destination).setWorker(wrkDestination);
@@ -52,7 +52,7 @@ public class Minotaur extends Player {
     }
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         throw new IllegalArgumentException();
     }
 }

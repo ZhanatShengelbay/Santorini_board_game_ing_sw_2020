@@ -44,8 +44,8 @@ public class RemoteViewTest {
         choice = new PlayerChoice[10];
         model = new Model();
 
-        Atlas player1 = new Atlas("player1");
-        Pan player2 = new Pan("player2");
+        Atlas player1 = new Atlas("player1", model);
+        Pan player2 = new Pan("player2", model);
         model.getPlayers().add(player1);
         model.getPlayers().add(player2);
         //model.players = players;

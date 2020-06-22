@@ -161,6 +161,11 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
             showMessage("Select the worker you want to move\n");
         if(model.getState().equals("positionworkers")&&model.getCurrentPlayer().equals(getPlayerID()))
             showMessage("Place your worker\n");
+        else if(model.getState().equals("win")){
+            if(model.getWinner().compareTo(connection.getID())==0) showMessage("You won");
+            else showMessage("You lost");
+            connection.closeConnection();
+        }
 
     }
 }

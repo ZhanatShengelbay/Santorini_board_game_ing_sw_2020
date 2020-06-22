@@ -9,14 +9,14 @@ public class Triton extends Player{
     /**
      * @param playerID
      */
-    public Triton(String playerID) {
-        super(playerID);
+    public Triton(String playerID, Model model) {
+        super(playerID, model);
     }
 
 
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
-        boolean result= super.makeMovement(model, destination);
+    public boolean makeMovement(Coordinate destination) {
+        boolean result= super.makeMovement(destination);
         if(result){
             if(model.getGrid().perimeterTile(destination))
                 model.setCurrentState(new Power());
@@ -26,16 +26,16 @@ public class Triton extends Player{
     }
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         boolean result;
         if(isActive()) {
             model.setCurrentState(new Move());
-             result=makeMovement(model, destination);
+             result=makeMovement(destination);
 
         }
         else{
             model.setCurrentState(new Build());
-            result=makeBuild(model, destination);
+            result=makeBuild(destination);
 
         }
         if(!result) model.setCurrentState(new Power());

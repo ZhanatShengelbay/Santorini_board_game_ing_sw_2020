@@ -11,7 +11,7 @@ public class ModelView implements Serializable {
     private List<Player> players;
     private String state;
     private Map<String, String> godsPlayer;
-
+    String winner;
     private String message;
 
 
@@ -23,7 +23,7 @@ public class ModelView implements Serializable {
         this.players = clone.getPlayers();
         this.state = clone.getCurrentState().getClass().getSimpleName().toLowerCase();
         this.godsPlayer = clone.getGodsPlayer();
-
+        this.winner = clone.winner;
     }
 
     public Map<String, String> getGodsPlayer() {
@@ -47,6 +47,9 @@ public class ModelView implements Serializable {
         return players.size();
     }
 
+    public String getWinner(){
+        return winner;
+    }
 
     public Grid getGrid() {
         return grid;

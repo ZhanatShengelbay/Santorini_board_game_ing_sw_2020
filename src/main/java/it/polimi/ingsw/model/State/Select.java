@@ -11,12 +11,12 @@ public class Select implements State, Serializable {
 
     @Override
     public boolean handle(Coordinate choice, Model model) {
-        return model.getCurrentPlayer().makeSelection(model,choice);
+        return model.getCurrentPlayer().makeSelection(choice);
 
     }
 
     @Override
     public String questionMessage() {
-        return "";
+        return "SELECT WORKER";
     }
 }

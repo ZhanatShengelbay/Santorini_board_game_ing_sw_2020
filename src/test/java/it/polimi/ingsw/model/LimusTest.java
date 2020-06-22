@@ -25,7 +25,7 @@ public class LimusTest {
         model.createPlayer("limus","player");
         limus =model.getPlayer(0);
 
-        opponent=new Pan("opponent"); //normal nextPhase
+        opponent=new Pan("opponent", model); //normal nextPhase
         opponent.addWorker();
         model.getPlayers().add(limus);
         model.getPlayers().add(opponent);
@@ -42,14 +42,14 @@ public class LimusTest {
         assertTrue(limus instanceof Limus);
         model.setCurrentState(new Select());
         model.setCurrentPlayer(opponent);
-        opponent.makeSelection(model,new Coordinate(2,0));
+        opponent.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(1,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        opponent.makeMovement(model, destination);
+        opponent.makeMovement(destination);
         assertTrue(model.getCurrentState() instanceof Build);
-        assertFalse(opponent.makeBuild(model,new Coordinate(2,1)));
+        assertFalse(opponent.makeBuild(new Coordinate(2,1)));
         model.getGrid().getTile(2,1).levelUp().levelUp().levelUp();
-        assertTrue(opponent.makeBuild(model,new Coordinate(2,1)));
+        assertTrue(opponent.makeBuild(new Coordinate(2,1)));
 
 
 

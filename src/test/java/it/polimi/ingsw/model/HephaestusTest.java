@@ -21,11 +21,11 @@ public class HephaestusTest {
     @Before
     public void setupGridTest(){
 
-        hephaestus = new Hephaestus("hephaestusTest");
+        model = new Model();
+        hephaestus = new Hephaestus("hephaestusTest", model);
         hephaestus.addWorker();
         hephaestus.addWorker();
 
-        model = new Model();
         model.getGrid().getTile(new Coordinate(4,0)).levelUp().setWorker(hephaestus.getWorker(0));
         model.getGrid().getTile(new Coordinate(4,1)).levelUp();
         model.getGrid().getTile(new Coordinate(3,1)).levelUp().levelUp();
@@ -37,20 +37,20 @@ public class HephaestusTest {
     public void NotDomeSecondBuildTest(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(hephaestus);
-        hephaestus.makeSelection(model, new Coordinate(4,0));
+        hephaestus.makeSelection(new Coordinate(4,0));
         Coordinate destination = new Coordinate(3,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        hephaestus.makeMovement(model, destination);
+        hephaestus.makeMovement(destination);
         assertEquals(hephaestus, model.getGrid().getTile(destination).getWorker().getPlayer(), "hephaestus should move");
 
         assertTrue(model.getCurrentState() instanceof Build);
         final Coordinate bldDestionation = new Coordinate(4,1);
         int beforeHeight = model.getGrid().getTile(bldDestionation).getHeight().ordinal();
-        hephaestus.makeBuild(model, bldDestionation);
+        hephaestus.makeBuild(bldDestionation);
         assertEquals(beforeHeight+1, model.getGrid().getTile(bldDestionation).getHeight().ordinal());
 
         assertTrue(model.getCurrentState() instanceof Power);
-        hephaestus.makePower(model, bldDestionation);
+        hephaestus.makePower(bldDestionation);
         assertNotEquals(beforeHeight + 2, model.getGrid().getTile(bldDestionation).getHeight().ordinal());
         assertTrue(model.getCurrentState() instanceof End);
     }
@@ -58,21 +58,21 @@ public class HephaestusTest {
     public void hephaestusPowerTest(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(hephaestus);
-        hephaestus.makeSelection(model, new Coordinate(2,0));
+        hephaestus.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,0);
         assertTrue(model.getCurrentState() instanceof Move);
-        hephaestus.makeMovement(model, destination);
+        hephaestus.makeMovement(destination);
         assertEquals(hephaestus, model.getGrid().getTile(destination).getWorker().getPlayer(), "hephaestus should move");
 
         assertTrue(model.getCurrentState() instanceof Build);
         Coordinate bldDestionation = new Coordinate(2,1);
         int beforeHeight = model.getGrid().getTile(bldDestionation).getHeight().ordinal();
-        hephaestus.makeBuild(model, bldDestionation);
+        hephaestus.makeBuild(bldDestionation);
         assertEquals(beforeHeight+1, model.getGrid().getTile(bldDestionation).getHeight().ordinal());
 
         assertTrue(model.getCurrentState() instanceof Power);
         hephaestus.togglePower();
-        hephaestus.makePower(model, bldDestionation);
+        hephaestus.makePower(bldDestionation);
         assertEquals(beforeHeight + 2, model.getGrid().getTile(bldDestionation).getHeight().ordinal());
         assertTrue(model.getCurrentState() instanceof End);
     }
@@ -80,22 +80,22 @@ public class HephaestusTest {
     public void differentDestinationTest(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(hephaestus);
-        hephaestus.makeSelection(model, new Coordinate(2,0));
+        hephaestus.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,0);
         assertTrue(model.getCurrentState() instanceof Move);
-        hephaestus.makeMovement(model, destination);
+        hephaestus.makeMovement(destination);
         assertEquals(hephaestus, model.getGrid().getTile(destination).getWorker().getPlayer(), "hephaestus should move");
 
         assertTrue(model.getCurrentState() instanceof Build);
         Coordinate bldDestionation = new Coordinate(2,1);
         int beforeHeight = model.getGrid().getTile(bldDestionation).getHeight().ordinal();
-        hephaestus.makeBuild(model, bldDestionation);
+        hephaestus.makeBuild(bldDestionation);
         assertEquals(beforeHeight+1, model.getGrid().getTile(bldDestionation).getHeight().ordinal());
 
         int bfHght = model.getGrid().getTile(new Coordinate(4,1)).getHeight().ordinal();
         assertTrue(model.getCurrentState() instanceof Power);
         hephaestus.togglePower();
-        hephaestus.makePower(model, new Coordinate(4,1));
+        hephaestus.makePower(new Coordinate(4,1));
         assertEquals(bfHght, model.getGrid().getTile(new Coordinate(4,1)).getHeight().ordinal());
         assertTrue(model.getCurrentState() instanceof End);
     }

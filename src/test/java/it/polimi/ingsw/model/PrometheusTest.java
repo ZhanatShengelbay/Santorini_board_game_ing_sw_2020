@@ -16,10 +16,10 @@ public class PrometheusTest {
     @Before
     public void setupGridTest(){
 
-        prometheus = new Prometheus("playerTest");
+        model = new Model();
+        prometheus = new Prometheus("playerTest", model);
         prometheus.addWorker();
 
-        model = new Model();
         model.getGrid().getTile(new Coordinate(1, 0)).levelUp().setWorker(prometheus.getWorker(0));
         model.getGrid().getTile(new Coordinate(1,1)).levelUp();
     }
@@ -27,15 +27,15 @@ public class PrometheusTest {
     public void firstTest(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(prometheus);
-        prometheus.makeSelection(model,new Coordinate(1,0));
+        prometheus.makeSelection(new Coordinate(1,0));
         assertTrue(model.getCurrentState() instanceof Power);
         prometheus.togglePower();
         int height= model.getGrid().getTile(1,1).getHeight().ordinal();
-        prometheus.makePower(model,new Coordinate(1,1));
+        prometheus.makePower(new Coordinate(1,1));
         assertEquals(model.getGrid().getTile(1,1).getHeight().ordinal(),height+1);
-        assertFalse(prometheus.makeMovement(model,new Coordinate(1,1)));
-        prometheus.makeMovement(model,new Coordinate(2,1));
-        prometheus.makeBuild(model,new Coordinate(1,1));
+        assertFalse(prometheus.makeMovement(new Coordinate(1,1)));
+        prometheus.makeMovement(new Coordinate(2,1));
+        prometheus.makeBuild(new Coordinate(1,1));
         assertTrue(model.getCurrentState() instanceof End);
 
     }
@@ -45,11 +45,11 @@ public class PrometheusTest {
         model.setCurrentPlayer(prometheus);
         model.getGrid().getTile(new Coordinate(1,1)).levelUp();
 
-        prometheus.makeSelection(model,new Coordinate(1,0));
+        prometheus.makeSelection(new Coordinate(1,0));
         assertTrue(model.getCurrentState() instanceof Power);
-        prometheus.makePower(model,new Coordinate(1,1));
+        prometheus.makePower(new Coordinate(1,1));
         assertEquals(model.getGrid().getTile(1,1).getWorker(),prometheus.getWorker(0));
-        prometheus.makeBuild(model,new Coordinate(2,1));
+        prometheus.makeBuild(new Coordinate(2,1));
         assertTrue(model.getCurrentState() instanceof End);
 
     }

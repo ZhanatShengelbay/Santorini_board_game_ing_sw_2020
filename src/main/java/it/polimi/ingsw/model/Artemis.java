@@ -22,21 +22,20 @@ public class Artemis extends Player {
      *
      * @param playerID name of the player
      */
-    public Artemis( String playerID) {
-        super(playerID);
+    public Artemis( String playerID, Model model) {
+        super(playerID, model);
     }
 
     /**
      * Method is overridden in order to keep the value of initial space
      *
      * @param selection
-     * @param model
      * @return
      */
     @Override
-    public boolean makeSelection(Model model, Coordinate selection) {
+    public boolean makeSelection(Coordinate selection) {
 
-        boolean result = super.makeSelection(model, selection);
+        boolean result = super.makeSelection(selection);
         if (result) from = selection;
         return result;
 
@@ -46,10 +45,9 @@ public class Artemis extends Player {
     /**
      * Method defines the behavior of the Artemis' turn
      *
-     * @param model The model where set the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -70,12 +68,11 @@ public class Artemis extends Player {
     /**
      * In the method the description of power is defined, i.e. how power behaves while it's off and ongit
      *
-     * @param model
      * @param destination
      * @return
      */
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
 
         if (isActive()) {
             model.setCurrentState(new Move());
@@ -83,10 +80,10 @@ public class Artemis extends Player {
             setValidCoordinate(new Checks(model, from).isNotWorker().isNotDome().isRisible().remove(this.from));
             if (containsInValidCoordinate(destination)) {
 
-                moveWorker(model, destination);
-                if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+                moveWorker(destination);
+                if (winCondition(from, destination)) model.setCurrentState(new Win());
                 else {
-                    nextPhase(model);
+                    nextPhase();
 
                 }
                 return true;
@@ -95,7 +92,7 @@ public class Artemis extends Player {
 
         } else {
             model.setCurrentState(new Build());
-            return makeBuild(model, destination);
+            return makeBuild(destination);
         }
 
     }

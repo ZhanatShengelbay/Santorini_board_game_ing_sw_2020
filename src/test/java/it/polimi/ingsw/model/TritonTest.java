@@ -15,7 +15,7 @@ public class TritonTest {
     @Before
     public void setupGridTest(){
 
-        triton = new Triton("tritonTest");
+        triton = new Triton("tritonTest", model);
         triton.addWorker();
         triton.addWorker();
 
@@ -31,19 +31,19 @@ public class TritonTest {
     public void TritonTest(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(triton);
-        triton.makeSelection(model, new Coordinate(1, 1));
+        triton.makeSelection(new Coordinate(1, 1));
         Coordinate destination = new Coordinate(0,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        triton.makeMovement(model, destination);
+        triton.makeMovement(destination);
         assertEquals(triton, model.getGrid().getTile(destination).getWorker().getPlayer(), "triton should move");
         int height=model.getGrid().getTile(destination).getHeight().ordinal();
         assertTrue(model.getCurrentState() instanceof Power);
         triton.togglePower();
-        triton.makePower(model,new Coordinate(0,2));
+        triton.makePower(new Coordinate(0,2));
         assertEquals(triton, model.getGrid().getTile(new Coordinate(0,2)).getWorker().getPlayer(), "triton should move");
         assertFalse(triton.isActive());
         assertTrue(model.getCurrentState() instanceof Power);
-        triton.makePower(model,destination);
+        triton.makePower(destination);
         assertEquals(height+1,model.getGrid().getTile(destination).getHeight().ordinal());
 
     }

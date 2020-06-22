@@ -148,7 +148,7 @@ public class Checks {
                 if (!tmp.isEmpty()) {
                     for (PlayerWithGroundEffect g : tmp) {
                         if(!g.equals(model.getCurrentPlayer()))
-                            if (g.respectEffect(model, from, destination)) returnList.remove(destination);
+                            if (g.respectEffect(from, destination)) returnList.remove(destination);
                     }
                 }
             }

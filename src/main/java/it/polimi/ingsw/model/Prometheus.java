@@ -17,18 +17,17 @@ public class Prometheus extends Player{
      * Constructor to keep the player's information from the super class
      * @param playerID
      */
-    public Prometheus(String playerID) {
-        super( playerID);
+    public Prometheus(String playerID, Model model) {
+        super( playerID, model);
     }
 
     /**
      * Overridden in a way to redefine the usual movement of super class Player
-     * @param model The model where the movement happened
      * @param destination The input choice
      * @return true or false depending on the result
      */
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
+    public boolean makeMovement(Coordinate destination) {
 
         Coordinate from = model.getCurrentWorker();
         if(isActive())
@@ -37,10 +36,10 @@ public class Prometheus extends Player{
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome().isRisible());
         if (containsInValidCoordinate(destination)) {
 
-            moveWorker(model,destination);
-            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+            moveWorker(destination);
+            if (winCondition(from, destination)) model.setCurrentState(new Win());
             else {
-                nextPhase(model);
+                nextPhase();
 
             }
             return true;
@@ -51,10 +50,9 @@ public class Prometheus extends Player{
 
     /**
      * To set the model in accordance with Prometheus' power
-     * @param model The model where set the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
@@ -78,18 +76,17 @@ public class Prometheus extends Player{
      * In case the power is active, checks the validity of the passed place and if valid builds,
      * if not valid sets the current state to Build and returns false
      * If power if not active sets the current state to Move and checks the makeMovements result.
-     * @param model
      * @param destination
      * @return
      */
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         if(isActive()){
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
             if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).levelUp();
-                nextPhase(model);
+                nextPhase();
                 return true;
             } else {
                 model.setCurrentState(new Build());
@@ -98,7 +95,7 @@ public class Prometheus extends Player{
         }
         else{
             model.setCurrentState(new Move());
-            boolean result= makeMovement(model,destination);
+            boolean result= makeMovement(destination);
             if(!result){
                 model.setCurrentState(new Power());
             }

@@ -18,16 +18,15 @@ public class Atlas extends Player {
      * Constructor Atlas to keep the Player's ID, which is received from the super class
      * @param playerID
      */
-    public Atlas(String playerID) {
-        super(playerID);
+    public Atlas(String playerID, Model model) {
+        super(playerID, model);
     }
 
     /**
      * Method describes the main skeleton of the turn, Power state is where player may use Atlas' power
-     * @param model The model where set the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -42,12 +41,11 @@ public class Atlas extends Player {
 
     /**
      * Method defines how the power of Atlas is exploited
-     * @param model
      * @param destination where to use the power
      * @return true or false
      */
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         if (isActive()) {
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).isNotWorker().isNotDome());
@@ -55,7 +53,7 @@ public class Atlas extends Player {
                 Tile t=model.getGrid().getTile(destination);
                 while(t.getHeight().ordinal()<TypeBlock.DOME.ordinal())
                     t.levelUp();
-                nextPhase(model);
+                nextPhase();
                 return true;
             } else {
                 model.setCurrentState(new Build());
@@ -64,7 +62,7 @@ public class Atlas extends Player {
         }
         else{
             model.setCurrentState(new Build());
-            boolean result= makeBuild(model,destination);
+            boolean result= makeBuild(destination);
             if(!result){
                 model.setCurrentState(new Power());
             }

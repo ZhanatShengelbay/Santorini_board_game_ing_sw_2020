@@ -17,24 +17,22 @@ public abstract class PlayerWithGroundEffect extends Player{
      * Constructor for the players owning groud effect
      * @param playerID
      */
-    public PlayerWithGroundEffect( String playerID) {
-        super( playerID);
+    public PlayerWithGroundEffect(String playerID, Model model) {
+        super( playerID, model);
     }
 
     /**
      * adds effect to the model
-     * @param model
      */
-    public void addEffect(Model model) {
+    public void addEffect() {
         model.getGroundEffects().add(this);
 
     }
     /**
      * It is called if one of the players possesses a ground power
-     * @param model
      * @param from starting point of tile
      * @param destination ending point of tile
      * @return true or false
      */
-    abstract  public boolean respectEffect(Model model, Coordinate from, Coordinate destination);
+    abstract  public boolean respectEffect(Coordinate from, Coordinate destination);
 }

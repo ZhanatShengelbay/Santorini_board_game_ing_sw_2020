@@ -15,10 +15,10 @@ public class AresTest {
     @Before
     public void setupGridTest(){
 
-        ares = new Ares("aresTest");
+        ares = new Ares("aresTest", model);
         ares.addWorker();
         ares.addWorker();
-        opponent = new Demeter("demeterOpponent");
+        opponent = new Demeter("demeterOpponent", model);
         opponent.addWorker();
 
         model = new Model();
@@ -34,20 +34,20 @@ public class AresTest {
     @Test
     public void usualAresTest(){
         model.setCurrentState(new Select());
-        ares.makeSelection(model, new Coordinate(1,0));
+        ares.makeSelection(new Coordinate(1,0));
         Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        ares.makeMovement(model, destination);
+        ares.makeMovement(destination);
         assertEquals("ares should move", ares, model.getGrid().getTile(destination).getWorker().getPlayer());
         int beforeHeight = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
 
         assertTrue(model.getCurrentState() instanceof Build);
-        ares.makeBuild(model, new Coordinate(1,1));
+        ares.makeBuild(new Coordinate(1,1));
         assertEquals("ares should build",model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal(), beforeHeight + 1);
         //assertTrue(model.getCurrentState() instanceof End);
         // ares.togglePower();
         assertTrue(model.getCurrentState() instanceof Power);
-        ares.makePower(model, new Coordinate(2,4));
+        ares.makePower(new Coordinate(2,4));
         assertEquals("ares should not reduce the place where opponent is located", opponent, model.getGrid().getTile(new Coordinate(2,4)).getWorker().getPlayer());
         assertTrue(model.getCurrentState() instanceof End);
     }
@@ -55,16 +55,16 @@ public class AresTest {
     @Test
     public void aresReduceTest(){
         model.setCurrentState(new Select());
-        ares.makeSelection(model, new Coordinate(1,0));
+        ares.makeSelection(new Coordinate(1,0));
         int movedWrkNum = model.getGrid().getTile(new Coordinate(1, 0)).getWorker().getNum();
         Coordinate destination = new Coordinate(2,1);
 
         assertTrue(model.getCurrentState() instanceof Move);
-        ares.makeMovement(model, destination);
+        ares.makeMovement(destination);
         int beforeHeight = model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal();
 
         assertTrue(model.getCurrentState() instanceof Build);
-        ares.makeBuild(model, new Coordinate(2,0));
+        ares.makeBuild(new Coordinate(2,0));
         assertEquals("ares should build", beforeHeight + 1, model.getGrid().getTile(new Coordinate(2,0)).getHeight().ordinal());
 
         //assertTrue(model.getCurrentState() instanceof End);
@@ -72,7 +72,7 @@ public class AresTest {
         int bfrHght = model.getGrid().getTile(new Coordinate(3,3)).getHeight().ordinal();
         assertTrue(model.getCurrentState() instanceof Power);
         ares.togglePower();
-        ares.makePower(model, new Coordinate(3,3));
+        ares.makePower(new Coordinate(3,3));
         int unmovedWrkNum = model.getGrid().getTile(new Coordinate(3,4)).getWorker().getNum();
         assertNotEquals("workers' nums should be different", movedWrkNum, unmovedWrkNum );
 

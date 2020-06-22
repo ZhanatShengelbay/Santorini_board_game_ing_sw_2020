@@ -115,4 +115,12 @@ public class Grid  implements Serializable {
         else return coordinate.getX() == 0 || coordinate.getX() == N_ROWS - 1 || coordinate.getY() == 0 || coordinate.getY() == N_COLS - 1;
     }
 
+    public void removeWorkersOfPlayer(Player player){
+        for (int i = 0; i < N_ROWS; i++)
+            for (int j = 0; j < N_COLS; j++) {
+                if(this.grid[i][j].getWorker()!=null && this.grid[i][j].getWorker().getPlayer().getPlayerID().compareTo(player.getPlayerID()) == 0)
+                    this.grid[i][j].noneWorker();
+            }
+    }
+
 }

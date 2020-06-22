@@ -18,20 +18,19 @@ public class Athena extends PlayerWithGroundEffect {
      * Constructor is used to initialize the object.
      * @param playerID players name
      */
-    public Athena(String playerID) {
-        super(playerID);
+    public Athena(String playerID, Model model) {
+        super(playerID, model);
 
     }
 
     /**
      * Method is overridden to keep info from where player moved
-     * @param model
      * @param selection
      */
     @Override
-    public boolean makeSelection(Model model, Coordinate selection) {
+    public boolean makeSelection(Coordinate selection) {
         model.getGroundEffects().remove(this);
-        boolean result = super.makeSelection(model, selection);
+        boolean result = super.makeSelection(selection);
         if(result)from = selection;
         return result;
 
@@ -40,15 +39,14 @@ public class Athena extends PlayerWithGroundEffect {
     /**
      * Method is overridden to activate the ground effect if player moved UP
      * @param destination The input choice
-     * @param model The model where the movement happened
      * @return
      */
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
-        boolean result = super.makeMovement(model, destination);
+    public boolean makeMovement(Coordinate destination) {
+        boolean result = super.makeMovement(destination);
         if(result)
             if(model.getGrid().HeightDifference(from,destination)==1)
-                addEffect(model);
+                addEffect();
         return result;
     }
 
@@ -57,26 +55,24 @@ public class Athena extends PlayerWithGroundEffect {
 
     /**
      * Method throws exception according to the power of Athena when opponent tries to move up
-     * @param model
      * @param destination
      * @return
      */
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         throw new IllegalStateException();
 
     }
 
     /**
      * The method defines that if Athena moved up, opponent should respect her power
-     * @param model
      * @param from starting point of tile
      * @param destination ending point of tile
      *
      * @return
      */
     @Override
-    public boolean respectEffect(Model model, Coordinate from,Coordinate destination) {
+    public boolean respectEffect(Coordinate from,Coordinate destination) {
         if(model.getCurrentState() instanceof Move)
             return model.getGrid().HeightDifference(from, destination) > 0;
         else return false;

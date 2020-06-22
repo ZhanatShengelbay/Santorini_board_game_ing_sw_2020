@@ -40,7 +40,6 @@ public class Worker implements Serializable {
      */
     public void setPlayer(Player player){
         this.player = player;
-
     }
 
     /**
@@ -48,7 +47,6 @@ public class Worker implements Serializable {
      * @return current player
      */
     public Player getPlayer() {
-
         return player;
     }
 

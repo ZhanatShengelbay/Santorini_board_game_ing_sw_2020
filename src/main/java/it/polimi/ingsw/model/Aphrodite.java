@@ -22,56 +22,53 @@ public class Aphrodite extends PlayerWithGroundEffect {
      * @param model to be added an effect
      */
 
-    public Aphrodite(String playerID) {
-        super(playerID);
+    public Aphrodite(String playerID, Model model) {
+        super(playerID, model);
 
     }
 
 
 
     @Override
-    public boolean positionWorker(Model model, Coordinate destination) {
+    public boolean positionWorker(Coordinate destination) {
         //Add in the ground effect this player
         if(!model.getGroundEffects().contains(this))
             model.getGroundEffects().add(this);
-        return super.positionWorker(model, destination);
+        return super.positionWorker(destination);
     }
 
     /**
      * Overridden to
-     * @param model
      * @param selection
      * @return
      */
     @Override
-    public boolean makeSelection(Model model, Coordinate selection) {
+    public boolean makeSelection(Coordinate selection) {
         model.getGroundEffects().remove(this);
-        return super.makeSelection(model, selection);
+        return super.makeSelection(selection);
     }
 
     /**
      *
-     * @param model
      * @param destination
      * @return
      */
 
     @Override
-    public boolean makeBuild(Model model, Coordinate destination) {
-        boolean result= super.makeBuild(model, destination);
-        if(result) addEffect(model);
+    public boolean makeBuild(Coordinate destination) {
+        boolean result= super.makeBuild(destination);
+        if(result) addEffect();
         return result;
     }
 
     /**
      *
-     * @param model
      * @param from starting point of tile
      * @param destination ending point of tile
      * @return
      */
     @Override
-    public boolean respectEffect(Model model, Coordinate from, Coordinate destination) {
+    public boolean respectEffect(Coordinate from, Coordinate destination) {
         if (model.getCurrentState() instanceof Move) {
             List<Coordinate> aroundTile = model.getGrid().validTileAround(from);
             for (Coordinate c : aroundTile) {
@@ -99,7 +96,7 @@ public class Aphrodite extends PlayerWithGroundEffect {
 
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         throw new IllegalArgumentException();
     }
 }

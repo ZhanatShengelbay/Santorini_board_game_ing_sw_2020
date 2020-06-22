@@ -20,21 +20,21 @@ public class PanTest {
     @Test
     public void usePowerToWinTest(){
 
-        pan = new Pan( "panTest");
+        model = new Model();
+        pan = new Pan( "panTest", model);
         pan.addWorker();
         pan.addWorker();
 
-        model = new Model();
         model.getGrid().getTile(new Coordinate(1,1)).levelUp().levelUp().levelUp().setWorker(pan.getWorker(0));
         model.getGrid().getTile(new Coordinate(2, 0)).levelUp();
         model.getGrid().getTile(new Coordinate(2,3)).levelUp().levelUp().setWorker(pan.getWorker(1));
 
         model.setCurrentState(new Select());
         Coordinate from = new Coordinate(1,1);
-        pan.makeSelection(model, from);
+        pan.makeSelection(from);
         assertTrue(model.getCurrentState() instanceof Move);
         Coordinate destination = new Coordinate(2,0);
-        pan.makeMovement(model,destination);
+        pan.makeMovement(destination);
         assertEquals("pan should be moved", pan, model.getGrid().getTile(destination).getWorker().getPlayer());
         assertTrue("pan should win", model.getCurrentState() instanceof Win);
 

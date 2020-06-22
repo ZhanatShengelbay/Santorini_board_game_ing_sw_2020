@@ -22,7 +22,7 @@ public class AphroditeTest {
         model.createPlayer("aphrodite","player");
         aphrodite=model.getPlayer(0);
 
-        opponent=new Pan("opponent"); //normal nextPhase
+        opponent=new Pan("opponent", model); //normal nextPhase
         opponent.addWorker();
         model.getPlayers().add(aphrodite);
         model.getPlayers().add(opponent);
@@ -39,12 +39,12 @@ public class AphroditeTest {
         assertTrue(aphrodite instanceof Aphrodite);
         model.setCurrentState(new Select());
         model.setCurrentPlayer(opponent);
-        opponent.makeSelection(model,new Coordinate(2,0));
+        opponent.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(3,1);
         assertTrue(model.getCurrentState() instanceof Move);
         assertFalse("opponent cannot move because there isnt a aphordite worker near destination",
-                    opponent.makeMovement(model, new Coordinate(3,0)));
-        opponent.makeMovement(model, destination);
+                    opponent.makeMovement(new Coordinate(3,0)));
+        opponent.makeMovement(destination);
         assertEquals("opponent should move", opponent.getWorker(0), model.getGrid().getTile(destination).getWorker());
 
 
@@ -52,13 +52,13 @@ public class AphroditeTest {
     @Test
     public void differentTestPower(){
         //This test is made to check the apollo power when Aphrodite's ground effect is active
-        Player apollo = new Apollo("Apollo");
+        Player apollo = new Apollo("Apollo", model);
         apollo.addWorker();
         model.getGrid().getTile(new Coordinate(2,0)).setWorker(apollo.getWorker(0));
         model.setCurrentState(new Select());
-        apollo.makeSelection(model,new Coordinate(2,0));
+        apollo.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(1,0);
-        apollo.makeMovement(model, destination);
+        apollo.makeMovement(destination);
         assertEquals("opponent should move", apollo.getWorker(0), model.getGrid().getTile(destination).getWorker());
         assertEquals("aphrodite change position", aphrodite.getWorker(0), model.getGrid().getTile(new Coordinate(2, 0)).getWorker());
 

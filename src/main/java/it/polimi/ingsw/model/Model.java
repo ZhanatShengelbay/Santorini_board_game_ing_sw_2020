@@ -20,9 +20,10 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
     private Coordinate currentWorker;
     private State currentState;
     private List<PlayerWithGroundEffect>groundEffects;
-    private List<Player> players;
+    List<Player> players;
     private Map<String,String> godsPlayer;
     private Player currentPlayer;
+    String winner;
 
     public Model clone(){
         Model model = new Model();
@@ -94,8 +95,8 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
     public void createPlayer(String god, String id){
         String godStandard = god.substring(0, 1).toUpperCase() + god.substring(1).toLowerCase();
         try {
-            Class [] classes = {String.class};
-            Player new_player = (Player)Class.forName("it.polimi.ingsw.model." + godStandard).getDeclaredConstructor(classes).newInstance(id);
+            Class [] classes = {String.class, Model.class};
+            Player new_player = (Player)Class.forName("it.polimi.ingsw.model." + godStandard).getDeclaredConstructor(classes).newInstance(id, this);
             players.add(new_player);
             godsPlayer.put(id,god);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
@@ -107,11 +108,22 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
     }
 
     public void nextPlayer(){
-        //for test
         if(players.size()==0)return;
         int index= players.indexOf(currentPlayer);
-        if(index==players.size()-1)index=0;
-        else index++;
+        for(int j=0; j < players.size(); j++) {
+            for (int i=0; i < players.size(); i++) {
+                if (index == players.size() - 1) index = 0;
+                else index++;
+                if (!players.get(index).gameOver) {
+                    System.out.println("player not gameover: " + players.get(index).getPlayerID());
+                    break;
+                }
+            }
+            if (!players.get(index).checkGameOver()) {
+                System.out.println("player not checked gameover: " + players.get(index).getPlayerID());
+                break;
+            }
+        }
         this.currentPlayer=players.get(index);
     }
 

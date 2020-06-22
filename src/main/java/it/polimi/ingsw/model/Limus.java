@@ -11,34 +11,34 @@ public class Limus extends PlayerWithGroundEffect {
     /**
      * @param playerID
      */
-    public Limus(String playerID) {
-        super(playerID);
+    public Limus(String playerID, Model model) {
+        super(playerID, model);
     }
 
     @Override
-    public boolean positionWorker(Model model, Coordinate destination) {
+    public boolean positionWorker(Coordinate destination) {
         //Add in the ground effect this player
         if(!model.getGroundEffects().contains(this))
             model.getGroundEffects().add(this);
-        return super.positionWorker(model, destination);
+        return super.positionWorker(destination);
     }
     
     @Override
-    public boolean makeSelection(Model model, Coordinate selection) {
+    public boolean makeSelection(Coordinate selection) {
         model.getGroundEffects().remove(this);
-        return super.makeSelection(model, selection);
+        return super.makeSelection(selection);
     }
 
     @Override
-    public boolean makeBuild(Model model, Coordinate destination) {
-        boolean result= super.makeBuild(model, destination);
-        if(result) addEffect(model);
+    public boolean makeBuild(Coordinate destination) {
+        boolean result= super.makeBuild(destination);
+        if(result) addEffect();
         return result;
     }
 
 
     @Override
-    public boolean respectEffect(Model model, Coordinate from, Coordinate destination) {
+    public boolean respectEffect(Coordinate from, Coordinate destination) {
 
         if(model.getCurrentState() instanceof Build) {
             if (model.getGrid().getTile(destination).getHeight() == TypeBlock.THIRD) return false;
@@ -54,7 +54,7 @@ public class Limus extends PlayerWithGroundEffect {
     }
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         return false;
     }
 }

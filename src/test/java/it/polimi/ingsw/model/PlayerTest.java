@@ -13,12 +13,12 @@ class AbstractPlayer extends Player{
 
 
     public AbstractPlayer( String playerID) {
-        super( playerID);
+        super( playerID, new Model());
     }
 
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         return false;
     }
 }
@@ -51,12 +51,12 @@ public class PlayerTest {
         if(!extTest)
             player = new AbstractPlayer( "opponent");
         model.getPlayers().add(player);
-        player.positionWorker(model,new Coordinate(1,0));
-        player.positionWorker(model,new Coordinate(0,1));
-        assertFalse(player.positionWorker(model,new Coordinate(1,0)));
+        player.positionWorker(new Coordinate(1,0));
+        player.positionWorker(new Coordinate(0,1));
+        assertFalse(player.positionWorker(new Coordinate(1,0)));
         assertTrue(model.getGrid().getTile(1,0).getWorker().equals(player.getWorker(0)));
         opponent = new AbstractPlayer( "opponent");
-        opponent.positionWorker(model,new Coordinate(1,2));
+        opponent.positionWorker(new Coordinate(1,2));
         model.getGrid().getTile(1,1).levelUp().levelUp();
         model.getGrid().getTile(2,1).levelUp();
         model.setCurrentPlayer(player);
@@ -69,18 +69,18 @@ public class PlayerTest {
     public void simpleGameRound(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(player);
-        assertFalse(player.makeSelection(model,new Coordinate(1,1)));
+        assertFalse(player.makeSelection(new Coordinate(1,1)));
         Coordinate selection=new Coordinate(1,0);
-        assertTrue(player.makeSelection(model,selection));
+        assertTrue(player.makeSelection(selection));
         assertEquals(model.getGrid().getTile(model.getCurrentWorker()),model.getGrid().getTile(selection));
-        assertFalse(player.makeMovement(model,new Coordinate(1,1)));
-        assertFalse("impossible to reach,but possible to the other worker",player.makeMovement(model,new Coordinate(0,2)));
+        assertFalse(player.makeMovement(new Coordinate(1,1)));
+        assertFalse("impossible to reach,but possible to the other worker",player.makeMovement(new Coordinate(0,2)));
         Coordinate move= new Coordinate(2,1);
-        assertTrue(player.makeMovement(model,move));
+        assertTrue(player.makeMovement(move));
         assertEquals(model.getGrid().getTile(model.getCurrentWorker()),model.getGrid().getTile(move));
         Coordinate build= new Coordinate(1,1);
         int height= model.getGrid().getTile(build).getHeight().ordinal();
-        assertTrue(player.makeBuild(model,build));
+        assertTrue(player.makeBuild(build));
         assertEquals(height+1,model.getGrid().getTile(build).getHeight().ordinal());
         assertTrue(model.getCurrentState()instanceof End);
 
@@ -90,7 +90,7 @@ public class PlayerTest {
 
 
     public void testPositionWorker(){
-        player.positionWorker(model, new Coordinate(2, 3));
+        player.positionWorker(new Coordinate(2, 3));
         assertEquals(model.getGrid().getTile(positionWorker).getWorker(), player.getWorker(0));
         for(int i = 0; i < 5 && i!= positionWorker.getX(); i++){
             for(int j = 0; j < 5 && j!= positionWorker.getY(); j++){

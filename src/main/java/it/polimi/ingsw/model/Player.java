@@ -23,27 +23,31 @@ public abstract class Player implements Serializable{
     private List<Coordinate> validCoordinate;  //is always calculated in the previous action
     private boolean power=false;
     private String classname;
+    Model model;
+    boolean gameOver = false;
 
     /**
      *
      * @param playerID
      */
-    public Player (String playerID) {
 
-        this.playerID = playerID;
-        this.workers= new ArrayList<>();
-
-    }
-
-    public Player (String playerID,String classname) {
+    public Player (String playerID, String classname, Model model) {
         this.classname=classname;
         this.playerID = playerID;
         this.workers= new ArrayList<>();
-
+        this.model = model;
     }
 
+    /**
+     *
+     * @param playerID
+     */
+    public Player (String playerID, Model model) {
 
-
+        this.playerID = playerID;
+        this.workers= new ArrayList<>();
+        this.model = model;
+    }
 
     public Worker addWorker(){
         if(workers.size()<2){
@@ -77,21 +81,45 @@ public abstract class Player implements Serializable{
      */
     public final void setValidCoordinate(Checks checks) {
         this.validCoordinate= checks.getResult();
-        if(this.validCoordinate.isEmpty())defeatHandler();
+        //if(this.validCoordinate.isEmpty())defeatHandler();
+    }
+
+    protected boolean checkGameOver(){
+        boolean noAction = false;
+        for (int i = 0; i < Grid.N_ROWS; i++)
+            for (int j = 0; j < Grid.N_COLS; j++) {
+                if (model.getGrid().getTile(i, j).getWorker() != null && model.getGrid().getTile(i, j).getWorker().getPlayer().getPlayerID().compareTo(this.playerID) == 0) {
+                    setValidCoordinate(new Checks(model, new Coordinate(i, j)).isNotWorker().isNotDome().isRisible());
+                    if (!noAction) {
+                        if (this.validCoordinate.isEmpty()) noAction = true;
+                        else return false;
+                    } else {
+                        if (this.validCoordinate.isEmpty()) {
+                            defeatHandler();
+                            return true;
+                        } else return false;
+                    }
+                }
+            }
+        return false;
     }
 
     protected void defeatHandler(){
-
-
+        int k = 0;
+        this.gameOver=true;
+        model.getGrid().removeWorkersOfPlayer(this);
+        for(int j=0; j < model.getNumOfPlayers(); j++) {
+            if(!model.getPlayer(j).gameOver) k++;
+        }
+        if(k==1) model.setCurrentState(new Win());
     }
 
     /**
      * Method locates the worker in the working area (game board) if there is no worker at chosen point
-     * @param model
      * @param destination
      * @return
      */
-    public boolean positionWorker(Model model, Coordinate destination) {
+    public boolean positionWorker(Coordinate destination) {
         if (!model.getGrid().getTile(destination).isWorker()) {
             model.getGrid().getTile(destination).setWorker(addWorker());
             if(workers.size() == 2 && model.getPlayer(model.getNumOfPlayers() - 1) == this) model.setCurrentState(new Select());
@@ -104,15 +132,14 @@ public abstract class Player implements Serializable{
     /**
      *
      * @param selection
-     * @param model
      * @return
      */
-    public boolean makeSelection(Model model, Coordinate selection) {
+    public boolean makeSelection(Coordinate selection) {
         Worker workerTmp = model.getGrid().getTile(selection).getWorker();
 
         if (workerTmp!=null &&  workerTmp.getPlayer().equals(this)) {
             model.setCurrentWorker(selection);
-            nextPhase(model);
+            nextPhase();
             return true;
 
         } else return false;
@@ -122,19 +149,18 @@ public abstract class Player implements Serializable{
 
     /**
      * Make the condition to check if the movement is available and call the move worker function
-     * @param model The model where the movement happened
      * @param destination The input choice
      * @return
      */
-    public boolean makeMovement(Model model, Coordinate destination) {
+    public boolean makeMovement(Coordinate destination) {
         Coordinate from = model.getCurrentWorker();
         setValidCoordinate(new Checks(model,from).isNotWorker().isNotDome().isRisible());
         if (validCoordinate.contains(destination)) {
 
-            moveWorker(model,destination);
-            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+            moveWorker(destination);
+            if (winCondition(from, destination)) model.setCurrentState(new Win());
             else {
-                nextPhase(model);
+                nextPhase();
 
             }
             return true;
@@ -143,7 +169,7 @@ public abstract class Player implements Serializable{
 
     }
 
-    protected void moveWorker(Model model,Coordinate destination){
+    protected void moveWorker(Coordinate destination){
 
         Worker wrkTmp = model.getGrid().getTile(model.getCurrentWorker()).getWorker();
         model.getGrid().getTile(destination).setWorker(wrkTmp);
@@ -152,16 +178,16 @@ public abstract class Player implements Serializable{
 
     }
 
-    public boolean makeBuild(Model model, Coordinate destination) {
+    public boolean makeBuild(Coordinate destination) {
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
         if (validCoordinate.contains(destination)) {
             model.getGrid().getTile(destination).levelUp();
-            nextPhase(model);
+            nextPhase();
             return true;
         } else return false;
     }
 
-    public boolean winCondition(Model model, Coordinate from, Coordinate destination) {
+    public boolean winCondition(Coordinate from, Coordinate destination) {
         Tile tileFrom = model.getGrid().getTile(from);
         Tile tileDestination = model.getGrid().getTile(destination);
 
@@ -182,9 +208,8 @@ public abstract class Player implements Serializable{
     /**
      * This function needs an implementation of the FSM structure which describe game's round for each kind of god.
      * For each state, the function had to decide the next state, depends also if the power is active or not.
-     * @param model The model where set the new current State
      */
-    public void nextPhase(Model model){
+    public void nextPhase(){
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -194,13 +219,14 @@ public abstract class Player implements Serializable{
             nextState = new Build();
 
         else if (currentState instanceof Build){
-            nextState = new End();
+            nextState = new Select();
+            model.nextPlayer();
         }
 
         model.setCurrentState(nextState);
     }
 
-    public abstract boolean makePower(Model model, Coordinate destination);
+    public abstract boolean makePower(Coordinate destination);
 
     public final boolean containsInValidCoordinate(Coordinate coordinate){
         return validCoordinate.contains(coordinate);

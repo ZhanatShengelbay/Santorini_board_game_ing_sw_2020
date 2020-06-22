@@ -12,7 +12,7 @@ public class Move implements State, Serializable {
 
     @Override
     public boolean handle(Coordinate choice, Model model){
-       return model.getCurrentPlayer().makeMovement(model,choice);
+       return model.getCurrentPlayer().makeMovement(choice);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Build implements State, Serializable {
 
     @Override
     public boolean handle(Coordinate choice, Model model) {
-       return model.getCurrentPlayer().makeBuild(model, choice);
+       return model.getCurrentPlayer().makeBuild(choice);
 
     }
 

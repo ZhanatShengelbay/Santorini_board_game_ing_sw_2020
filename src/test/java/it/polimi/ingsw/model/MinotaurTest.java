@@ -16,11 +16,11 @@ public class MinotaurTest {
 
     @Before
     public void testSetUpGrid() {
-        mino =new Minotaur("playertest");
+        model=new Model();
+        mino =new Minotaur("playertest", model);
         mino.addWorker();
         opponent=new AbstractPlayer("opponent");
         opponent.addWorker();
-        model=new Model();
         model.getGrid().getTile(new Coordinate(2, 0)).setWorker(mino.getWorker(0));
         model.getGrid().getTile(new Coordinate(2,1)).setWorker(opponent.getWorker(0));
         model.getGrid().getTile(new Coordinate(2,2)).levelUp().levelUp().levelUp();
@@ -28,9 +28,9 @@ public class MinotaurTest {
     @Test
     public void SimpleTest(){
         model.setCurrentState(new Select());
-        mino.makeSelection(model,new Coordinate(2,0));
+        mino.makeSelection(new Coordinate(2,0));
         Coordinate destination=new Coordinate(2,1);
-        mino.makeMovement(model,destination);
+        mino.makeMovement(destination);
         assertEquals("mino should move", mino.getWorker(0), model.getGrid().getTile(destination).getWorker());
         assertEquals("mino should move", mino.getWorker(0), model.getGrid().getTile(model.getCurrentWorker()).getWorker());
         assertEquals("opponent shift", opponent.getWorker(0), model.getGrid().getTile(new Coordinate(2,2)).getWorker());
@@ -42,9 +42,9 @@ public class MinotaurTest {
     public void secondTest(){
         model.setCurrentState(new Select());
         model.getGrid().getTile(new Coordinate(2,2)).levelUp();
-        mino.makeSelection(model,new Coordinate(2,0));
+        mino.makeSelection(new Coordinate(2,0));
         Coordinate destination=new Coordinate(2,1);
-        assertFalse(mino.makeMovement(model,destination));
+        assertFalse(mino.makeMovement(destination));
         assertEquals("mino shouldn t move", mino.getWorker(0), model.getGrid().getTile(new Coordinate(2,0)).getWorker());
         assertEquals("mino shouldn t move", mino.getWorker(0), model.getGrid().getTile(model.getCurrentWorker()).getWorker());
 
@@ -57,8 +57,8 @@ public class MinotaurTest {
         model.getGrid().getTile(new Coordinate(2, 3)).setWorker(mino.getWorker(1));
         model.getGrid().getTile(new Coordinate(2,4)).setWorker(opponent.getWorker(0));
         model.setCurrentState(new Select());
-        mino.makeSelection(model,new Coordinate(2,3));
-        assertFalse(mino.makeMovement(model,new Coordinate(2,4)));
+        mino.makeSelection(new Coordinate(2,3));
+        assertFalse(mino.makeMovement(new Coordinate(2,4)));
 
     }
 

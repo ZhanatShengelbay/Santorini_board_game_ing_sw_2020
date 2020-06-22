@@ -20,12 +20,12 @@ public class ApolloTest {
 
     @Before
     public void testSetUpGrid() {
-        apollo=new Apollo("playertest");
+        model=new Model();
+        apollo=new Apollo("playertest", model);
         apollo.addWorker();
         apollo.addWorker();
         opponent=new AbstractPlayer("opponent");
         opponent.addWorker();
-        model=new Model();
         model.getGrid().getTile(new Coordinate(2, 0)).setWorker(apollo.getWorker(0));
         model.getGrid().getTile(new Coordinate(3, 0)).setWorker(apollo.getWorker(1));
         model.getGrid().getTile(new Coordinate(2,1)).setWorker(opponent.getWorker(0));
@@ -35,15 +35,15 @@ public class ApolloTest {
     public void TestPower(){
         model.setCurrentState(new Select());
         model.setCurrentPlayer(apollo);
-        apollo.makeSelection(model,new Coordinate(2,0));
+        apollo.makeSelection(new Coordinate(2,0));
         Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
-        assertFalse("cannot move because there is a worker of apollo",apollo.makeMovement(model, new Coordinate(3,0)));
-        apollo.makeMovement(model, destination);
+        assertFalse("cannot move because there is a worker of apollo",apollo.makeMovement(new Coordinate(3,0)));
+        apollo.makeMovement(destination);
         assertEquals("apollo should move", apollo.getWorker(0), model.getGrid().getTile(destination).getWorker());
         assertEquals("opponent's worker is now in the selection tile",opponent.getWorker(0),model.getGrid().getTile(new Coordinate(2,0)).getWorker());
         assertTrue(model.getCurrentState() instanceof Build);
-        apollo.makeBuild(model,new Coordinate(2,2));
+        apollo.makeBuild(new Coordinate(2,2));
 
 
 
@@ -54,12 +54,12 @@ public class ApolloTest {
     public void TestFail(){
         model.setCurrentState(new Select());
         Coordinate from=new Coordinate(2,0);
-        apollo.makeSelection(model,from);
+        apollo.makeSelection(from);
         Coordinate destination = new Coordinate(2,1);
         model.getGrid().getTile(destination).levelUp().levelUp();
         assertEquals(2, model.getGrid().getTile(2, 1).getHeight().ordinal());
         assertTrue(model.getCurrentState() instanceof Move);
-        apollo.makeMovement(model, destination);
+        apollo.makeMovement(destination);
         assertEquals("apollo not move", apollo.getWorker(0), model.getGrid().getTile(from).getWorker());
         assertEquals("opponent worker not move",opponent.getWorker(0),model.getGrid().getTile(destination).getWorker());
         assertTrue(model.getCurrentState() instanceof Move);

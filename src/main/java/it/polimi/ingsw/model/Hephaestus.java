@@ -18,20 +18,19 @@ public class Hephaestus extends Player {
      *
      * @param playerID player's name
      */
-    public Hephaestus(String playerID) {
-        super(playerID);
+    public Hephaestus(String playerID, Model model) {
+        super(playerID, model);
     }
 
     /**
      * Overridden to check if the destination is the same as previous built place
      *
-     * @param model
      * @param destination
      * @return true or false depending on the condition's result
      */
     @Override
-    public boolean makeBuild(Model model, Coordinate destination) {
-        boolean lastBuilt = super.makeBuild(model, destination);
+    public boolean makeBuild(Coordinate destination) {
+        boolean lastBuilt = super.makeBuild(destination);
         if (lastBuilt) prevDestination = destination;
         return lastBuilt;
     }
@@ -41,10 +40,9 @@ public class Hephaestus extends Player {
      * while the turn of player starts current state's value is received from the model
      * and the assignment of next state's value depends on the current state
      *
-     * @param model The model where set the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -64,17 +62,16 @@ public class Hephaestus extends Player {
     /**
      * this method defines how the god's power should be used
      *
-     * @param model
      * @param destination
      */
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         if (isActive()) {
             model.setCurrentState(new Build());
             int lastHeight = model.getGrid().getTile(prevDestination).getHeight().ordinal();
             if (lastHeight < 3) {
                 model.getGrid().getTile(prevDestination).levelUp();
-                nextPhase(model);
+                nextPhase();
                 return true;
             } else {
                 model.setCurrentState(new Power());

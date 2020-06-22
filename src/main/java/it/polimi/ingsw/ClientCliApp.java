@@ -12,7 +12,7 @@ public class ClientCliApp
         System.out.println("Insert server ip\n");
 
 
-        Client client = new Client("127.0.0.1", 12345);
+        Client client = new Client("40.113.159.138", 12345);
         CLI cli = new CLI(client);
 
         client.addObserver(cli);

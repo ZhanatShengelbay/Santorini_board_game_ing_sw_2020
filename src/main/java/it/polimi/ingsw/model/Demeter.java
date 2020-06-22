@@ -24,25 +24,24 @@ public class Demeter extends Player {
      *
      * @param playerID name of the player
      */
-    public Demeter( String playerID) {
-        super( playerID);
+    public Demeter( String playerID, Model model) {
+        super( playerID, model);
     }
 
     /**
      * Overridden to keep the last built coordinate, it is used in the makePower method
-     * @param model
      * @param destination
      * @return true or false depending on the condition's result
      */
     @Override
-    public boolean makeBuild(Model model, Coordinate destination) {
+    public boolean makeBuild(Coordinate destination) {
         Checks tmp =new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome();
         if(doubleBuild)
             tmp.remove(firstBuild);
         setValidCoordinate(tmp);
         if (containsInValidCoordinate(destination)) {
             model.getGrid().getTile(destination).levelUp();
-            nextPhase(model);
+            nextPhase();
             doubleBuild=false;
             return true;
         } else {
@@ -54,10 +53,9 @@ public class Demeter extends Player {
      * Method describes the behavior of demeter. The current state received from the model is assigned to current state and
      * next state is first defined as null, later depending on the current state respective new next state info is assigned
      *
-     * @param model sets the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState = model.getCurrentState();
         State nextState = null;
         if (currentState instanceof Select)
@@ -80,7 +78,6 @@ public class Demeter extends Player {
      * player chooses the coordinate to build (should NOT be the same coordinate),
      * if there is any valid coordinate to build, builds otherwise goes to the next phase, i.e to the end
      *
-     * @param model
      * @param destination
      */
     /*@Override
@@ -108,7 +105,7 @@ public class Demeter extends Player {
     }
       */
     @Override
-    public boolean makePower(Model model, Coordinate destination){
+    public boolean makePower(Coordinate destination){
         if(isActive()){
             model.setCurrentState(new Build());
             setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
@@ -124,7 +121,7 @@ public class Demeter extends Player {
         }
         else{
             model.setCurrentState(new Build());
-            boolean result=makeBuild(model,destination);
+            boolean result=makeBuild(destination);
             if(result){
                 model.setCurrentState(new End());
             }

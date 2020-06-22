@@ -23,7 +23,7 @@ public class Power implements State, Serializable {
      */
     @Override
     public boolean handle(Coordinate choice, Model model) {
-       return model.getCurrentPlayer().makePower(model,choice);
+       return model.getCurrentPlayer().makePower(choice);
 
     }
     /**

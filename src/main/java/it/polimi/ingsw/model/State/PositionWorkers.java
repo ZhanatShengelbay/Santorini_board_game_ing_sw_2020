@@ -33,7 +33,7 @@ public class PositionWorkers implements State, Serializable {
      */
     @Override
     public boolean handle(Coordinate choice, Model model) {
-        boolean result = model.getCurrentPlayer().positionWorker(model,choice);
+        boolean result = model.getCurrentPlayer().positionWorker(choice);
         if(result)
             if(numOfWorkerToBePlaced>1)numOfWorkerToBePlaced--;
             else model.nextPlayer();

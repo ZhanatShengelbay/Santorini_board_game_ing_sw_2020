@@ -18,16 +18,15 @@ public class Apollo extends Player {
      *
      * @param playerID
      */
-    public Apollo( String playerID) {
-        super( playerID);
+    public Apollo( String playerID, Model model) {
+        super( playerID, model);
     }
 
     /**
      * Overriden method to define the behavior of FSM when player owns the god Apollo
-     * @param model The model where set the new current State
      */
     @Override
-    public void nextPhase(Model model) {
+    public void nextPhase() {
         State currentState=model.getCurrentState();
         State nextState=null;
         if(currentState instanceof Select)
@@ -41,10 +40,10 @@ public class Apollo extends Player {
     }
 
     @Override
-    public boolean makeMovement(Model model, Coordinate destination) {
+    public boolean makeMovement(Coordinate destination) {
         Worker wrkDestination = model.getGrid().getTile(destination).getWorker();
         if(wrkDestination==null || wrkDestination.getPlayer().equals(this))
-            return super.makeMovement(model,destination);
+            return super.makeMovement(destination);
         //This block was made to avoid synergy problem with Aphrodite's power
         //Do first the movement and after check if this action is possible: if not, back to the initial condition
         Coordinate from = model.getCurrentWorker();
@@ -55,9 +54,9 @@ public class Apollo extends Player {
         if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).setWorker(wrkFrom);
                 model.setCurrentWorker(destination);
-            if (winCondition(model, from, destination)) model.setCurrentState(new Win());
+            if (winCondition(from, destination)) model.setCurrentState(new Win());
             else
-                nextPhase(model);
+                nextPhase();
             return true;
         }else {
             model.getGrid().getTile(destination).setWorker(wrkDestination);
@@ -71,7 +70,7 @@ public class Apollo extends Player {
 
 
     @Override
-    public boolean makePower(Model model, Coordinate destination) {
+    public boolean makePower(Coordinate destination) {
         throw new IllegalStateException();
 
     }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.utility.Coordinate;
 
@@ -6,8 +6,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class BoardGUI extends JFrame {
@@ -27,7 +28,7 @@ public class BoardGUI extends JFrame {
 
 
 
-    public void initBoard(ClientBackEnd backEnd){
+    public void initBoard(BackEndGui backEnd){
         this.setLayout(new BorderLayout());
 
         rightPanel=new JPanel();
@@ -57,17 +58,53 @@ public class BoardGUI extends JFrame {
         this.add(rightPanel, BorderLayout.EAST);
         this.pack();
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                backEnd.sendMessage("QUIT");
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
 
     }
 
-    public void createGrid(ClientBackEnd model){
+    public void createGrid(BackEndGui model){
 
         grid=new GraphicTile[N_ROWS][N_COLS];
         BufferedImage img = null;
         try {
 
-            img = ImageIO.read(getClass().getResource("/floor.png"));
+            img = ImageIO.read(getClass().getResource("/tileImage/floor.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,7 +135,7 @@ public class BoardGUI extends JFrame {
         return grid;
     }
 
-    public void playersPanel(ClientBackEnd backEnd){
+    public void playersPanel(BackEndGui backEnd){
         JPanel result=new JPanel();
         result.setLayout(new GridLayout(3,1));
 
@@ -110,7 +147,7 @@ public class BoardGUI extends JFrame {
             BufferedImage img = null;
             try {
 
-                img = ImageIO.read(getClass().getResource("/gods/"+backEnd.getPlayersGods().get(s).toLowerCase()+".png"));
+                img = ImageIO.read(getClass().getResource("/godsImage/" +backEnd.getPlayersGods().get(s).toLowerCase()+".png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

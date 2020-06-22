@@ -12,8 +12,8 @@ import static org.junit.Assert.*;
 class AbstractPlayer extends Player{
 
 
-    public AbstractPlayer( String playerID) {
-        super( playerID, new Model());
+    public AbstractPlayer( String playerID,Model model) {
+        super( playerID, model);
     }
 
 
@@ -49,13 +49,13 @@ public class PlayerTest {
 
         model = new Model();
         if(!extTest)
-            player = new AbstractPlayer( "opponent");
+            player = new AbstractPlayer( "opponent",model);
         model.getPlayers().add(player);
         player.positionWorker(new Coordinate(1,0));
         player.positionWorker(new Coordinate(0,1));
         assertFalse(player.positionWorker(new Coordinate(1,0)));
         assertTrue(model.getGrid().getTile(1,0).getWorker().equals(player.getWorker(0)));
-        opponent = new AbstractPlayer( "opponent");
+        opponent = new AbstractPlayer( "opponent",model);
         opponent.positionWorker(new Coordinate(1,2));
         model.getGrid().getTile(1,1).levelUp().levelUp();
         model.getGrid().getTile(2,1).levelUp();

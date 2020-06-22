@@ -37,7 +37,7 @@ public class Ares extends Player {
             nextState = new Build();
 
         else if (currentState instanceof Build)
-            nextState = new Power();
+            nextState = new PowerEnd();
         model.setCurrentState(nextState);
 
     }
@@ -45,6 +45,7 @@ public class Ares extends Player {
     @Override
     public boolean makePower(Coordinate destination) {
         if(isActive()){
+            model.setCurrentState(new Move());
             boolean result=false;
             List<Coordinate>tileAroundDestination=model.getGrid().validTileAround(destination);
             for(Coordinate c : tileAroundDestination){
@@ -54,8 +55,10 @@ public class Ares extends Player {
                     break;
                 }
             }
-            if(result)
+            if(result) {
                 model.setCurrentState(new End());
+                numWrk=0;
+            }
             return result;
         }
         else{

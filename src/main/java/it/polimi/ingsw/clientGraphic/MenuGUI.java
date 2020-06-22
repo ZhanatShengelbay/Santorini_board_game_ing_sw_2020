@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.client.ClientBackEnd;
+package it.polimi.ingsw.clientGraphic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +8,12 @@ public class MenuGUI extends JFrame implements ActionListener {
     JLabel bckg;
     JTextField nameForm;
 
-    public MenuGUI(ClientBackEnd clientBackEnd){
+    public MenuGUI(BackEndGui backEndGui){
 
         setSize(1280, 720);
         setLayout(new GridBagLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon("src/main/java/it/polimi/ingsw/view/Images/Santorini.jpeg");
+        ImageIcon img = new ImageIcon(getClass().getResource("/Santorini.jpeg"));
         bckg = new JLabel("", img, JLabel.CENTER);
         bckg.setBounds(0,0,1280, 720);
         add(bckg);
@@ -66,10 +64,10 @@ public class MenuGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Insert your name");
             else {
                 JOptionPane.showMessageDialog(null, "Wait other player");
-                clientBackEnd.sendMessage(nameForm.getText());
-                clientBackEnd.sendMessage("2");
+                backEndGui.sendMessage(nameForm.getText());
+                backEndGui.sendMessage("2");
 
-                new GodSetupUI(2,clientBackEnd);
+                new GodSetupUI(2, backEndGui);
                 this.dispose();
             }
 
@@ -85,8 +83,9 @@ public class MenuGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Insert your name");
             else {
                 JOptionPane.showMessageDialog(null, "Wait other players");
-                clientBackEnd.sendMessage(nameForm.getText()+" "+3);
-                new GodSetupUI(3,clientBackEnd);
+                backEndGui.sendMessage(nameForm.getText());
+                backEndGui.sendMessage("3");
+                new GodSetupUI(3, backEndGui);
                 this.dispose();
 
 

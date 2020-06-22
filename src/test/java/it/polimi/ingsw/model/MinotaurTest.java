@@ -19,7 +19,7 @@ public class MinotaurTest {
         model=new Model();
         mino =new Minotaur("playertest", model);
         mino.addWorker();
-        opponent=new AbstractPlayer("opponent");
+        opponent=new AbstractPlayer("opponent",model);
         opponent.addWorker();
         model.getGrid().getTile(new Coordinate(2, 0)).setWorker(mino.getWorker(0));
         model.getGrid().getTile(new Coordinate(2,1)).setWorker(opponent.getWorker(0));

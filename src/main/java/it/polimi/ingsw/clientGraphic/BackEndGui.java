@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.controller.Event;
 import it.polimi.ingsw.model.ModelView;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ClientBackEnd implements Observer<Object>,Graphic{
+public class BackEndGui implements Observer<Object> {
 
     private final Client client;
     boolean power;
@@ -30,7 +30,7 @@ public class ClientBackEnd implements Observer<Object>,Graphic{
     boolean init;
     boolean godChoice;
 
-    public ClientBackEnd(Client client)
+    public BackEndGui(Client client)
     {
         this.client=client;
         //this.gui= new GameGUI();
@@ -57,14 +57,15 @@ public class ClientBackEnd implements Observer<Object>,Graphic{
     }
 
     public void sendChoice(){
-        if(readyToSend) {
-            StringBuilder message = new StringBuilder("");
-            if (power) message.append("@ ");
-            message.append(coordinate.getX()).append(" ").append(coordinate.getY());
-            client.send(message.toString());
-            power = false;
-            readyToSend=!readyToSend;
-        }
+           if(coordinate!=null) {
+                StringBuilder message = new StringBuilder("");
+                if (power) message.append("@ ");
+                message.append(coordinate.getX()).append(" ").append(coordinate.getY());
+                client.send(message.toString());
+                power = false;
+                gui.power.updateGraphic(false);
+            }
+
     }
     public void sendMessage(String message){
         client.send(message.toLowerCase());
@@ -98,6 +99,7 @@ public class ClientBackEnd implements Observer<Object>,Graphic{
 
                 }
             }
+            gui.revalidate();
         });
         /*
         for(int i=0;i<GameGUI.N_ROWS;i++) {

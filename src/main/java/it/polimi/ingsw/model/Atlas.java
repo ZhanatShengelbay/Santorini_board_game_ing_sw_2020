@@ -56,7 +56,7 @@ public class Atlas extends Player {
                 nextPhase();
                 return true;
             } else {
-                model.setCurrentState(new Build());
+                model.setCurrentState(new Power());
                 return false;
             }
         }

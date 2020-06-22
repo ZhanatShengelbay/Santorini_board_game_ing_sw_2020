@@ -18,7 +18,7 @@ public enum TypeBlock implements Serializable {
 
     private static final long serialVersionUID = 14L;
 
-    //ToString da implementare
+
     /**
      * level attribute of type int
      */

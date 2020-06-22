@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

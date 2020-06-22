@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.model.EnumDivinity;
 
@@ -16,7 +16,7 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
     JLabel bckg;
 
     int numOfPlayer;
-    ClientBackEnd backEnd;
+    BackEndGui backEnd;
 
     private JPanel panelCenter;
     private JPanel panelSouth;
@@ -49,7 +49,7 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
     private DefaultListModel<String> listModelAllGods = new DefaultListModel<>();
     private DefaultListModel<String> listModelGameGods = new DefaultListModel<>();
 
-    public GodSetupUI(int numOfPlayer,ClientBackEnd backEnd){
+    public GodSetupUI(int numOfPlayer, BackEndGui backEnd){
         this.numOfPlayer=numOfPlayer;
         this.backEnd=backEnd;
         backEnd.setSetupGui(this);
@@ -65,7 +65,7 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         setSize(1280, 720);
         setLayout(new GridBagLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon("src/main/java/it/polimi/ingsw/view/Images/santorini_splash.jpg");
+        ImageIcon img = new ImageIcon(getClass().getResource("/santorini_splash.jpg"));
         bckg = new JLabel("", img, JLabel.CENTER);
         bckg.setBounds(0,0,1280, 720);
         add(bckg);
@@ -393,8 +393,8 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
             return;
         }
         String cardName = listGameGods.getSelectedValue();
-        cardName = "src/main/java/it/polimi/ingsw/view/Images/" + cardName + ".png";
-        lblCard.setIcon(new ImageIcon(cardName));
+        cardName =  "/godsCard/" + cardName + ".png";
+        lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
     }
 
     private void changeCardAll(){
@@ -404,8 +404,8 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
             return;
         }
         String cardName = listAllGods.getSelectedValue();
-        cardName = "src/main/java/it/polimi/ingsw/view/Images/" + cardName + ".png";
-        lblCard.setIcon(new ImageIcon(cardName));
+        cardName = "/godsCard/" + cardName + ".png";
+        lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
     }
 
     private void displaySelectedItems(){

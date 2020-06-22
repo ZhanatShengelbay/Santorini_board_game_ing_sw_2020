@@ -23,7 +23,7 @@ public class Zeus extends Player {
      * @param playerID
      */
     public Zeus(String playerID, Model model){
-        super(playerID, model);
+        super(playerID,model);
     }
 
     /**
@@ -32,7 +32,7 @@ public class Zeus extends Player {
      * @return true or false
      */
     @Override
-    public boolean makeMovement(Coordinate destination) {
+    public boolean makeMovement( Coordinate destination) {
         boolean prevAnswer = super.makeMovement(destination);
         if (prevAnswer) selfPlace = destination;
         return prevAnswer;
@@ -44,23 +44,24 @@ public class Zeus extends Player {
      * @return true or false
      */
     @Override
-    public boolean makeBuild(Coordinate destination) {
+    public boolean makeBuild( Coordinate destination) {
         if (destination != selfPlace) {
-           super.makeBuild(destination);
+           return super.makeBuild(destination);
         } else {
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).add(this.selfPlace));
-            if (model.getGrid().getTile(selfPlace).getHeight().ordinal() < TypeBlock.THIRD.ordinal()) {
-                model.getGrid().getTile(selfPlace).levelUp();
-                nextPhase();
-                return true;
+            if(containsInValidCoordinate(destination)&&model.getGrid().getTile(destination).getHeight().ordinal() < TypeBlock.THIRD.ordinal()){
+                {
+                    model.getGrid().getTile(selfPlace).levelUp();
+                    nextPhase();
+                    return true;
+                }
             } else return false;
         }
-        return false;
     }
 
 
     @Override
-    public boolean makePower(Coordinate destination) {
+    public boolean makePower( Coordinate destination) {
         throw new IllegalArgumentException();
     }
 }

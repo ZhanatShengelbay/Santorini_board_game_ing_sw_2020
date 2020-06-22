@@ -14,12 +14,12 @@ public class TritonTest {
 
     @Before
     public void setupGridTest(){
-
+        model = new Model();
         triton = new Triton("tritonTest", model);
         triton.addWorker();
         triton.addWorker();
 
-        model = new Model();
+
         model.getGrid().getTile(new Coordinate(1, 1)).levelUp().setWorker(triton.getWorker(0));
         model.getGrid().getTile(new Coordinate(0,1)).levelUp();
         model.getGrid().getTile(new Coordinate(0,2)).levelUp().levelUp();

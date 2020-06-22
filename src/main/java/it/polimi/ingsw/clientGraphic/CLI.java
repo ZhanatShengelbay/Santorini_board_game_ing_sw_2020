@@ -1,17 +1,17 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.clientGraphic;
 
 
-import it.polimi.ingsw.client.Graphic;
 import it.polimi.ingsw.controller.Event;
 import it.polimi.ingsw.model.EnumDivinity;
 
 import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utility.Observer;
+import it.polimi.ingsw.view.Client;
 
 import java.util.Scanner;
 
-public class CLI implements Graphic, Observer<Object>, Runnable {
+public class CLI implements Observer<Object>, Runnable {
 
     Client client;
     Scanner stdin = new Scanner(System.in);

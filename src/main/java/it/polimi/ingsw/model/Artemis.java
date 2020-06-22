@@ -87,7 +87,10 @@ public class Artemis extends Player {
 
                 }
                 return true;
-            } else return false;
+            } else{
+                model.setCurrentState(new Power());
+                return false;
+            }
 
 
         } else {

@@ -19,7 +19,6 @@ public class Aphrodite extends PlayerWithGroundEffect {
     /**
      * Constructor to initialize Aphrodite object
      * @param playerID possessing Aphrodite
-     * @param model to be added an effect
      */
 
     public Aphrodite(String playerID, Model model) {
@@ -28,6 +27,11 @@ public class Aphrodite extends PlayerWithGroundEffect {
     }
 
 
+    /** Overridden to insert aphrodite into the groundEffects in model
+     * @param model
+     * @param destination
+     * @return
+             */
 
     @Override
     public boolean positionWorker(Coordinate destination) {
@@ -38,7 +42,7 @@ public class Aphrodite extends PlayerWithGroundEffect {
     }
 
     /**
-     * Overridden to
+     *
      * @param selection
      * @return
      */

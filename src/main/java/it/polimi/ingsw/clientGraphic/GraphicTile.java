@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utility.Coordinate;
@@ -6,10 +6,7 @@ import it.polimi.ingsw.utility.Coordinate;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class GraphicTile extends JLabel  {
@@ -44,7 +41,7 @@ public class GraphicTile extends JLabel  {
         if(change){
 
             BufferedImage img = null;
-            String URI="/"+TypeBlock.values()[this.height].toString().toLowerCase()+this.playerColor.toLowerCase() +".png";
+            String URI="/tileImage/"+TypeBlock.values()[this.height].toString().toLowerCase()+this.playerColor.toLowerCase() +".png";
             try {
                 img = ImageIO.read(getClass().getResource(URI));
             } catch (IOException e) {

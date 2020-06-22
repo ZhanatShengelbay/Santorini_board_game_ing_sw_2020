@@ -1,25 +1,27 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.view.CLI;
+import it.polimi.ingsw.clientGraphic.BackEndGui;
+import it.polimi.ingsw.clientGraphic.CLI;
 import it.polimi.ingsw.view.Client;
 
 import java.util.Scanner;
 
 public class ClientCliApp
 {
+
+
     public static void main(String[] args){
-        Scanner stdin= new Scanner(System.in);
-        System.out.println("Insert server ip\n");
+
+        Client client;
+        CLI cli;
 
 
-        Client client = new Client("40.113.159.138", 12345);
-        CLI cli = new CLI(client);
-
+        String ipAdd = "127.0.0.1";
+        client = new Client(ipAdd, 12345);
+        cli = new CLI(client);
         client.addObserver(cli);
-
         Thread t0 = new Thread(client);
         Thread t1 = new Thread(cli);
-
         t0.start();
         t1.start();
 
@@ -31,6 +33,7 @@ public class ClientCliApp
             System.out.println("Thread interrupted");
             return;
         }
+
 
     }
 }

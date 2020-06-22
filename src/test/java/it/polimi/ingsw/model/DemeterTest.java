@@ -17,11 +17,11 @@ public class DemeterTest {
 
     @Before
     public void setupGridTest(){
-
         model = new Model();
         demeter = new Demeter( "demeterTest", model);
         demeter.addWorker();
         demeter.addWorker();
+
 
         model.getGrid().getTile(new Coordinate(1,1)).levelUp().setWorker(demeter.getWorker(0));
         model.getGrid().getTile(new Coordinate(2,0)).levelUp().levelUp();
@@ -39,25 +39,30 @@ public class DemeterTest {
         demeter.makeSelection(new Coordinate(1,1));
         Coordinate destination = new Coordinate(2,0);
         assertTrue(model.getCurrentState() instanceof Move);
-        demeter.makeMovement(destination);
+        demeter.makeMovement( destination);
         assertEquals("demeter should move", demeter, model.getGrid().getTile(destination).getWorker().getPlayer());
 
-        assertTrue(model.getCurrentState() instanceof Power);
+        assertTrue(model.getCurrentState() instanceof Build);
         Coordinate bldPlace = new Coordinate(2,1);
         int bld = model.getGrid().getTile(bldPlace).getHeight().ordinal();
-        demeter.togglePower();
-        demeter.makePower(bldPlace);
+        demeter.makeBuild(bldPlace);
         assertEquals(bld+1, model.getGrid().getTile(bldPlace).getHeight().ordinal());
-        assertTrue( model.getCurrentState() instanceof Build);
+        assertTrue( model.getCurrentState() instanceof Power);
         int newBld = model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal();
 
-        assertFalse(demeter.makeBuild(new Coordinate(2,1)));
-        assertTrue( model.getCurrentState() instanceof Build);
+        demeter.makePower(new Coordinate(5,5));
+        assertTrue( model.getCurrentState() instanceof End);
         //this action is possible
+        model.setCurrentState(new Power());
+        demeter.togglePower();
+        Coordinate newDest=(new Coordinate(2,1));
+        boolean result = demeter.makePower(newDest);
+        assertFalse(result);
+        assertEquals(newBld, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
-        Coordinate newDest;
+        assertTrue(model.getCurrentState() instanceof Power);
         newDest=(new Coordinate(1,1));
-        demeter.makeBuild(newDest);
+        demeter.makePower( newDest);
         assertEquals(newBld+1, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
 

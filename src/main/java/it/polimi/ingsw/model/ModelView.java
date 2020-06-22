@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class ModelView implements Serializable {
 
+    private static final long serialVersionUID = 30L;
     private Grid grid;
     private String currentPlayer;
     private List<Player> players;
@@ -29,6 +30,7 @@ public class ModelView implements Serializable {
     public Map<String, String> getGodsPlayer() {
         return godsPlayer;
     }
+
 
     public ModelView(Model model, String message) {
         new ModelView(model).setMessage(message);

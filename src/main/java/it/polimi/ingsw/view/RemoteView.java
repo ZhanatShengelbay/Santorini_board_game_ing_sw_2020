@@ -63,6 +63,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
             return;
         }
         if (model.getCurrentState() instanceof Power){
+
             GameChoice choice;
             if(inputs[0].toLowerCase().compareTo("@") == 0) {
                 choice = new GameChoice(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2]), connection.getID(), this);

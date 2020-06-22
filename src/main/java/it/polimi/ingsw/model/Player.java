@@ -22,21 +22,10 @@ public abstract class Player implements Serializable{
     private String playerID;
     private List<Coordinate> validCoordinate;  //is always calculated in the previous action
     private boolean power=false;
-    private String classname;
+
     Model model;
     boolean gameOver = false;
 
-    /**
-     *
-     * @param playerID
-     */
-
-    public Player (String playerID, String classname, Model model) {
-        this.classname=classname;
-        this.playerID = playerID;
-        this.workers= new ArrayList<>();
-        this.model = model;
-    }
 
     /**
      *
@@ -219,8 +208,8 @@ public abstract class Player implements Serializable{
             nextState = new Build();
 
         else if (currentState instanceof Build){
-            nextState = new Select();
-            model.nextPlayer();
+            nextState = new End();
+
         }
 
         model.setCurrentState(nextState);

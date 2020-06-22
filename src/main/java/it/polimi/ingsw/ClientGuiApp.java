@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.client.ClientBackEnd;
-import it.polimi.ingsw.view.CLI;
+import it.polimi.ingsw.clientGraphic.BackEndGui;
 import it.polimi.ingsw.view.Client;
 
 import java.util.Scanner;
@@ -15,8 +14,8 @@ public class ClientGuiApp
         System.out.println("Insert server ip\n");
 
 
-        Client client = new Client("127.0.0.1", 12345);
-        ClientBackEnd gui= new ClientBackEnd(client);
+        Client client = new Client("40.113.159.138", 12345);
+        BackEndGui gui= new BackEndGui(client);
 
         client.addObserver(gui);
 

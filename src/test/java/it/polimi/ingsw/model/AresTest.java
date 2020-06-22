@@ -14,14 +14,14 @@ public class AresTest {
 
     @Before
     public void setupGridTest(){
-
+        model = new Model();
         ares = new Ares("aresTest", model);
         ares.addWorker();
         ares.addWorker();
         opponent = new Demeter("demeterOpponent", model);
         opponent.addWorker();
 
-        model = new Model();
+
         model.getGrid().getTile(new Coordinate(1,0)).levelUp().setWorker(ares.getWorker(0));
         model.getGrid().getTile(new Coordinate(3,4)).levelUp().setWorker(ares.getWorker(1));
         model.getGrid().getTile(new Coordinate(2,4)).setWorker(opponent.getWorker(0));

@@ -16,10 +16,11 @@ public class ZeusTest {
 
     @Before
     public void setupGridTest(){
+        model = new Model();
         zeus = new Zeus("zeustest", model);
         zeus.addWorker();
         zeus.addWorker();
-        model = new Model();
+
         model.getGrid().getTile(new Coordinate(1, 0)).levelUp().setWorker(zeus.getWorker(0));
         model.getGrid().getTile(new Coordinate(1, 1)).levelUp();
         model.getGrid().getTile(new Coordinate(2, 0)).levelUp();

@@ -24,7 +24,7 @@ public class ApolloTest {
         apollo=new Apollo("playertest", model);
         apollo.addWorker();
         apollo.addWorker();
-        opponent=new AbstractPlayer("opponent");
+        opponent=new AbstractPlayer("opponent",model);
         opponent.addWorker();
         model.getGrid().getTile(new Coordinate(2, 0)).setWorker(apollo.getWorker(0));
         model.getGrid().getTile(new Coordinate(3, 0)).setWorker(apollo.getWorker(1));

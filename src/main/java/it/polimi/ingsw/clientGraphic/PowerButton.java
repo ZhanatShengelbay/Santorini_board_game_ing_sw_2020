@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 
 import javax.swing.*;
@@ -7,9 +7,9 @@ import java.awt.event.ActionEvent;
 public class PowerButton extends Button {
 
     BoardGUI boardGui;
-    ClientBackEnd model;
+    BackEndGui model;
 
-    public PowerButton(BoardGUI boardGui, ClientBackEnd model) {
+    public PowerButton(BoardGUI boardGui, BackEndGui model) {
         this.boardGui = boardGui;
         this.model=model;
         this.addActionListener(this);

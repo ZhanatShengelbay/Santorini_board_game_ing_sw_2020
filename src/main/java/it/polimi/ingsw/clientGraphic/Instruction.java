@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.client.MenuGUI;
+package it.polimi.ingsw.clientGraphic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,7 +91,7 @@ public class Instruction extends JFrame implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
+ /*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -102,9 +100,11 @@ public class Instruction extends JFrame implements ActionListener {
             }
         });
     }
-
+*/
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+
 }

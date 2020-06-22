@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.clientGraphic;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -6,9 +6,9 @@ import java.awt.event.MouseListener;
 public class GraphicListener implements MouseListener {
 
     BoardGUI boardGui;
-    ClientBackEnd model;
+    BackEndGui model;
 
-    public GraphicListener(BoardGUI boardGui, ClientBackEnd model) {
+    public GraphicListener(BoardGUI boardGui, BackEndGui model) {
         this.boardGui = boardGui;
         this.model=model;
     }

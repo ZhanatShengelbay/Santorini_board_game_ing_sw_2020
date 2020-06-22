@@ -15,9 +15,10 @@ public class AtlasTest {
 
     @Before
     public void testSetUpGrid() {
+        model=new Model();
         atlas =new Atlas("playertest", model);
         atlas.addWorker();
-        model=new Model();
+
         model.getGrid().getTile(new Coordinate(2, 0)).setWorker(atlas.getWorker(0));
 
     }

@@ -26,10 +26,10 @@ public class GraphicTile extends JLabel  {
         return coordinate;
     }
 
-    @Override
-    public int getHeight() {
-        return height;
-    }
+//    @Override
+//    public int getHeight() {
+//        return height;
+//    }
 
     public void updateGraphic(String playerColor, int height){
         boolean change=false;

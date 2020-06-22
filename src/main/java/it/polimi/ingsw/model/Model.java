@@ -114,15 +114,9 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
             for (int i=0; i < players.size(); i++) {
                 if (index == players.size() - 1) index = 0;
                 else index++;
-                if (!players.get(index).gameOver) {
-                    System.out.println("player not gameover: " + players.get(index).getPlayerID());
-                    break;
-                }
+                if (!players.get(index).gameOver) break;
             }
-            if (!players.get(index).checkGameOver()) {
-                System.out.println("player not checked gameover: " + players.get(index).getPlayerID());
-                break;
-            }
+            if (!players.get(index).checkGameOver()) break;
         }
         this.currentPlayer=players.get(index);
     }

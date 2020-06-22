@@ -94,13 +94,20 @@ public abstract class Player implements Serializable{
     }
 
     protected void defeatHandler(){
+        String winner = null;
         int k = 0;
         this.gameOver=true;
         model.getGrid().removeWorkersOfPlayer(this);
         for(int j=0; j < model.getNumOfPlayers(); j++) {
-            if(!model.getPlayer(j).gameOver) k++;
+            if(!model.getPlayer(j).gameOver) {
+                k++;
+                winner = model.getPlayer(j).getPlayerID();
+            }
         }
-        if(k==1) model.setCurrentState(new Win());
+        if(k==1) {
+            model.setCurrentState(new Win());
+            model.winner = winner;
+        }
     }
 
     /**

@@ -39,7 +39,7 @@ public class Minotaur extends Player {
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotDome().isRisible());
         if (containsInValidCoordinate(destination)) {
             moveWorker(destination);
-            if (winCondition(from, destination)) model.setCurrentState(new Win());
+            if (winCondition(from, destination)) model.setCurrentState(new Win(this.getPlayerID()));
             else
                 nextPhase();
             return true;

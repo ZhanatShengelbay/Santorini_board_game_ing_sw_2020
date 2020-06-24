@@ -11,11 +11,20 @@ import java.io.Serializable;
 public class Win implements State, Serializable {
 
     private static final long serialVersionUID = 12L;
+    private String winner;
 
     /**
      * Overriden getter method that does not allow the choice of coordinate while there is a winner in the game
      * @return null
      */
+
+    public Win(String winner){
+        this.winner = winner;
+    }
+
+    public String getWinner(){
+        return winner;
+    }
 
     @Override
     public boolean handle(Coordinate choice, Model model) {

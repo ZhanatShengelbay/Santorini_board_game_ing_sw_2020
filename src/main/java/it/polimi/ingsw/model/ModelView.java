@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.State.Win;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,8 @@ public class ModelView implements Serializable {
         this.players = clone.getPlayers();
         this.state = clone.getCurrentState().getClass().getSimpleName().toLowerCase();
         this.godsPlayer = clone.getGodsPlayer();
-        this.winner = clone.winner;
+        if(clone.getCurrentState() instanceof Win)
+            this.winner = ((Win)clone.getCurrentState()).getWinner();
     }
 
     public Map<String, String> getGodsPlayer() {

@@ -37,7 +37,7 @@ public class Prometheus extends Player{
         if (containsInValidCoordinate(destination)) {
 
             moveWorker(destination);
-            if (winCondition(from, destination)) model.setCurrentState(new Win());
+            if (winCondition(from, destination)) model.setCurrentState(new Win(this.getPlayerID()));
             else {
                 nextPhase();
 

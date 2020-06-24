@@ -49,9 +49,8 @@ public class GameController implements Controller {
                 if(model.getCurrentState() instanceof End){
                     model.getCurrentState().handle(null,model);
                 }
-                    model.notify(model.updateState().setMessage("It's "+model.getCurrentPlayer().getPlayerID()+"'s turn."));
+                    model.notify(model.updateState().setMessage("It's " + model.getCurrentPlayer().getPlayerID() + "'s turn."));
                     message.getView().showMessage(model.getCurrentState().questionMessage());
-
 
             }
             else message.getView().showError("Wrong action, retry");

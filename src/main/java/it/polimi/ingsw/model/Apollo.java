@@ -54,7 +54,7 @@ public class Apollo extends Player {
         if (containsInValidCoordinate(destination)) {
                 model.getGrid().getTile(destination).setWorker(wrkFrom);
                 model.setCurrentWorker(destination);
-            if (winCondition(from, destination)) model.setCurrentState(new Win());
+            if (winCondition(from, destination)) model.setCurrentState(new Win(this.getPlayerID()));
             else
                 nextPhase();
             return true;

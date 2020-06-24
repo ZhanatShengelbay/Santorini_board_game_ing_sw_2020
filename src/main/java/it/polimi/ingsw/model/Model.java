@@ -33,6 +33,7 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
         model.godsPlayer=this.godsPlayer;
         model.currentPlayer=this.currentPlayer;
         model.currentWorker=this.currentWorker;
+        model.winner=this.winner;
         return model;
     }
 

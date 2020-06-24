@@ -101,11 +101,12 @@ public abstract class Player implements Serializable{
         for(int j=0; j < model.getNumOfPlayers(); j++) {
             if(!model.getPlayer(j).gameOver) {
                 k++;
+                System.out.println("SETTING WINNER");
                 winner = model.getPlayer(j).getPlayerID();
             }
         }
         if(k==1) {
-            model.setCurrentState(new Win());
+            model.setCurrentState(new Win(winner));
             model.winner = winner;
         }
     }
@@ -154,7 +155,7 @@ public abstract class Player implements Serializable{
         if (validCoordinate.contains(destination)) {
 
             moveWorker(destination);
-            if (winCondition(from, destination)) model.setCurrentState(new Win());
+            if (winCondition(from, destination)) model.setCurrentState(new Win(this.playerID));
             else {
                 nextPhase();
 

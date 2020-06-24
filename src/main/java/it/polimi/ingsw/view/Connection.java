@@ -16,6 +16,7 @@ public class Connection extends Subject<String> implements Runnable {
     private String name;
     private int numOfPlayers;
     private boolean active = true;
+    int gameIndex;
 
     public Connection(Socket socket, Server server){
             this.socket = socket;

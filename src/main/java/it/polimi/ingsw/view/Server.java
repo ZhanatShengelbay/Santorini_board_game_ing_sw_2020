@@ -30,6 +30,9 @@ public class Server {
     //Deregister connection
     public synchronized void deregisterConnection(Connection c){
         connections.remove(c);
+        for(Connection connection : playingConnections.get(c.gameIndex - 1)){
+            connection.send(c.getID() + " disconnected");
+        }
     }
 
     public synchronized void createGame(List<Connection> connectionList){
@@ -77,6 +80,7 @@ public class Server {
                     playingConnections.add(tmp);
                     createGame(tmp);
                     for(Connection connection : tmp){
+                        connection.gameIndex = playingConnections.size();
                         waitingConnections.remove(connection);
                     }
                 }
@@ -93,6 +97,7 @@ public class Server {
                     playingConnections.add(tmp);
                     createGame(tmp);
                     for(Connection connection : tmp){
+                        connection.gameIndex = playingConnections.size();
                         waitingConnections.remove(connection);
                     }
                 }

@@ -189,20 +189,11 @@ public class BoardGUI extends JFrame {
         if(selected!=null)
             selected.setBorder(commonBorder);
         this.selected=t;
-       // selected.updateGraphic("blue",2);
-        selected.setBorder(BorderFactory.createLineBorder(Color.YELLOW,3));
-
-    }
-
-    public void godList(){
-
-    }
-
-
-    public void godChoice(String[] input){
+        SwingUtilities.invokeLater(() -> selected.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3)));
 
 
     }
+
 
     public void printText(String message){
         textBox.setVisible(false);

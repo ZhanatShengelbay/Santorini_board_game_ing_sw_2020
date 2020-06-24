@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientGraphic;
 
 import it.polimi.ingsw.controller.Event;
+import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.utility.Coordinate;
@@ -60,7 +61,7 @@ public class BackEndGui implements Observer<Object> {
            if(coordinate!=null) {
                 StringBuilder message = new StringBuilder("");
                 if (power) message.append("@ ");
-                message.append(coordinate.getX()).append(" ").append(coordinate.getY());
+                message.append(coordinate.getX()+1).append(" ").append(coordinate.getY()+1);
                 client.send(message.toString());
                 power = false;
                 gui.power.updateGraphic(false);
@@ -163,6 +164,8 @@ public class BackEndGui implements Observer<Object> {
         else if(message instanceof ModelView){
             if(init)
                 initGraphic((ModelView)message);
+            if(((ModelView)message).getMessage()!=null)
+                this.gui.printText(((ModelView)message).getMessage());
             updateGraphicGrid((ModelView)message);
             this.model=(ModelView)message;
         }
@@ -176,7 +179,7 @@ public class BackEndGui implements Observer<Object> {
     }
 
 
-    private void initGraphic(ModelView message) {
+    public void initGraphic(ModelView message) {
         for(int i=0;i<message.sizePlayers();i++){
             this.players.add(message.getPlayer(i));
             switch (i){

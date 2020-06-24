@@ -26,16 +26,18 @@ public class GraphicTile extends JLabel  {
         return coordinate;
     }
 
-//    @Override
-//    public int getHeight() {
-//        return height;
-//    }
+    public String getPlayerColor() {
+        return playerColor;
+    }
+
+    public int getTileHeight() {
+       return height; }
 
     public void updateGraphic(String playerColor, int height){
         boolean change=false;
-        if(playerColor==null)
-            this.playerColor ="";
-        else if(!this.playerColor.equals(playerColor)){
+        if(playerColor ==null)
+            playerColor ="";
+        if(!this.playerColor.equals(playerColor)){
             change=true;
             this.playerColor = playerColor;
         }

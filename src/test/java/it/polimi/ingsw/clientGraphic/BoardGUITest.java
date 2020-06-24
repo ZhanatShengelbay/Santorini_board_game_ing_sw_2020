@@ -73,8 +73,10 @@ public class BoardGUITest {
 
     @Test
     public void textTest(){
+        String tmp=backEnd.getGui().textBox.getText();
         backEnd.update("text");
-        assertEquals(backEnd.getGui().textBox.getText(),"text");
+
+        assertEquals(backEnd.getGui().textBox.getText(),tmp+" "+"text");
     }
 
 

@@ -89,6 +89,7 @@ public class Artemis extends Player {
                 return true;
             } else{
                 model.setCurrentState(new Power());
+                togglePower();
                 return false;
             }
 

@@ -61,7 +61,9 @@ public class DemeterTest {
         assertEquals(newBld, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 
         assertTrue(model.getCurrentState() instanceof Power);
+        demeter.togglePower();
         newDest=(new Coordinate(1,1));
+
         demeter.makePower( newDest);
         assertEquals(newBld+1, model.getGrid().getTile(new Coordinate(1,1)).getHeight().ordinal());
 

@@ -7,10 +7,9 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
+
+import static javax.swing.PopupFactory.getSharedInstance;
 
 public class GodSetupUI extends JFrame implements ActionListener, ListSelectionListener, ItemListener {
     JLabel bckg;
@@ -393,8 +392,12 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
             return;
         }
         String cardName = listGameGods.getSelectedValue();
+
         cardName =  "/godsCard/" + cardName + ".png";
+
         lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
+
+
     }
 
     private void changeCardAll(){
@@ -403,9 +406,14 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
             lblCard.setIcon(null);
             return;
         }
+
         String cardName = listAllGods.getSelectedValue();
+
         cardName = "/godsCard/" + cardName + ".png";
         lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
+
+
+
     }
 
     private void displaySelectedItems(){

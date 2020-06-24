@@ -98,6 +98,7 @@ public class Prometheus extends Player{
             boolean result= makeMovement(destination);
             if(!result){
                 model.setCurrentState(new Power());
+                togglePower();
             }
             return result;
         }

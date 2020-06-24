@@ -59,6 +59,11 @@ public class Ares extends Player {
                 model.setCurrentState(new End());
                 numWrk=0;
             }
+            else
+            {
+                model.setCurrentState(new PowerEnd());
+                togglePower();
+            }
             return result;
         }
         else{

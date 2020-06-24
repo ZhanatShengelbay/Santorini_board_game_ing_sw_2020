@@ -38,7 +38,9 @@ public class Triton extends Player{
             result=makeBuild(destination);
 
         }
-        if(!result) model.setCurrentState(new Power());
+        if(!result){
+            model.setCurrentState(new Power());
+        }
         return result;
     }
 }

@@ -75,6 +75,7 @@ public class Hephaestus extends Player {
                 return true;
             } else {
                 model.setCurrentState(new Power());
+                togglePower();
                 return false;
             }
         } else {

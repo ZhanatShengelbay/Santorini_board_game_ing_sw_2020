@@ -88,6 +88,7 @@ public class Demeter extends Player {
                 return true;
             } else {
                 model.setCurrentState(new PowerEnd());
+                togglePower();
                 return false;
             }
         } else {

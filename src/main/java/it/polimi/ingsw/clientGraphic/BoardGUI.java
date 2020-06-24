@@ -6,10 +6,14 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import static javax.swing.PopupFactory.*;
 
 public class BoardGUI extends JFrame {
 
@@ -19,6 +23,7 @@ public class BoardGUI extends JFrame {
 
     GraphicTile[][] grid;
     JTextField textBox = new JTextField();
+
     JPanel rightPanel;
     JPanel gridPanel;
     Button send;
@@ -26,9 +31,12 @@ public class BoardGUI extends JFrame {
     GraphicTile selected;
     Border commonBorder=BorderFactory.createLineBorder(new Color(6, 9, 12), 2);
 
+    public BoardGUI(String title) throws HeadlessException {
+        super(title);
+    }
 
+    public void initBoard(BackEndGui backEnd) {
 
-    public void initBoard(BackEndGui backEnd){
         this.setLayout(new BorderLayout());
 
         rightPanel=new JPanel();
@@ -53,7 +61,7 @@ public class BoardGUI extends JFrame {
 
         rightPanel.add(buttonsPanel,BorderLayout.SOUTH);
 
-
+        this.setResizable(false);
         this.add(textBox, BorderLayout.SOUTH);
         this.add(rightPanel, BorderLayout.EAST);
         this.pack();
@@ -139,14 +147,16 @@ public class BoardGUI extends JFrame {
         JPanel result=new JPanel();
         result.setLayout(new GridLayout(3,1));
 
+
         for(String s : backEnd.players){
             JPanel tmp=new JPanel();
+
+            final Popup[] popup = new Popup[1];
             tmp.setLayout(new BorderLayout());
             JLabel pic=new JLabel();
             JLabel name=new JLabel();
             BufferedImage img = null;
             try {
-
                 img = ImageIO.read(getClass().getResource("/godsImage/" +backEnd.getPlayersGods().get(s).toLowerCase()+".png"));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -169,6 +179,37 @@ public class BoardGUI extends JFrame {
             tmp.add(name,BorderLayout.SOUTH);
             tmp.add(pic,BorderLayout.CENTER);
 
+
+
+            tmp.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    JLabel description=new JLabel(PowerDescription.getDescription(backEnd.getPlayersGods().get(s).toUpperCase()));
+                    popup[0] = getSharedInstance().getPopup(e.getComponent(), description, e.getXOnScreen(), e.getYOnScreen());
+                    popup[0].show();
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    if(popup[0]!=null)
+                        popup[0].hide();
+                }
+            });
             result.add(tmp);
 
 

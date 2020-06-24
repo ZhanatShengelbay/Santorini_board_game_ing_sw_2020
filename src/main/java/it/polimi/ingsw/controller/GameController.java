@@ -40,7 +40,7 @@ public class GameController implements Controller {
             return;
 
         if(model.getCurrentState() instanceof Power && ((GameChoice) message).powerIsActive()) {
-            model.getCurrentPlayer().togglePower();
+            if(!model.getCurrentPlayer().isActive())model.getCurrentPlayer().togglePower();
         }
 
         try {

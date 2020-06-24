@@ -49,8 +49,9 @@ public class BackEndGui implements Observer<Object> {
     }
 
     public void createBoardGui() {
-        this.gui=new BoardGUI();
+        this.gui=new BoardGUI("Santorini");
         gui.initBoard(this);
+
     }
 
     public void setup(){
@@ -156,7 +157,7 @@ public class BackEndGui implements Observer<Object> {
     public void update(Object message) {
         if(message instanceof String){
             try {
-                this.gui.printText((String)message);
+                this.gui.printText(this.gui.textBox.getText()+" "+ message);
             }catch (NullPointerException e){
                 System.out.println((String)message);
             }

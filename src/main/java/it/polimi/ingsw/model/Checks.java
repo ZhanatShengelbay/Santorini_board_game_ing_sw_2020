@@ -125,6 +125,7 @@ public class Checks {
         return this;
 
     }
+
     public Checks add(Coordinate additionalValidCoordinate){
         result.add(true);
         destinations.add(additionalValidCoordinate);

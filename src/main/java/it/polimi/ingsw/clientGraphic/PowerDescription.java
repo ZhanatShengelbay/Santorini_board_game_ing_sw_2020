@@ -45,8 +45,8 @@ public class PowerDescription {
                        "space, it may immediately move " +"<br>"+
                        "again.</html>";
            case ARTEMIS:
-               return "<html>"+x.name()+" Your Move: Your Worker may " +
-                       "move one additional time, but not " +"<br>"+
+               return "<html>"+x.name()+" Your Move: Your Worker may " +"<br>"+
+                       "move one additional time, but not " +
                        "back to its initial space.</html>";
            case DEMETER:
                return"<html>"+ x.name()+" Your Build: Your Worker may " +"<br>"+
@@ -59,8 +59,8 @@ public class PowerDescription {
                        "forced one space straight backwards to an " +"<br>"+
                        "unoccupied space at any level. </html>";
            case APHRODITE:
-               return"<html>"+  x.name()+" Any Move: If an opponent Worker" +"<br>"+
-                       "starts its turn neighboring one of" +
+               return"<html>"+  x.name()+" Any Move: If an opponent Worker" +
+                       "starts its turn neighboring one of" +"<br>"+
                        "your Workers, its last move must" +"<br>"+
                        "be to a space neighboring one of your Workers.</html>";
            case HEPHAESTUS:

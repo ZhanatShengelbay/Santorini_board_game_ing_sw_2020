@@ -107,7 +107,7 @@ public abstract class Player implements Serializable{
         }
         if(k==1) {
             model.setCurrentState(new Win(winner));
-            model.winner = winner;
+            model.setWinner(winner);
         }
     }
 

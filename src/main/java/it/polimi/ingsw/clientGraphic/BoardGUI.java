@@ -31,7 +31,7 @@ public class BoardGUI extends JFrame {
     GraphicTile selected;
     Border commonBorder=BorderFactory.createLineBorder(new Color(6, 9, 12), 2);
 
-    public BoardGUI(String title) throws HeadlessException {
+    public BoardGUI(String title)  {
         super(title);
     }
 
@@ -43,20 +43,22 @@ public class BoardGUI extends JFrame {
         rightPanel.setLayout(new BorderLayout());
         JPanel buttonsPanel =new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
+        buttonsPanel.setBackground(new Color(224, 224, 183));;
 
         //playersPanel(backEnd);
 
 
 
+
         createGrid(backEnd);
-        textBox.setPreferredSize(new Dimension(this.getWidth(),80));
+        textBox.setPreferredSize(new Dimension(this.getWidth(),40));
 
         send= new SendButton(this, backEnd);
-        send.setPreferredSize(new Dimension(100,100));
+        send.setPreferredSize(new Dimension(75,75));
         buttonsPanel.add(send);
 
         power = new PowerButton(this, backEnd);
-        power.setPreferredSize(new Dimension(100,100));
+        power.setPreferredSize(new Dimension(75,75));
         buttonsPanel.add(power);
 
         rightPanel.add(buttonsPanel,BorderLayout.SOUTH);
@@ -76,6 +78,7 @@ public class BoardGUI extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 backEnd.sendMessage("QUIT");
+
             }
 
             @Override
@@ -117,7 +120,7 @@ public class BoardGUI extends JFrame {
             e.printStackTrace();
         }
         assert img != null;
-        Image dimg= img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        Image dimg= img.getScaledInstance(125, 125, Image.SCALE_SMOOTH);
         gridPanel=new JPanel();
         gridPanel.setLayout(new GridLayout(5,5));
 
@@ -126,7 +129,7 @@ public class BoardGUI extends JFrame {
             for (int j = 0; j < N_COLS; j++) {
                 GraphicTile t = new GraphicTile(new Coordinate(i, j));
                 t.addMouseListener(listener);
-                t.setPreferredSize(new Dimension(150,150));
+                t.setPreferredSize(new Dimension(125,125));
                 t.setIcon(new ImageIcon(dimg));
                 t.setBorder(commonBorder);
                 t.setOpaque(true);
@@ -145,12 +148,15 @@ public class BoardGUI extends JFrame {
 
     public void playersPanel(BackEndGui backEnd){
         JPanel result=new JPanel();
+
+
         result.setLayout(new GridLayout(3,1));
+        result.setBackground(new Color(224, 224, 183));
 
 
         for(String s : backEnd.players){
             JPanel tmp=new JPanel();
-
+            tmp.setBackground(new Color(224, 224, 183));
             final Popup[] popup = new Popup[1];
             tmp.setLayout(new BorderLayout());
             JLabel pic=new JLabel();
@@ -162,7 +168,7 @@ public class BoardGUI extends JFrame {
                 e.printStackTrace();
             }
             assert img != null;
-            Image dimg= img.getScaledInstance(128, 200, Image.SCALE_SMOOTH);
+            Image dimg= img.getScaledInstance(104, 163, Image.SCALE_SMOOTH);
             pic.setIcon(new ImageIcon(dimg));
             pic.setHorizontalAlignment(SwingConstants.CENTER);
             name.setText(s.toUpperCase());
@@ -200,6 +206,7 @@ public class BoardGUI extends JFrame {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     JLabel description=new JLabel(PowerDescription.getDescription(backEnd.getPlayersGods().get(s).toUpperCase()));
+                    description.setFont(new Font(Font.DIALOG,Font.PLAIN,18));
                     popup[0] = getSharedInstance().getPopup(e.getComponent(), description, e.getXOnScreen(), e.getYOnScreen());
                     popup[0].show();
                 }

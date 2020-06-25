@@ -29,6 +29,6 @@ public class PowerEnd extends Power {
      */
     @Override
     public String questionMessage() {
-        return super.questionMessage()+" If you just want to end just send a void input";
+        return super.questionMessage()+" If you just want to end just send a input";
     }
 }

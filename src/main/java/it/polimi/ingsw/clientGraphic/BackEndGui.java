@@ -1,7 +1,6 @@
 package it.polimi.ingsw.clientGraphic;
 
-import it.polimi.ingsw.controller.Event;
-import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.view.Event;
 import it.polimi.ingsw.model.ModelView;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.utility.Coordinate;
@@ -115,18 +114,16 @@ public class BackEndGui implements Observer<Object> {
     public void handle(Event event){
         switch (event){
             case SETUP:
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        setupGui.createGodSetup();
-                    }
-                });
-
-
+                SwingUtilities.invokeLater(() -> setupGui.createGodSetup());
 
                 break;
             case GODCHOICE:
                 godChoice=true;
+                break;
+            case WIN:
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Congratulation, you win!!");
                 break;
         }
     }

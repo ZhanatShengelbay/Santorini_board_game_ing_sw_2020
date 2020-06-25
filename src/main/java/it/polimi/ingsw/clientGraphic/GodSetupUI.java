@@ -34,6 +34,7 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
     private JButton btnRemoveAll;
 
     private JLabel lblCard;
+    private JLabel lblDescription;
     private JLabel lblListAllGods;
     private JLabel lblListGameGods;
     private JLabel lblSelectedAllGods;
@@ -147,8 +148,11 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         lblCard = new JLabel(new ImageIcon());
         lblCard.setAlignmentX(LEFT_ALIGNMENT);
         lblCard.setPreferredSize(new Dimension(200,300));
-
+        lblDescription= new JLabel();
+        lblDescription.setOpaque(true);
         boxPower.add(lblGodCard);
+        boxPower.add(lblDescription);
+
         boxPower.add(Box.createRigidArea(new Dimension(100, 30)));
         boxPower.add(lblCard);
         panelCenter.add(boxPower);
@@ -192,6 +196,7 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         setSize(new Dimension(1280, 720));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
+
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -315,9 +320,10 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
             listModelAllGods.addElement(s.toUpperCase());
         }
 
-        setSize(new Dimension(1600, 800));
+        setSize(new Dimension(1280, 720));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
+
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -389,9 +395,11 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         int selectedItem = listGameGods.getSelectedIndex();
         if (selectedItem == -1){
             lblCard.setIcon(null);
+
             return;
         }
         String cardName = listGameGods.getSelectedValue();
+
 
         cardName =  "/godsCard/" + cardName + ".png";
 
@@ -404,11 +412,11 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         int selectedItem = listAllGods.getSelectedIndex();
         if (selectedItem == -1){
             lblCard.setIcon(null);
+
             return;
         }
 
         String cardName = listAllGods.getSelectedValue();
-
         cardName = "/godsCard/" + cardName + ".png";
         lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
 

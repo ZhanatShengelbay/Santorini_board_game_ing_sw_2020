@@ -45,7 +45,7 @@ public class Zeus extends Player {
      */
     @Override
     public boolean makeBuild( Coordinate destination) {
-        if (destination != selfPlace) {
+        if (!(destination.equals(selfPlace))) {
            return super.makeBuild(destination);
         } else {
             setValidCoordinate(new Checks(model, model.getCurrentWorker()).add(this.selfPlace));

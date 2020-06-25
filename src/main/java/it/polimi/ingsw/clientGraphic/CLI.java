@@ -1,7 +1,7 @@
 package it.polimi.ingsw.clientGraphic;
 
 
-import it.polimi.ingsw.controller.Event;
+import it.polimi.ingsw.view.Event;
 import it.polimi.ingsw.model.EnumDivinity;
 
 import it.polimi.ingsw.model.ModelView;
@@ -133,6 +133,9 @@ public class CLI implements Observer<Object>, Runnable {
 
             case GODCHOICE:
                 System.out.println("Select gods from this list:\n");
+                break;
+            case WIN:
+                System.out.println("You win!!:\n");
                 break;
 
         }

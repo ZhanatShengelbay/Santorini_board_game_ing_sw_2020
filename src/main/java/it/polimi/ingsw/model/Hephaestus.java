@@ -53,7 +53,7 @@ public class Hephaestus extends Player {
             if (isActive()) {
                 nextState = new End();
                 togglePower();
-            } else nextState = new Power();
+            } else nextState = new PowerEnd();
         } else
             nextState = new End();
         model.setCurrentState(nextState);
@@ -74,7 +74,7 @@ public class Hephaestus extends Player {
                 nextPhase();
                 return true;
             } else {
-                model.setCurrentState(new Power());
+                model.setCurrentState(new PowerEnd());
                 togglePower();
                 return false;
             }

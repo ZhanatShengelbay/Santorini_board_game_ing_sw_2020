@@ -26,13 +26,22 @@ public class Win implements State, Serializable {
         return winner;
     }
 
+
+
     @Override
     public boolean handle(Coordinate choice, Model model) {
-        return false;
+
+        return true;
     }
 
     @Override
     public String questionMessage() {
         return null;
+    }
+
+    public Win setWinner(Model model,String winner)
+    {
+        model.setWinner(winner);
+        return this;
     }
 }

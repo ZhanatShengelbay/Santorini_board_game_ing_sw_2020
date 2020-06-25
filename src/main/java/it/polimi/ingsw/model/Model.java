@@ -23,7 +23,8 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
     List<Player> players;
     private Map<String,String> godsPlayer;
     private Player currentPlayer;
-    String winner;
+
+ String winner;
 
     public Model clone(){
         Model model = new Model();
@@ -120,6 +121,13 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
             if (!players.get(index).checkGameOver()) break;
         }
         this.currentPlayer=players.get(index);
+    }
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public String getWinner() {
+        return winner;
     }
 
     public Map<String, String> getGodsPlayer() {

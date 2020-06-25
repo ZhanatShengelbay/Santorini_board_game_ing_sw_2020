@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.State.PositionWorkers;
 import it.polimi.ingsw.model.playerChoice.PlayerChoice;
 import it.polimi.ingsw.model.playerChoice.SetUpChoice;
+import it.polimi.ingsw.view.Event;
 import it.polimi.ingsw.view.RemoteView;
 
 

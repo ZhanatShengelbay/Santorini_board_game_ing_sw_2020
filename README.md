@@ -32,6 +32,7 @@ Without specifying an IP-address. It works with the IP of Azure. If it fails, IP
 >2. Choose the number of players
 >3. Choose the God/Gods
 >4. click the `start the Game` button
+
 ![Name and number of players](src/main/resources/123.png "Name and number of player")
 
 Once the one types his/her name and chooses the number of players, if there are enough players for a chosen game, depending who is the first accessed to the server gets to the God selection  stage.

@@ -21,9 +21,19 @@ The following requirements have met:
 -------------------------
 ## HOW TO RUN THE PROGRAMM:
 
-Game is loaded to the server Azure and released in single .jar file. While .jar file is clicked GUI is launched which connects the server Azure. In a negative case, the next arguments could be put:
+Game is loaded to the server Azure and released in single .jar file. While .jar file is clicked GUI is launched which connects the server Azure.
+You can launch the Cli mode with this command:
+>java -jar ./GC51.jar cli
+
 The server can be set up that tries to operate in Server localhost  CLI or GUI  mode to make both work.
-Without specifying an IP-address. It works with the IP of Azure. If it fails, IP should be specified from the server type of localhost.
+You can also specify a IP address different from the one of default: write ip as an argument in command line, after you write cli or gui as first argument.
+Without specifying an IP-address, it works with the IP of Azure.
+If you want to build the Jar, use Maven.
+
+Use:
+>mvn package
+
+in the directory of the project and you will create the Jar in the deliveries/final/jar directory.
 
 -------------------------
 ## How to play the game: GUI tutorial
@@ -51,7 +61,7 @@ Red arrows point
     - **2 - Level 2 TypeBlock**
     - **3 - Level 3 TypeBlock**
     - **blue circle - DOME TypeBlock**
-2. to the blue and pink circles with 2 vertical short lines linked to the Gods on the right side:
+2. to the pink,blue and gray circles linked to the Gods on the right side:
     - each color represents the God and God card has the same color
 3. to the God power's explanation:
     - while mouse is on the God Card the power description appears

@@ -6,21 +6,21 @@ import it.polimi.ingsw.utility.Coordinate;
 /**
  *  The power of god Artemis is described in this class. Player holding this god may move 1 more additional time,
  *  but not back to its initial space
+ *
  *  @author CG51
- *  @version 0.1
+ *  @version 1.1
  */
 public class Artemis extends Player {
     /**
-     * Class attributes
+     * Class attribute
      */
     private Coordinate from;
 
 
     /**
-     * Constructor of the class to initialize player's  values
-     *
-     *
-     * @param playerID name of the player
+     * Class constructor to set the Player's ID
+     * @param playerID of type String
+     * @param model
      */
     public Artemis( String playerID, Model model) {
         super(playerID, model);
@@ -29,8 +29,8 @@ public class Artemis extends Player {
     /**
      * Method is overridden in order to keep the value of initial space
      *
-     * @param selection
-     * @return
+     * @param selection of type Coordinate
+     * @return true or false
      */
     @Override
     public boolean makeSelection(Coordinate selection) {
@@ -44,7 +44,6 @@ public class Artemis extends Player {
 
     /**
      * Method defines the behavior of the Artemis' turn
-     *
      */
     @Override
     public void nextPhase() {
@@ -68,8 +67,8 @@ public class Artemis extends Player {
     /**
      * In the method the description of power is defined, i.e. how power behaves while it's off and ongit
      *
-     * @param destination
-     * @return
+     * @param destination of type Coordinate
+     * @return true or false
      */
     @Override
     public boolean makePower(Coordinate destination) {

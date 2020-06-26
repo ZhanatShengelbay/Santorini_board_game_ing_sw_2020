@@ -6,8 +6,9 @@ import java.util.List;
 
 /**
  * This class describes the validity conditions of the chosen coordinate and it is used by the main actions of the game: move and build.
+ * Has the following methods
  * @author CG51
- * @version 0.1
+ * @version 1.1
  */
 
 public class Checks {
@@ -126,6 +127,11 @@ public class Checks {
 
     }
 
+    /**
+     * Method is used in some classes in order to implement some God's power, to add the valid Coordinate to the standard valid coordinates
+     * @param additionalValidCoordinate of type Coordinate
+     * @return true or false
+     */
     public Checks add(Coordinate additionalValidCoordinate){
         result.add(true);
         destinations.add(additionalValidCoordinate);
@@ -133,7 +139,7 @@ public class Checks {
     }
 
     /**
-     *  getter method to access the result array, verifies the destinations with accessible set of destinations,
+     *  Getter method to access the result array, verifies the destinations with accessible set of destinations,
      *  in case if one of the players possess the Athena's power
      *  and the destination can not be reachable according to GroundEffect rule, this destination is removed from the array
      * @return the array containing the accessible destination

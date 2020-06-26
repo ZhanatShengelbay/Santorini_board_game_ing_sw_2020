@@ -16,7 +16,8 @@ public class Atlas extends Player {
 
     /**
      * Constructor Atlas to keep the Player's ID, which is received from the super class
-     * @param playerID
+     * @param playerID of type String (Player's name)
+     * @param model
      */
     public Atlas(String playerID, Model model) {
         super(playerID, model);

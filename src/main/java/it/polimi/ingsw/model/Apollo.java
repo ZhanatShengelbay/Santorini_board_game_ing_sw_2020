@@ -10,13 +10,13 @@ import it.polimi.ingsw.utility.Coordinate;
  * The thing to remember is if opponent's worker forced move up into the 3rd level from the 2nd or
  * from 3rd level to another the same level does not trigger a win.
  * @author CG51
- * @version 0.1
+ * @version 1.1
  */
 public class Apollo extends Player {
     /**
      * Constructor to set that player from the parent class owns the Apollo's power
-     *
      * @param playerID
+     * @param model
      */
     public Apollo( String playerID, Model model) {
         super( playerID, model);
@@ -39,6 +39,12 @@ public class Apollo extends Player {
 
     }
 
+    /**
+     * To modify the Move event in accordance with the Apollo's power
+     * Along with the standard move condition this method allows to Apollo to swap by forcing the opponent's worker
+     * @param destination The input choice
+     * @return
+     */
     @Override
     public boolean makeMovement(Coordinate destination) {
         Worker wrkDestination = model.getGrid().getTile(destination).getWorker();

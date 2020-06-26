@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
 /**
- * Special enumeration class to represent Gods. In this game the listed Gods is used.
+ * Special enumeration class to represent Gods of the Game. In this game the listed Gods is used.
  * The power of each God and how they are implemented can be found in the classes of the same name
+ * @author CG51
+ * @version 0.1
  */
 public enum EnumDivinity {
     /**

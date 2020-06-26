@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class describes the Model functionality
+ * @author CG51
+ * @version 1.1
+ */
 public class Model extends Subject<ModelView> implements Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +31,7 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
 
  String winner;
 
+
     public Model clone(){
         Model model = new Model();
         model.grid=this.grid;
@@ -38,6 +44,9 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
         return model;
     }
 
+    /**
+     * Class constructor to initialize the objects
+     */
     public Model(){
         this.godsPlayer=new HashMap<>();
         this.grid = new Grid();
@@ -51,48 +60,98 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
         return super.toString();
     }
 
+    /**
+     * getter method to access the number of players in the game
+     * @return
+     */
     public int getNumOfPlayers(){return players.size();}
 
+    /**
+     * getter method to access the grid
+     * @return
+     */
     public Grid getGrid() {
         return grid;
     }
 
+    /**
+     * getter to get the current player
+     * @return
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * setter to set the current player
+     * @param currentPlayer
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * getter to get the coordinate of the current worker
+     * @return
+     */
     public Coordinate getCurrentWorker() {
         return currentWorker;
     }
 
+    /**
+     * setter to set the current worker's coordinate
+     * @param worker
+     */
     public void setCurrentWorker(Coordinate worker) {
         this.currentWorker = worker;
     }
 
+    /**
+     * getter to access the current state
+     * @return
+     */
     public State getCurrentState() {
         return currentState;
     }
 
+    /**
+     * setter to set the current state
+     * @param currentState
+     */
     public void setCurrentState(State currentState) {
         this.currentState = currentState;
     }
 
+    /**
+     * getter to access the players that have ground effect
+     * @return
+     */
     protected List<PlayerWithGroundEffect> getGroundEffects() {
         return groundEffects;
     }
 
+    /**
+     * getter to access the player
+     * @param index
+     * @return
+     */
     public Player getPlayer(int index){
         return players.get(index);
     }
 
+    /**
+     * getter to access the players of player list
+     * @return
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * creates the player of the game
+     * @param god
+     * @param id
+     */
     // THE GOD NAME NEEDS TO BE THE SAME AS THE CLASS
     public void createPlayer(String god, String id){
         String godStandard = god.substring(0, 1).toUpperCase() + god.substring(1).toLowerCase();
@@ -109,6 +168,9 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
         }
     }
 
+    /**
+     * to access the next player of the game
+     */
     public void nextPlayer(){
         if(players.size()==0)return;
         int index= players.indexOf(currentPlayer);
@@ -122,18 +184,35 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
         }
         this.currentPlayer=players.get(index);
     }
+
+    /**
+     * setter to set the winner of the game
+     * @param winner
+     */
     public void setWinner(String winner) {
         this.winner = winner;
     }
 
+    /**
+     * getter to access the winner
+     * @return
+     */
     public String getWinner() {
         return winner;
     }
 
+    /**
+     * getter to access the player who owns the God
+     * @return
+     */
     public Map<String, String> getGodsPlayer() {
         return godsPlayer;
     }
 
+    /**
+     * updates the state in ModelView
+     * @return
+     */
     public ModelView updateState(){
         return new ModelView(this);
     }

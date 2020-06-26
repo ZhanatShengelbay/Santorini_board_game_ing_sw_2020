@@ -12,6 +12,8 @@ import java.util.List;
  * is responsible of all changes in the grid and
  * all the actions that could be done by its workers are described in this class.
  * The class is abstract because it needs an implementation depending on which God the user decides to use during the game.
+ * @author CG51
+ * @version 1.1
  */
 
 public abstract class Player implements Serializable{
@@ -28,8 +30,9 @@ public abstract class Player implements Serializable{
 
 
     /**
-     *
+     * Class constructor to set the Player name and workers
      * @param playerID
+     * @param model
      */
     public Player (String playerID, Model model) {
 
@@ -38,6 +41,10 @@ public abstract class Player implements Serializable{
         this.model = model;
     }
 
+    /**
+     * Adds exactly 2 worker
+     * @return
+     */
     public Worker addWorker(){
         if(workers.size()<2){
         Worker worker=new Worker(this,workers.size());
@@ -73,6 +80,10 @@ public abstract class Player implements Serializable{
         //if(this.validCoordinate.isEmpty())defeatHandler();
     }
 
+    /**
+     * Checks if the game is over
+     * @return
+     */
     protected boolean checkGameOver(){
         boolean noAction = false;
         for (int i = 0; i < Grid.N_ROWS; i++)
@@ -93,6 +104,9 @@ public abstract class Player implements Serializable{
         return false;
     }
 
+    /**
+     * Winning handler
+     */
     protected void defeatHandler(){
         String winner = null;
         int k = 0;
@@ -127,7 +141,7 @@ public abstract class Player implements Serializable{
     }
 
     /**
-     *
+     * To select the worker
      * @param selection
      * @return
      */
@@ -166,6 +180,10 @@ public abstract class Player implements Serializable{
 
     }
 
+    /**
+     * moves worker to destination coordinate
+     * @param destination
+     */
     protected void moveWorker(Coordinate destination){
 
         Worker wrkTmp = model.getGrid().getTile(model.getCurrentWorker()).getWorker();
@@ -175,6 +193,11 @@ public abstract class Player implements Serializable{
 
     }
 
+    /**
+     * Builds typeblock at destination point if condition is met
+     * @param destination
+     * @return true or false
+     */
     public boolean makeBuild(Coordinate destination) {
         setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotWorker().isNotDome());
         if (validCoordinate.contains(destination)) {
@@ -184,6 +207,12 @@ public abstract class Player implements Serializable{
         } else return false;
     }
 
+    /**
+     * Checks the win condition
+     * @param from
+     * @param destination
+     * @return true or false
+     */
     public boolean winCondition(Coordinate from, Coordinate destination) {
         Tile tileFrom = model.getGrid().getTile(from);
         Tile tileDestination = model.getGrid().getTile(destination);
@@ -191,10 +220,17 @@ public abstract class Player implements Serializable{
         return tileFrom.getHeight().equals(TypeBlock.SECOND) && tileDestination.getHeight().equals(TypeBlock.THIRD);
     }
 
+    /**
+     * is used to check if the power is active or not
+     * @return true or false depending on power's activation
+     */
     public boolean isActive(){
         return power;
     }
 
+    /**
+     * Switches the power
+     */
     public void togglePower(){
         power= !power;
     }
@@ -228,7 +264,7 @@ public abstract class Player implements Serializable{
     }
 
     /**
-     * Overriden equals method to compare the player object
+     * Overridden equals method to compare the player object
      * @param obj to be compared with player
      * @return current player if passed parameter is player instance
      */

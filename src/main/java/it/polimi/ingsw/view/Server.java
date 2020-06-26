@@ -65,6 +65,63 @@ public class Server {
     }
 
     public synchronized void lobby(Connection c) throws Error{
+        waitingConnections.put(c, c.getNumOfPlayers());
+        List<Connection> tmp2 = new ArrayList<>();
+        List<Connection> tmp3 = new ArrayList<>();
+        boolean isIn = false;
+        for (Map.Entry<Connection, Integer> entry : waitingConnections.entrySet()) {
+            if(entry.getValue() == 2){
+                if(tmp2.isEmpty()){
+                    tmp2.add(entry.getKey());
+                } else{
+                    for(Connection connection : tmp2){
+                        if(connection.getID().compareTo(entry.getKey().getID())==0) {
+                            isIn = true;
+                            break;
+                        }
+                    }
+                    if(!isIn) {
+                        tmp2.add(entry.getKey());
+                        if(tmp2.size()==2){
+                            playingConnections.add(tmp2);
+                            createGame(tmp2);
+                            for(Connection connection : tmp2){
+                                connection.gameIndex = playingConnections.size();
+                                waitingConnections.remove(connection);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            else if(entry.getValue() == 3){
+                if(tmp3.isEmpty()){
+                    tmp3.add(entry.getKey());
+                } else{
+                    for(Connection connection : tmp3){
+                        if(connection.getID().compareTo(entry.getKey().getID())==0) {
+                            isIn = true;
+                            break;
+                        }
+                    }
+                    if(!isIn) {
+                        tmp3.add(entry.getKey());
+                        if(tmp3.size()==2){
+                            playingConnections.add(tmp3);
+                            createGame(tmp3);
+                            for(Connection connection : tmp3){
+                                connection.gameIndex = playingConnections.size();
+                                waitingConnections.remove(connection);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+/*
+    public synchronized void lobby(Connection c) throws Error{
         int j = 0, k = 0;
         waitingConnections.put(c, c.getNumOfPlayers());
         for (Map.Entry<Connection, Integer> entry : waitingConnections.entrySet()) {
@@ -104,6 +161,7 @@ public class Server {
             }
         }
     }
+*/
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);

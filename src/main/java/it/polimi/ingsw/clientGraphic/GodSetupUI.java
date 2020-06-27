@@ -150,12 +150,16 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         lblCard.setPreferredSize(new Dimension(200,300));
         lblDescription= new JLabel();
         lblDescription.setOpaque(true);
-        boxPower.add(lblGodCard);
-        boxPower.add(lblDescription);
+
+
 
         boxPower.add(Box.createRigidArea(new Dimension(100, 30)));
+        boxPower.add(lblGodCard);
         boxPower.add(lblCard);
+        boxPower.add(lblDescription);
         panelCenter.add(boxPower);
+
+
         contents.add(panelCenter, BorderLayout.CENTER);
 
         panelSouth = new JPanel();
@@ -282,6 +286,10 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         boxPower.add(lblCard);
         panelCenter.add(boxPower);
         contents.add(panelCenter, BorderLayout.CENTER);
+        lblDescription= new JLabel();
+        lblDescription.setOpaque(true);
+
+        boxPower.add(lblDescription);
 
         panelSouth = new JPanel();
         JLabel lblSelectedAllGodsLabel = new JLabel("Selected ALL GODS: ");
@@ -395,11 +403,13 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         int selectedItem = listGameGods.getSelectedIndex();
         if (selectedItem == -1){
             lblCard.setIcon(null);
-
+            lblDescription.setText("");
             return;
         }
         String cardName = listGameGods.getSelectedValue();
-
+        lblDescription.setText(PowerDescription.getDescription(cardName));
+        lblDescription.setFont(new Font(Font.DIALOG,Font.PLAIN,12));
+        lblDescription.setHorizontalAlignment(JLabel.CENTER);
 
         cardName =  "/godsCard/" + cardName + ".png";
 
@@ -412,11 +422,14 @@ public class GodSetupUI extends JFrame implements ActionListener, ListSelectionL
         int selectedItem = listAllGods.getSelectedIndex();
         if (selectedItem == -1){
             lblCard.setIcon(null);
-
+            lblDescription.setText("");
             return;
         }
 
         String cardName = listAllGods.getSelectedValue();
+        lblDescription.setText(PowerDescription.getDescription(cardName));
+        lblDescription.setFont(new Font(Font.DIALOG,Font.PLAIN,12));
+        lblDescription.setHorizontalAlignment(JLabel.CENTER);
         cardName = "/godsCard/" + cardName + ".png";
         lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));
 

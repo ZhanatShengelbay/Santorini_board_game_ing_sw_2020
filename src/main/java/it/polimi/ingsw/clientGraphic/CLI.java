@@ -30,6 +30,16 @@ public class CLI implements Observer<Object>, Runnable {
 
     public CLI(Client client){
         this.client = client;
+        System.out.println("\n 6MMMMb\\                                               68b           68b \n" +
+                                   "6M'    `                       /                       Y89           Y89 \n" +
+                                   "MM          ___    ___  __    /M       _____   ___  __ ___ ___  __   ___ \n" +
+                                   "YM.       6MMMMb   `MM 6MMb  /MMMMM   6MMMMMb  `MM 6MM `MM `MM 6MMb  `MM \n" +
+                                   " YMMMMb  8M'  `Mb   MMM9 `Mb  MM     6M'   `Mb  MM69 \"  MM  MMM9 `Mb  MM \n" +
+                                   "     `Mb     ,oMM   MM'   MM  MM     MM     MM  MM'     MM  MM'   MM  MM \n" +
+                                   "      MM ,6MM9'MM   MM    MM  MM     MM     MM  MM      MM  MM    MM  MM \n" +
+                                   "      MM MM'   MM   MM    MM  MM     MM     MM  MM      MM  MM    MM  MM \n" +
+                                   "L    ,M9 MM.  ,MM   MM    MM  YM.  , YM.   ,M9  MM      MM  MM    MM  MM \n" +
+                                   "MYMMMM9  `YMMM9'Yb._MM_  _MM_  YMMM9  YMMMMM9  _MM_    _MM__MM_  _MM__MM_\n");
         initializeBoard();
     }
 
@@ -137,6 +147,8 @@ public class CLI implements Observer<Object>, Runnable {
             case WIN:
                 System.out.println("You win!!:\n");
                 break;
+            case LOST:
+                System.out.println("You lost!!:\n");
 
         }
     }

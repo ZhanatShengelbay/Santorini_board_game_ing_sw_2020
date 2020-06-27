@@ -125,6 +125,11 @@ public class BackEndGui implements Observer<Object> {
                         null,
                         "Congratulation, you win!!");
                 break;
+            case LOST:
+                JOptionPane.showMessageDialog(
+                        null,
+                        "You lost!");
+                break;
         }
     }
 
@@ -154,7 +159,7 @@ public class BackEndGui implements Observer<Object> {
     public void update(Object message) {
         if(message instanceof String){
             try {
-                this.gui.printText(this.gui.textBox.getText()+" "+ message);
+                this.gui.printText(this.gui.textBox.getText()+" \n"+ message);
             }catch (NullPointerException e){
                 System.out.println((String)message);
             }

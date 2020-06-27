@@ -37,12 +37,12 @@ public class DefeatTest {
     @Test
     public void defeatTest(){
         model.nextPlayer();
-        assertEquals(players.get(2).getPlayerID(), model.getCurrentPlayer().getPlayerID());
+        assertEquals(players.get(1).getPlayerID(), model.getCurrentPlayer().getPlayerID());
         assertNull(model.getGrid().getTile(0,0).getWorker());
         assertNull(model.getGrid().getTile(4,4).getWorker());
         model.nextPlayer();
-        assertEquals(players.get(0).getPlayerID(), model.getCurrentPlayer().getPlayerID());
-        model.nextPlayer();
         assertEquals(players.get(2).getPlayerID(), model.getCurrentPlayer().getPlayerID());
+        model.nextPlayer();
+        assertEquals(players.get(0).getPlayerID(), model.getCurrentPlayer().getPlayerID());
     }
 }

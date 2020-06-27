@@ -77,7 +77,7 @@ public abstract class Player implements Serializable{
      */
     public final void setValidCoordinate(Checks checks) {
         this.validCoordinate= checks.getResult();
-        //if(this.validCoordinate.isEmpty())defeatHandler();
+        if(this.validCoordinate.isEmpty())defeatHandler();
     }
 
     /**
@@ -121,6 +121,7 @@ public abstract class Player implements Serializable{
         if(k==1) {
             model.setCurrentState(new Win(winner));
             model.setWinner(winner);
+            model.notify(model.updateState());
         }
     }
 

@@ -9,6 +9,8 @@ import it.polimi.ingsw.utility.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.swing.*;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +27,7 @@ public class LimusTest {
         model.createPlayer("limus","player");
         limus =model.getPlayer(0);
 
-        opponent=new Pan("opponent", model); //normal nextPhase
+        opponent=new Demeter("opponent", model); //normal nextPhase
         opponent.addWorker();
         model.getPlayers().add(limus);
         model.getPlayers().add(opponent);
@@ -43,13 +45,19 @@ public class LimusTest {
         model.setCurrentState(new Select());
         model.setCurrentPlayer(opponent);
         opponent.makeSelection(new Coordinate(2,0));
-        Coordinate destination = new Coordinate(1,1);
+        Coordinate destination = new Coordinate(2,1);
         assertTrue(model.getCurrentState() instanceof Move);
         opponent.makeMovement(destination);
         assertTrue(model.getCurrentState() instanceof Build);
-        assertFalse(opponent.makeBuild(new Coordinate(2,1)));
-        model.getGrid().getTile(2,1).levelUp().levelUp().levelUp();
-        assertTrue(opponent.makeBuild(new Coordinate(2,1)));
+        assertFalse(opponent.makeBuild(new Coordinate(1,1)));
+        model.getGrid().getTile(2,2).levelUp().levelUp();
+        assertTrue(opponent.makeBuild(new Coordinate(3,0)));
+        opponent.togglePower();
+        assertFalse(opponent.makePower(new Coordinate(2,2)));
+        model.getGrid().getTile(2,2).levelUp();
+        assertTrue(opponent.makePower(new Coordinate(2,2)));
+
+
 
 
 

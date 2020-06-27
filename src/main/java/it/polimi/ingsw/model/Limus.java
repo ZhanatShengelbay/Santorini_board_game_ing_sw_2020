@@ -70,7 +70,7 @@ public class Limus extends PlayerWithGroundEffect {
 
         if(model.getCurrentState() instanceof Build) {
             if (model.getGrid().getTile(destination).getHeight() == TypeBlock.THIRD) return false;
-            List<Coordinate> tileAroundDestination = model.getGrid().validTileAround(from);
+            List<Coordinate> tileAroundDestination = model.getGrid().validTileAround(destination);
             for (Coordinate c : tileAroundDestination) {
                 Worker tmp = model.getGrid().getTile(c).getWorker();
                 if (tmp!=null&&this.equals(tmp.getPlayer()))

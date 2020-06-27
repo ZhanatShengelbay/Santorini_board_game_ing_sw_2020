@@ -52,7 +52,7 @@ public class MenuGUI extends JFrame implements ActionListener {
             }
         });
         bckg.add(nameForm);
-        JPanel twoPlayerGame = new JPanel();
+        //JPanel twoPlayerGame = new JPanel();
 
         JButton btn2player = new JButton("2-player game");
         btn2player.setSize(150, 50);
@@ -99,11 +99,11 @@ public class MenuGUI extends JFrame implements ActionListener {
         btnInstr.setLocation(700, 620);
         btnInstr.setBackground(Color.getHSBColor(10, 10, 9));
         btnInstr.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Instruction();
-            }
-        });
+                                       @Override
+                                       public void actionPerformed(ActionEvent e) {
+                                           new Instruction();
+                                       }
+                                   });
         bckg.add(btnInstr);
 
         JButton btnCrd = new JButton("Credits to: ");
@@ -117,7 +117,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
             }
         });
-        bckg.add(btnCrd);
+        //bckg.add(btnCrd);
 
         JButton btnExit = new JButton("Exit");
         btnExit.setSize(150, 50);

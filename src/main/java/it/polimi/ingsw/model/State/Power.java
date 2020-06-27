@@ -32,6 +32,6 @@ public class Power implements State, Serializable {
      */
     @Override
     public String questionMessage() {
-        return "You are in Power phase. You can active your power and select the coordinate";
+        return "You can active your power and select the coordinate";
     }
 }

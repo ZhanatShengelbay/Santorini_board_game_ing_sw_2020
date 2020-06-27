@@ -177,6 +177,8 @@ public class BoardGUI extends JFrame {
             //too dark the normal blue
             if(color.equals(Color.BLUE))
                 color=new Color(0x4E96CB);
+            if(color.equals(Color.PINK))
+                color=new Color(0xDF8DF1);
             name.setBackground(color);
             name.setOpaque(true);
 
@@ -243,10 +245,13 @@ public class BoardGUI extends JFrame {
     }
 
 
-    public void printText(String message){
+    public void printText(String message) {
+
         textBox.setVisible(false);
         textBox.setText(message);
         textBox.setVisible(true);
+
+
     }
 
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.State.Build;
 import it.polimi.ingsw.model.State.Move;
 import it.polimi.ingsw.model.State.Power;
+import it.polimi.ingsw.model.State.Win;
 import it.polimi.ingsw.utility.Coordinate;
 
 /**
@@ -28,9 +29,10 @@ public class Triton extends Player{
     public boolean makeMovement(Coordinate destination) {
         boolean result= super.makeMovement(destination);
         if(result){
-            if(model.getGrid().perimeterTile(destination))
+            if(model.getGrid().perimeterTile(destination)&&!(model.getCurrentState() instanceof Win)) {
                 model.setCurrentState(new Power());
-                if(isActive())togglePower();
+                if (isActive()) togglePower();
+            }
         }
         return result;
     }

@@ -23,7 +23,7 @@ The following requirements have met:
 
 Game is loaded to the server Azure and released in single .jar file. While .jar file is clicked GUI is launched which connects the server Azure.
 You can launch the Cli mode with this command:
-```java
+```cmd
 java -jar ./GC51.jar cli
 ```
 
@@ -31,7 +31,7 @@ The server can be set up that tries to operate in Server localhost  CLI or GUI  
 You can also specify an IP address different from the one of default: write IP as a second argument in command line, after you write cli or gui as first argument.
 Without specifying an IP-address, it works with the IP of Azure.
 If you want to build the Jar, use Maven:
-```mvn
+```cmd
 mvn package
 ```
 in the directory of the project and you will create the Jar in the deliveries/final/jar directory.

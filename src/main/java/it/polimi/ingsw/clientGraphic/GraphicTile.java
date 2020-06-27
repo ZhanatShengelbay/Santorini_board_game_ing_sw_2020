@@ -55,7 +55,7 @@ public class GraphicTile extends JLabel  {
                 e.printStackTrace();
             }
             assert img != null;
-            Image dimg= img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            Image dimg= img.getScaledInstance(125, 125, Image.SCALE_SMOOTH);
             this.setIcon(new ImageIcon(dimg));
             this.updateUI();
 

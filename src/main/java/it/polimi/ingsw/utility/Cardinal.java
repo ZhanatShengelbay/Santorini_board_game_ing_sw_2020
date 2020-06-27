@@ -18,7 +18,7 @@ public enum Cardinal {
     SW,
     W,
     NW;
-    //potrebbe essere piu utile un sistema cardinale piu intuitivo (esempio tastiera)
+
 
     /**
      * Method to parse the string from input into enum value

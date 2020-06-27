@@ -6,6 +6,11 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.io.Serializable;
 
+/**
+ * Class describes the Move state. it has the following methods:
+ * @author CG51
+ * @version 1.1
+ */
 public class Move implements State, Serializable {
 
     private static final long serialVersionUID = 8L;

@@ -12,7 +12,6 @@ import java.io.Serializable;
 
 public interface GroundEffect {
 
-
      boolean respectEffect(Model model, Coordinate from, Coordinate destination);
 
 

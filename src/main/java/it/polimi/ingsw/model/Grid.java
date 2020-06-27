@@ -10,9 +10,8 @@ import java.util.jar.Attributes;
 
 /**
  * This class describes a board of the game. There are methods which verifies that chosen coordinate is actually on the board
- *
  * @author CG51
- * @version 0.1
+ * @version 1.1
  */
 public class Grid  implements Serializable {
     /**
@@ -34,7 +33,6 @@ public class Grid  implements Serializable {
 
     /**
      * Method checks the coordinate if it is the part of the grid
-     *
      * @param coordinate
      * @return coordinate, if the wrong coordinate is entered returns null
      */
@@ -58,7 +56,6 @@ public class Grid  implements Serializable {
 
     /**
      * This method examines the possible coordinates around of the parting point "from", keeps obtained values in array
-     *
      * @param from of type Coordinate, the starting point of the tile
      * @return array with values of possible coordinates
      */
@@ -100,7 +97,6 @@ public class Grid  implements Serializable {
 
     /**
      * Method calculates the level difference between starting and end points of the tile
-     *
      * @param from        starting point
      * @param destination ending point
      * @return integer value of level difference
@@ -110,11 +106,20 @@ public class Grid  implements Serializable {
 
     }
 
+    /**
+     * Is used to check the Perimeter tile
+     * @param coordinate
+     * @return
+     */
     public boolean perimeterTile(Coordinate coordinate){
         if(!contains(coordinate)) return  false;
         else return coordinate.getX() == 0 || coordinate.getX() == N_ROWS - 1 || coordinate.getY() == 0 || coordinate.getY() == N_COLS - 1;
     }
 
+    /**
+     * Method to remove the workers of the Player
+     * @param player
+     */
     public void removeWorkersOfPlayer(Player player){
         for (int i = 0; i < N_ROWS; i++)
             for (int j = 0; j < N_COLS; j++) {

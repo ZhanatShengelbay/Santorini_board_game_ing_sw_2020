@@ -6,7 +6,7 @@ import it.polimi.ingsw.utility.Coordinate;
 /**
  *  Class describes the power of Demeter. Player owning the Demeter can build 1 additional time, but not at the same place
  *  @author CG51
- *  @version 0.1
+ *  @version 1.1
  */
 
 public class Demeter extends Player {
@@ -29,8 +29,7 @@ public class Demeter extends Player {
 
     /**
      * Overridden to keep the last built coordinate, it is used in the makePower method
-     *
-     * @param destination
+     * @param destination of type Coordinate
      * @return true or false depending on the condition's result
      */
     @Override
@@ -41,9 +40,8 @@ public class Demeter extends Player {
     }
 
     /**
-     * Method describes the behavior of demeter. The current state received from the model is assigned to current state and
+     * Method describes the behavior of Demeter. The current state received from the model is assigned to current state and
      * next state is first defined as null, later depending on the current state respective new next state info is assigned
-     *
      */
     @Override
     public void nextPhase() {
@@ -72,9 +70,7 @@ public class Demeter extends Player {
      * if after the building first time player that owns demeter decides to use its power,
      * player chooses the coordinate to build (should NOT be the same coordinate),
      * if there is any valid coordinate to build, builds otherwise goes to the next phase, i.e to the end
-     *
-     * @param model
-     * @param destination
+     * @param destination of type Coordinate
      */
     @Override
     public boolean makePower( Coordinate destination) {

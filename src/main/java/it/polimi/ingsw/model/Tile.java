@@ -100,6 +100,11 @@ public class Tile implements Serializable {
 
     }
 
+    /**
+     * Method diminishes the block for 1
+     * @return
+     * @throws IllegalStateException
+     */
     public Tile reduceBlock() throws IllegalStateException {
         switch (block) {
             case THIRD:

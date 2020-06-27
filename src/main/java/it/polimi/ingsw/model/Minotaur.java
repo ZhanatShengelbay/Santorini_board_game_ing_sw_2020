@@ -16,12 +16,19 @@ import it.polimi.ingsw.utility.Coordinate;
  */
 public class Minotaur extends Player {
     /**
-     * @param playerID
+     * Class constructor to keep the player's ID
+     * @param playerID Player name
+     * @param model
      */
     public Minotaur(String playerID, Model model) {
         super(playerID, model);
     }
 
+    /**
+     * Overridden to implement the moving power of Minotaur
+     * @param destination The input choice
+     * @return true or false
+     */
     @Override
     public boolean makeMovement(Coordinate destination) {
         Worker wrkDestination = model.getGrid().getTile(destination).getWorker();

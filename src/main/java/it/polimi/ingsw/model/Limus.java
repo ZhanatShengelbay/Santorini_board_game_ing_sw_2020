@@ -5,16 +5,29 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.util.List;
 
+/**
+ * This class describes the power of the Limus, Goddess of Famine. in opponent's turn:
+ * Opponent worker can NOT build on spaces neighboring your Workers, unless building a dome to create a Complete Tower
+ * @author CG51
+ * @version 1.1
+ * It has the following methods
+ */
 public class Limus extends PlayerWithGroundEffect {
 
 
     /**
+     * Class constructor
      * @param playerID
      */
     public Limus(String playerID, Model model) {
         super(playerID, model);
     }
 
+    /**
+     * Overridden to add the ground effect
+     * @param destination of type Coordinate
+     * @return
+     */
     @Override
     public boolean positionWorker(Coordinate destination) {
         //Add in the ground effect this player
@@ -22,13 +35,23 @@ public class Limus extends PlayerWithGroundEffect {
             model.getGroundEffects().add(this);
         return super.positionWorker(destination);
     }
-    
+
+    /**
+     * Overridden to
+     * @param selection of type Coordinate
+     * @return
+     */
     @Override
     public boolean makeSelection(Coordinate selection) {
         model.getGroundEffects().remove(this);
         return super.makeSelection(selection);
     }
 
+    /**
+     * Overridden to implement the Limus' power
+     * @param destination of type Coordinate
+     * @return true or false
+     */
     @Override
     public boolean makeBuild(Coordinate destination) {
         boolean result= super.makeBuild(destination);
@@ -36,7 +59,12 @@ public class Limus extends PlayerWithGroundEffect {
         return result;
     }
 
-
+    /**
+     * Method is used to check the Limus' affect
+     * @param from starting point of tile
+     * @param destination ending point of tile
+     * @return true or false
+     */
     @Override
     public boolean respectEffect(Coordinate from, Coordinate destination) {
 
@@ -52,6 +80,7 @@ public class Limus extends PlayerWithGroundEffect {
         }
         return false;
     }
+
 
     @Override
     public boolean makePower(Coordinate destination) {

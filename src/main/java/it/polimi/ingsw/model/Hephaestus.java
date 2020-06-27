@@ -11,11 +11,13 @@ import it.polimi.ingsw.utility.Coordinate;
  */
 public class Hephaestus extends Player {
 
+    /**
+     * Class attribute
+     */
     private Coordinate prevDestination;
 
     /**
      * Constructor to keep the player's value, the one who owns this god
-     *
      * @param playerID player's name
      */
     public Hephaestus(String playerID, Model model) {
@@ -24,7 +26,6 @@ public class Hephaestus extends Player {
 
     /**
      * Overridden to check if the destination is the same as previous built place
-     *
      * @param destination
      * @return true or false depending on the condition's result
      */
@@ -53,16 +54,15 @@ public class Hephaestus extends Player {
             if (isActive()) {
                 nextState = new End();
                 togglePower();
-            } else nextState = new Power();
+            } else nextState = new PowerEnd();
         } else
             nextState = new End();
         model.setCurrentState(nextState);
     }
 
     /**
-     * this method defines how the god's power should be used
-     *
-     * @param destination
+     * This method defines how the god's power should be used
+     * @param destination of type Coordinate
      */
     @Override
     public boolean makePower(Coordinate destination) {
@@ -74,7 +74,7 @@ public class Hephaestus extends Player {
                 nextPhase();
                 return true;
             } else {
-                model.setCurrentState(new Power());
+                model.setCurrentState(new PowerEnd());
                 togglePower();
                 return false;
             }

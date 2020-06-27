@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.Event;
 import it.polimi.ingsw.model.EnumDivinity;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.ModelView;
@@ -157,16 +156,20 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
 
     @Override
     public void update(ModelView model){
-        connection.send(model);
-        if(model.getState().equals("select")&&model.getCurrentPlayer().equals(getPlayerID()))
-            showMessage("Select the worker you want to move\n");
-        if(model.getState().equals("positionworkers")&&model.getCurrentPlayer().equals(getPlayerID()))
-            showMessage("Place your worker\n");
-        if(model.getState().equals("win")){
-            if(model.getWinner().compareTo(connection.getID())==0) showMessage("You won");
-            else showMessage("You lost");
-            connection.closeConnection();
+        try {
+            connection.send(model);
+            if (model.getState().equals("select") && model.getCurrentPlayer().equals(getPlayerID()))
+                showMessage("Select the worker you want to move\n");
+            if (model.getState().equals("positionworkers") && model.getCurrentPlayer().equals(getPlayerID()))
+                showMessage("Place your worker\n");
+            if (model.getState().equals("win")) {
+                if (model.getWinner().compareTo(connection.getID()) == 0) showEvent(Event.WIN);
+                else showMessage("You lost");
+                connection.send("QUIT");
+            }
+        }catch (NullPointerException e)
+        {
+            System.out.println("Null connection\n");
         }
-
     }
 }

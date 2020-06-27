@@ -7,6 +7,11 @@ import it.polimi.ingsw.utility.Coordinate;
 
 import java.io.Serializable;
 
+/**
+ * Class describes the GameStart state
+ * @author CG51
+ * @version 1.1
+ */
 public class GameStart implements State, Serializable {
 
     private static final long serialVersionUID = 7L;

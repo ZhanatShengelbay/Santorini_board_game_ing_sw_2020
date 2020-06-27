@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 /**
  * In this class the action of locating the worker is described. It has the following methods:
+ * @author CG51
+ * @version 1.1
  */
 public class PositionWorkers implements State, Serializable {
 
@@ -25,12 +27,7 @@ public class PositionWorkers implements State, Serializable {
         this.numOfWorkerToBePlaced = 2;
     }
 
-    /**
-     *
-     * @param choice
-     * @param model
-     * @return
-     */
+
     @Override
     public boolean handle(Coordinate choice, Model model) {
         boolean result = model.getCurrentPlayer().positionWorker(choice);

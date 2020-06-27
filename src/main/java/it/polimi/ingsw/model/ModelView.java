@@ -6,8 +6,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class describes the ModelView functionality
+ * @author CG51
+ * @version 1.1
+ */
 public class ModelView implements Serializable {
-
+    /**
+     * Class attributes
+     */
     private static final long serialVersionUID = 30L;
     private Grid grid;
     private String currentPlayer;

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * The class Worker represents workers of the game
  * @author CG51
- * @version 0.1
+ * @version 1.1
  */
 
 
@@ -25,10 +25,19 @@ public class Worker implements Serializable {
         //ONLY FOR TEST
     }
 
+    /**
+     * Getter method to get the index of worker
+     * @return index of worker
+     */
     public int getNum() {
         return num;
     }
 
+    /**
+     * Class constructor to assign the worker with the index to the player
+     * @param player
+     * @param num
+     */
     public Worker(Player player, int num) {
         this.player = player;
         this.num = num;

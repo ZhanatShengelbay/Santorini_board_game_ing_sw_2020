@@ -34,6 +34,7 @@ public class Client extends Subject<Object> implements Runnable {
     public void send(String message){
         if(message.toUpperCase().compareTo("QUIT") == 0){
             t0.stop();
+
         }
         try{
             socketOut.println(message);

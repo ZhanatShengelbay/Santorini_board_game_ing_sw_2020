@@ -101,7 +101,6 @@ public abstract class Player implements Serializable{
         for(int j=0; j < model.getNumOfPlayers(); j++) {
             if(!model.getPlayer(j).gameOver) {
                 k++;
-                System.out.println("SETTING WINNER");
                 winner = model.getPlayer(j).getPlayerID();
             }
         }

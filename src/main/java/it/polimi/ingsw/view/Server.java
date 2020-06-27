@@ -106,7 +106,7 @@ public class Server {
                     }
                     if(!isIn) {
                         tmp3.add(entry.getKey());
-                        if(tmp3.size()==2){
+                        if(tmp3.size()==3){
                             playingConnections.add(tmp3);
                             createGame(tmp3);
                             for(Connection connection : tmp3){

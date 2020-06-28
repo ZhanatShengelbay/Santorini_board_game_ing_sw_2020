@@ -77,7 +77,11 @@ public abstract class Player implements Serializable{
      */
     public final void setValidCoordinate(Checks checks) {
         this.validCoordinate= checks.getResult();
-        if(this.validCoordinate.isEmpty())defeatHandler();
+        if(this.validCoordinate.isEmpty()) {
+            defeatHandler();
+            model.setCurrentState(new Select());
+            model.nextPlayer();
+        }
     }
 
     /**
@@ -86,15 +90,16 @@ public abstract class Player implements Serializable{
      */
     protected boolean checkGameOver(){
         boolean noAction = false;
+        List<Coordinate> result;
         for (int i = 0; i < Grid.N_ROWS; i++)
             for (int j = 0; j < Grid.N_COLS; j++) {
                 if (model.getGrid().getTile(i, j).getWorker() != null && model.getGrid().getTile(i, j).getWorker().getPlayer().getPlayerID().compareTo(this.playerID) == 0) {
-                    setValidCoordinate(new Checks(model, new Coordinate(i, j)).isNotWorker().isNotDome().isRisible());
+                    result = new Checks(model, new Coordinate(i, j)).isNotWorker().isNotDome().isRisible().getResult();
                     if (!noAction) {
-                        if (this.validCoordinate.isEmpty()) noAction = true;
+                        if (result.isEmpty()) noAction = true;
                         else return false;
                     } else {
-                        if (this.validCoordinate.isEmpty()) {
+                        if (result.isEmpty()) {
                             defeatHandler();
                             return true;
                         } else return false;

@@ -183,6 +183,7 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
             if (!players.get(index).checkGameOver()) break;
         }
         this.currentPlayer=players.get(index);
+        this.notify(this.updateState());
     }
 
     /**

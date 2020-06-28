@@ -89,7 +89,8 @@ public class Prometheus extends Player{
                 nextPhase();
                 return true;
             } else {
-                model.setCurrentState(new Build());
+                model.setCurrentState(new Power());
+                togglePower();
                 return false;
             }
         }

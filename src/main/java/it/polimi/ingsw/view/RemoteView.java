@@ -165,7 +165,7 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
             if (model.getState().equals("win")) {
                 if (model.getWinner().compareTo(connection.getID()) == 0) showEvent(Event.WIN);
                 else showEvent(Event.LOST);
-                connection.send("QUIT");
+
             }
         }catch (NullPointerException e)
         {

@@ -146,9 +146,12 @@ public class CLI implements Observer<Object>, Runnable {
                 break;
             case WIN:
                 System.out.println("You win!!:\n");
+                client.send("QUIT");
                 break;
             case LOST:
                 System.out.println("You lost!!:\n");
+                client.send("QUIT");
+                break;
 
         }
     }

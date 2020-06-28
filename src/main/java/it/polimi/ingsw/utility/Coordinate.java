@@ -67,7 +67,7 @@ public class Coordinate implements Serializable {
     }
 
     /**
-     *
+     * converts cardinal to coordinate
      * @param cardinal
      * @return
      */

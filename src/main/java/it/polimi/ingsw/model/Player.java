@@ -79,8 +79,7 @@ public abstract class Player implements Serializable{
         this.validCoordinate= checks.getResult();
         if(this.validCoordinate.isEmpty()) {
             defeatHandler();
-            model.setCurrentState(new Select());
-            model.nextPlayer();
+            model.setCurrentState(new End());
         }
     }
 

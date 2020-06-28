@@ -130,7 +130,7 @@ public class BackEndGui implements Observer<Object> {
                 JOptionPane.showMessageDialog(
                         null,
                         "You lost!");
-                client.send("QUIT");
+                //client.send("QUIT");
                 break;
         }
     }

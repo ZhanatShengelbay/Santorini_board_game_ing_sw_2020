@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.State.*;
 import it.polimi.ingsw.model.playerChoice.GameChoice;
 import it.polimi.ingsw.model.playerChoice.PlayerChoice;
 import it.polimi.ingsw.utility.Observer;
-
+import it.polimi.ingsw.view.Event;
 
 
 public class GameController implements Controller {
@@ -45,16 +45,33 @@ public class GameController implements Controller {
 
         try {
             boolean result  =  model.getCurrentState().handle(((GameChoice)message).getChoice(),model);
+            if(model.getCurrentPlayer().isGameOver()) {
+                ModelView modelView=model.updateState();
+                model.setCurrentState(new End());
+                model.getCurrentState().handle(null,model);
+
+                if(!modelView.getState().equals("win")){
+                    message.getView().showEvent(Event.LOST);
+                    model.notify(model.updateState().setMessage(modelView.getCurrentPlayer()+" lose!"
+                    +" It's now "+model.getCurrentPlayer().getPlayerID()+"'s turn."));
+                }
+
+
+
+
+            }
             if(result) {
                 if(model.getCurrentState() instanceof End){
+
                     model.getCurrentState().handle(null,model);
                 }
-                    if(model.getCurrentState() instanceof Win)
-                        model.notify(model.updateState().setMessage("Game Over"));
-                    else
-                        model.notify(model.updateState().setMessage("It's " + model.getCurrentPlayer().getPlayerID() + "'s turn."));
-                    if(model.getCurrentState().questionMessage() != null)
-                        message.getView().showMessage(model.getCurrentState().questionMessage());
+                if(model.getCurrentState() instanceof Win) {
+                    model.notify(model.updateState().setMessage("Game Over"));
+                }
+                else
+                    model.notify(model.updateState().setMessage("It's " + model.getCurrentPlayer().getPlayerID() + "'s turn."));
+                if(model.getCurrentState().questionMessage() != null)
+                    message.getView().showMessage(model.getCurrentState().questionMessage());
 
             }
             else message.getView().showError("Wrong action, retry");

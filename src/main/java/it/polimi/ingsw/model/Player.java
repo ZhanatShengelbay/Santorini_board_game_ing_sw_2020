@@ -26,6 +26,11 @@ public abstract class Player implements Serializable{
     private boolean power=false;
 
     Model model;
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
     boolean gameOver = false;
 
 
@@ -79,7 +84,7 @@ public abstract class Player implements Serializable{
         this.validCoordinate= checks.getResult();
         if(this.validCoordinate.isEmpty()) {
             defeatHandler();
-            model.setCurrentState(new End());
+
         }
     }
 

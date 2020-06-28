@@ -178,7 +178,7 @@ public class Model extends Subject<ModelView> implements Cloneable, Serializable
             for (int i=0; i < players.size(); i++) {
                 if (index == players.size() - 1) index = 0;
                 else index++;
-                if (!players.get(index).gameOver) break;
+                if (!players.get(index).isGameOver()) break;
             }
             if (!players.get(index).checkGameOver()) break;
         }

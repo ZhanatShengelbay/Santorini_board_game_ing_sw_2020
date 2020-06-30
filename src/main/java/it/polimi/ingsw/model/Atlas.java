@@ -64,7 +64,7 @@ public class Atlas extends Player {
         }
         else{
             model.setCurrentState(new Build());
-            boolean result= makeBuild(destination);
+            boolean result= super.makeBuild(destination);
             if(!result){
                 model.setCurrentState(new Power());
             }

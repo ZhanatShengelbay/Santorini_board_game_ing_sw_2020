@@ -5,7 +5,7 @@ import it.polimi.ingsw.utility.Coordinate;
 import it.polimi.ingsw.view.RemoteView;
 
 /**
- * Class describes the GameChoice
+ * Class describes the GameChoice, implemented
  * @author CG51
  * @version 1.1
  */

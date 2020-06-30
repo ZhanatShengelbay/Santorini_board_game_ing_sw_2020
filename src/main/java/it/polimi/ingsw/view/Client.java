@@ -7,8 +7,16 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Client-Server is addressed in terms of Observer design pattern and by means of Socket
+ * @author CG51
+ * @version 1.1
+ */
 public class Client extends Subject<Object> implements Runnable {
 
+    /**
+     * attributes
+     */
     private String ip;
     private int port;
     Socket socket;
@@ -16,10 +24,16 @@ public class Client extends Subject<Object> implements Runnable {
     PrintWriter socketOut;
     Thread t0;
 
+    /**
+     * Initializes Client object
+     * @param ip of type String
+     * @param port of type integer
+     */
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
+
 
     public synchronized void closeSocket(){
         try {

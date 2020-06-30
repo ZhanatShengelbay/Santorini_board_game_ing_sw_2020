@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.utility.Coordinate;
 
 /**
- * State interface to implement the states of the model. It has the following methods:
+ * Manages, checks the input.
  * @author CG51
  * @version 1.1
  */

@@ -6,6 +6,11 @@ import it.polimi.ingsw.view.Client;
 
 import java.util.Scanner;
 
+/**
+ * Runs the CLI mode
+ * @author CG51
+ * @version 1.1
+ */
 public class ClientCliApp
 {
 

@@ -7,6 +7,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Represents the data exchange between Server and Clients
+ * @author CG51
+ * @version 1.1
+ */
 public class Connection extends Subject<String> implements Runnable {
 
     private Socket socket;
@@ -18,15 +23,28 @@ public class Connection extends Subject<String> implements Runnable {
     private boolean active = true;
     int gameIndex;
 
+    /**
+     * Initializes the connection
+     * @param socket
+     * @param server
+     */
     public Connection(Socket socket, Server server){
             this.socket = socket;
             this.server = server;
     }
 
+    /**
+     * getter to access the ID
+     * @return String
+     */
     public String getID(){
         return name;
     }
 
+    /**
+     * to access the number of players
+     * @return Integer
+     */
     public int getNumOfPlayers(){
         return numOfPlayers;
     }
@@ -35,6 +53,10 @@ public class Connection extends Subject<String> implements Runnable {
         return active;
     }
 
+    /**
+     * message sending
+     * @param message
+     */
     public void send(Object message){
         try {
             out.reset();

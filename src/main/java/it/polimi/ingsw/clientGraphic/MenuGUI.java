@@ -76,7 +76,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         JButton btn3player = new JButton("3-player game");
         btn3player.setSize(150, 50);
-        btn3player.setLocation(500, 620);
+        btn3player.setLocation(550, 620);
         btn3player.setBackground(Color.getHSBColor(10, 10, 9));
         btn3player.addActionListener(e -> {
             if(nameForm.getText().equals("Insert your name"))
@@ -96,7 +96,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         JButton btnInstr = new JButton("how to play");
         btnInstr.setSize(150, 50);
-        btnInstr.setLocation(700, 620);
+        btnInstr.setLocation(750, 620);
         btnInstr.setBackground(Color.getHSBColor(10, 10, 9));
         btnInstr.addActionListener(new ActionListener() {
                                        @Override
@@ -106,22 +106,10 @@ public class MenuGUI extends JFrame implements ActionListener {
                                    });
         bckg.add(btnInstr);
 
-        JButton btnCrd = new JButton("Credits to: ");
-        btnCrd.setSize(150, 50);
-        btnCrd.setLocation(900, 620);
-        btnCrd.setBackground(Color.getHSBColor(10, 10, 9));
-        btnCrd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               // new CreditsTo();
-
-            }
-        });
-        //bckg.add(btnCrd);
 
         JButton btnExit = new JButton("Exit");
         btnExit.setSize(150, 50);
-        btnExit.setLocation(1100, 620);
+        btnExit.setLocation(950, 620);
         btnExit.setBackground(Color.getHSBColor(10, 10, 9));
         btnExit.addActionListener(new ActionListener() {
             @Override

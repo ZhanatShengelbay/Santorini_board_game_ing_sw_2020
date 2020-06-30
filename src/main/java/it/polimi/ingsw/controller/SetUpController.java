@@ -11,8 +11,16 @@ import it.polimi.ingsw.view.RemoteView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class handles the God selection phase of each player through the following methods:
+ * @author CG51
+ * @version 1.1
+ */
 public class SetUpController implements Controller {
 
+    /**
+     * Class attributes
+     */
     Model model;
     List<String> players;
     int current_player;
@@ -22,7 +30,12 @@ public class SetUpController implements Controller {
     int numOfPlayerToCreate;
     List<RemoteView> views;
 
-
+    /**
+     * Constructor initializes the players, to each player different (unique) RemoteView is opted.
+     * @param model
+     * @param players
+     * @param views
+     */
     public SetUpController(Model model, List<String> players, List<RemoteView> views){
         this.views=views;
         for(RemoteView v : views){
@@ -49,6 +62,11 @@ public class SetUpController implements Controller {
         numOfPlayerToCreate++;
     }
 
+    /**
+     * used to communicate with the player in selecting the God. After having selected the Game Gods successfully currentController of the specific Remote View (=player) switches to GameController
+     * @param message
+     * @throws Error if unexpected behaviour is done
+     */
     public void handle(PlayerChoice message) throws Error{
 
             if (init){
@@ -111,6 +129,11 @@ public class SetUpController implements Controller {
 
     }
 
+    /**
+     * Method is used to notify player, while current player gets the messages according to his/her step,
+     * other players who try to do something get the message while it is not their turn
+     * @param message
+     */
     @Override
     public void update(PlayerChoice message){
         if(message.getPlayer().compareTo(players.get(current_player)) == 0){

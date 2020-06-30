@@ -12,8 +12,15 @@ import it.polimi.ingsw.utility.Subject;
 
 import java.io.*;
 
+/**
+ * Represents the unique client. Placed between the Client and Controller.
+ * @author CG51
+ * @version 1.1
+ */
 public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelView>{
-
+    /**
+     * attributes
+     */
     ByteArrayOutputStream os;
     ObjectOutputStream out;
     private Connection connection;
@@ -33,6 +40,11 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
         }
     }
 
+    /**
+     *
+     * @param connection
+     * @param model
+     */
     public RemoteView(Connection connection, Model model) {
         this.model = model;
         this.connection = connection;
@@ -129,6 +141,13 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
         }
     }
 
+    /**
+     * Method is used in CLI mode, throws an exception if invalid coordinates are entered
+     * @param c1
+     * @param c2
+     * @return true or false
+     * @throws Exception
+     */
     public boolean checkInputCoordinates(String c1, String c2) throws Exception{
         if(Integer.parseInt(c1) > 5 || Integer.parseInt(c1) < 0 || Integer.parseInt(c2) > 5 || Integer.parseInt(c2) < 0) {
             return false;
@@ -136,15 +155,27 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
         else return true;
     }
 
+    /**
+     * Sends the message to the connection
+     * @param message
+     */
     public void showMessage(Object message){
         connection.send(message);
     }
 
+    /**
+     * Sends the event to the connection
+     * @param event
+     */
     public void showEvent(Event event){
         connection.send(event);
 
     }
 
+    /**
+     * displays the error
+     * @param error
+     */
     public void showError(String error){
         showMessage(error);
         //something else
@@ -154,6 +185,10 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
         //connection.send(model.getOutcome(getPlayer()).printOutcome() + "\tMake your move");
     }
 
+    /**
+     * is used to make the player aware of the current state
+     * @param model
+     */
     @Override
     public void update(ModelView model){
         try {

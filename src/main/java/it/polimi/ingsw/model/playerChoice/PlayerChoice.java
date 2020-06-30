@@ -15,7 +15,7 @@ public abstract class PlayerChoice {
     private String player_id;
 
     /**
-     * Constructor to initialize the class object
+     * Initializes players
      * @param player_id of type String (player's name)
      * @param view of type RemoteView
      */
@@ -25,8 +25,8 @@ public abstract class PlayerChoice {
     }
 
     /**
-     * getter to access the View, different to each player
-     * @return
+     * getter to access the RemoteView, different for each player
+     * @return view
      */
     public RemoteView getView() {
         return view;

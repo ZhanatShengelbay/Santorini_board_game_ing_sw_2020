@@ -5,6 +5,9 @@ import it.polimi.ingsw.view.Client;
 
 import java.util.Scanner;
 
+/**
+ * Self-explaining class: runs in the GUI mode
+ */
 public class ClientGuiApp
 {
     public static void main(String[] args){

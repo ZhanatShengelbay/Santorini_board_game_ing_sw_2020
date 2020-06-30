@@ -9,8 +9,16 @@ import it.polimi.ingsw.utility.Observer;
 import it.polimi.ingsw.view.Event;
 
 
-public class GameController implements Controller {
+/**
+ * Handles the communication between Controller and Remote View during the match. Has the following methods:
+ * @author CG51
+ * @version 1.1
+ */
 
+public class GameController implements Controller {
+    /**
+     * attributes
+     */
     Model model;
     Player currentPlayer;
 
@@ -18,11 +26,19 @@ public class GameController implements Controller {
 
     public PlayerChoice lastChoice;
 
+    /**
+     * Initializes the model with current player
+     * @param model
+     */
     public GameController(Model model) {
         this.model = model;
         this.currentPlayer = model.getPlayer(0);
     }
 
+    /**
+     * sends the message to the specific ReomteView (= specific player) during the match
+     * @param message
+     */
     @Override
     public void update(PlayerChoice message) {
         this.currentPlayer = model.getCurrentPlayer();

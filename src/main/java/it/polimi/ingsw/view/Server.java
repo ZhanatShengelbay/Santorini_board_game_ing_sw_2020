@@ -12,6 +12,11 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * On the Server side Controller, Model and Remote View are located and after the connection is established it creates the match, placing the players in a lobby.
+ * @author CG51
+ * @version 1.1
+ */
 public class Server {
     private static final int PORT= 12345;
     private ServerSocket serverSocket;
@@ -35,6 +40,10 @@ public class Server {
         }
     }
 
+    /**
+     * with the established connections between Client (each client, connection is a player) initializes the relative RemoteViews for each Client and SetUp Controller is initilizes
+     * @param connectionList
+     */
     public synchronized void createGame(List<Connection> connectionList){
         Connection c1 = connectionList.get(0);
         Connection c2 = connectionList.get(1);
@@ -64,6 +73,11 @@ public class Server {
 
     }
 
+    /**
+     * lobby is used to run the multiple matches simultaneously. Each 2 or 3 connections(players) are placed in one lobby.
+     * @param c
+     * @throws Error
+     */
     public synchronized void lobby(Connection c) throws Error{
         waitingConnections.put(c, c.getNumOfPlayers());
         List<Connection> tmp2 = new ArrayList<>();
@@ -163,10 +177,17 @@ public class Server {
     }
 */
 
+    /**
+     * initializes the Server Socket
+     * @throws IOException
+     */
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
     }
 
+    /**
+     * Registers the connection
+     */
     public void run(){
         System.out.println("Server listening on port: " + PORT);
         while(true){

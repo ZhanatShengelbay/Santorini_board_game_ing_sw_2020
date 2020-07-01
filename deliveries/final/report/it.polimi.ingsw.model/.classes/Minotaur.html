@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Minotaur</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Minotaur (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Minotaur</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73,7%
+  </span>
+  <span class="absValue">
+    (14/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.Model;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.Player;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.State.Win;
+<i>6</i>&nbsp;import it.polimi.ingsw.utility.Cardinal;
+<i>7</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Class describes the turn of the player who has the Minotaur&#39;s power, Bull-headed Monster.
+<i>11</i>&nbsp; * The player holding Minotaur while moving, may move into the space of opponent&#39;s workers,
+<i>12</i>&nbsp; * If the opponent&#39;s worker can be forced one space straight backwards to an unoccupied space at any level.
+<i>13</i>&nbsp; * Class has the following methods:
+<i>14</i>&nbsp; * @author CG51
+<i>15</i>&nbsp; * @version 0.1
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class Minotaur extends Player {
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Class constructor to keep the player&#39;s ID
+<i>20</i>&nbsp;     * @param playerID Player name
+<i>21</i>&nbsp;     * @param model
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    public Minotaur(String playerID, Model model) {
+<b class="fc"><i>24</i>&nbsp;        super(playerID, model);</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * Overridden to implement the moving power of Minotaur
+<i>29</i>&nbsp;     * @param destination The input choice
+<i>30</i>&nbsp;     * @return true or false
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    @Override
+<i>33</i>&nbsp;    public boolean makeMovement(Coordinate destination) {
+<b class="fc"><i>34</i>&nbsp;        Worker wrkDestination = model.getGrid().getTile(destination).getWorker();</b>
+<b class="fc"><i>35</i>&nbsp;        if(wrkDestination==null || wrkDestination.getPlayer().equals(this))</b>
+<b class="nc"><i>36</i>&nbsp;            return super.makeMovement(destination);</b>
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;        Coordinate from = model.getCurrentWorker();</b>
+<b class="fc"><i>39</i>&nbsp;        Coordinate opponentDestination= destination.shift(Cardinal.getDirection(from,destination));</b>
+<b class="fc"><i>40</i>&nbsp;        if(new Checks(model,destination,opponentDestination).isNotDome().isNotWorker().simpleGetResult())return false;</b>
+<i>41</i>&nbsp;        //This block was made to avoid synergy problem with Aphrodite&#39;s power
+<i>42</i>&nbsp;        //Do first the movement and after check if this action is possible: if not, back to the initial condition
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;        model.getGrid().getTile(opponentDestination).setWorker(wrkDestination);</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        setValidCoordinate(new Checks(model,model.getCurrentWorker()).isNotDome().isRisible());</b>
+<b class="fc"><i>47</i>&nbsp;        if (containsInValidCoordinate(destination)) {</b>
+<b class="fc"><i>48</i>&nbsp;            moveWorker(destination);</b>
+<b class="fc"><i>49</i>&nbsp;            if (winCondition(from, destination)) model.setCurrentState(new Win(this.getPlayerID()));</b>
+<i>50</i>&nbsp;            else
+<b class="fc"><i>51</i>&nbsp;                nextPhase();</b>
+<b class="fc"><i>52</i>&nbsp;            return true;</b>
+<i>53</i>&nbsp;        }else {
+<b class="nc"><i>54</i>&nbsp;            model.getGrid().getTile(destination).setWorker(wrkDestination);</b>
+<b class="nc"><i>55</i>&nbsp;            model.getGrid().getTile(opponentDestination).noneWorker();</b>
+<b class="nc"><i>56</i>&nbsp;            return false;</b>
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override
+<i>62</i>&nbsp;    public boolean makePower(Coordinate destination) {
+<b class="nc"><i>63</i>&nbsp;        throw new IllegalArgumentException();</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TypeBlock</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TypeBlock (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TypeBlock</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Enum class TypeBlock represents building blocks with indicated levels.
+<i>7</i>&nbsp; * Blocks are buildable in ascending order, 1 at a time (special cases are specified in god powers)
+<i>8</i>&nbsp; * The building with level 4 is considered as a complete tower.
+<i>9</i>&nbsp; *  @author CG51
+<i>10</i>&nbsp; *  @version 0.1
+<i>11</i>&nbsp; */
+<b class="fc"><i>12</i>&nbsp;public enum TypeBlock implements Serializable {</b>
+<b class="fc"><i>13</i>&nbsp;    FLOOR (0),</b>
+<b class="fc"><i>14</i>&nbsp;    FIRST(1),</b>
+<b class="fc"><i>15</i>&nbsp;    SECOND(2),</b>
+<b class="fc"><i>16</i>&nbsp;    THIRD(3),</b>
+<b class="fc"><i>17</i>&nbsp;    DOME(4);</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private static final long serialVersionUID = 14L;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * level attribute of type int
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    private int level;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * constructor to assign the level attribute into constants
+<i>29</i>&nbsp;     * @param level
+<i>30</i>&nbsp;     */
+<b class="fc"><i>31</i>&nbsp;    TypeBlock(int level) {</b>
+<b class="fc"><i>32</i>&nbsp;        this.level=level;</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

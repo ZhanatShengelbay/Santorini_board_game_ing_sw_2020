@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SetUpChoice</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.playerChoice</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SetUpChoice (it.polimi.ingsw.model.playerChoice)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SetUpChoice</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.playerChoice;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.view.RemoteView;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.rmi.Remote;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Class describes the setting up the player&#39;s Choices
+<i>9</i>&nbsp; * @author CG51
+<i>10</i>&nbsp; * @version 1.1
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;public class SetUpChoice extends PlayerChoice {
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Class attributes
+<i>15</i>&nbsp;     */
+<i>16</i>&nbsp;    String[] inputs;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Constructor to initialize the class object
+<i>20</i>&nbsp;     * @param inputs
+<i>21</i>&nbsp;     * @param player_id
+<i>22</i>&nbsp;     * @param view
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    public SetUpChoice(String[] inputs, String player_id, RemoteView view){
+<b class="fc"><i>25</i>&nbsp;        super(player_id,view);</b>
+<b class="fc"><i>26</i>&nbsp;        this.inputs = inputs;</b>
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * getter to access the input strings
+<i>32</i>&nbsp;     * @return inputs
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    public String[] getInputs() {
+<b class="fc"><i>35</i>&nbsp;        return inputs;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

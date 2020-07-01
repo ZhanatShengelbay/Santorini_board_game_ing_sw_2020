@@ -1,0 +1,607 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodSetupUI</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.clientGraphic</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodSetupUI (it.polimi.ingsw.clientGraphic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GodSetupUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 348)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.clientGraphic;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.EnumDivinity;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import javax.swing.*;
+<i>6</i>&nbsp;import javax.swing.border.Border;
+<i>7</i>&nbsp;import javax.swing.event.ListSelectionEvent;
+<i>8</i>&nbsp;import javax.swing.event.ListSelectionListener;
+<i>9</i>&nbsp;import java.awt.*;
+<i>10</i>&nbsp;import java.awt.event.*;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import static javax.swing.PopupFactory.getSharedInstance;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class GodSetupUI extends JFrame implements ActionListener, ListSelectionListener, ItemListener {
+<i>15</i>&nbsp;    JLabel bckg;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    int numOfPlayer;
+<i>18</i>&nbsp;    BackEndGui backEnd;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    private JPanel panelCenter;
+<i>21</i>&nbsp;    private JPanel panelSouth;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;    private Border borderCenter = BorderFactory.createEmptyBorder(10, 10, 10, 10);</b>
+<b class="nc"><i>24</i>&nbsp;    private Border borderContent = BorderFactory.createEmptyBorder(0,0,10,0);</b>
+<b class="nc"><i>25</i>&nbsp;    private Border borderList = BorderFactory.createLineBorder(Color.gray, 1);</b>
+<i>26</i>&nbsp;
+<b class="nc"><i>27</i>&nbsp;    private Box boxButton = Box.createVerticalBox();</b>
+<b class="nc"><i>28</i>&nbsp;    private Box boxListAllGods = Box.createVerticalBox();</b>
+<b class="nc"><i>29</i>&nbsp;    private Box boxListGameGods = Box.createVerticalBox();</b>
+<b class="nc"><i>30</i>&nbsp;    private Box boxPower = Box.createVerticalBox();</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    private JButton btnAdd;
+<i>33</i>&nbsp;    private JButton btnRemove;
+<i>34</i>&nbsp;    private JButton btnRemoveAll;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    private JLabel lblCard;
+<i>37</i>&nbsp;    private JLabel lblDescription;
+<i>38</i>&nbsp;    private JLabel lblListAllGods;
+<i>39</i>&nbsp;    private JLabel lblListGameGods;
+<i>40</i>&nbsp;    private JLabel lblSelectedAllGods;
+<i>41</i>&nbsp;    private JLabel lblSelectedGameGods;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    private JList&lt;String&gt; listAllGods;
+<i>44</i>&nbsp;    private JList&lt;String&gt; listGameGods;
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;    private final Font fontBold = new Font(Font.DIALOG, Font.BOLD,18);</b>
+<b class="nc"><i>47</i>&nbsp;    private final Font fontPlain = new Font(Font.DIALOG, Font.PLAIN, 18);</b>
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;    private DefaultListModel&lt;String&gt; listModelAllGods = new DefaultListModel&lt;&gt;();</b>
+<b class="nc"><i>50</i>&nbsp;    private DefaultListModel&lt;String&gt; listModelGameGods = new DefaultListModel&lt;&gt;();</b>
+<i>51</i>&nbsp;
+<b class="nc"><i>52</i>&nbsp;    public GodSetupUI(int numOfPlayer, BackEndGui backEnd){</b>
+<b class="nc"><i>53</i>&nbsp;        this.numOfPlayer=numOfPlayer;</b>
+<b class="nc"><i>54</i>&nbsp;        this.backEnd=backEnd;</b>
+<b class="nc"><i>55</i>&nbsp;        backEnd.setSetupGui(this);</b>
+<b class="nc"><i>56</i>&nbsp;        setFonts();</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        setupSplash();</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;    public void setupSplash(){
+<b class="nc"><i>63</i>&nbsp;        revalidate();</b>
+<b class="nc"><i>64</i>&nbsp;        repaint();</b>
+<b class="nc"><i>65</i>&nbsp;        setSize(1280, 720);</b>
+<b class="nc"><i>66</i>&nbsp;        setLayout(new GridBagLayout());</b>
+<b class="nc"><i>67</i>&nbsp;        setDefaultCloseOperation(EXIT_ON_CLOSE);</b>
+<b class="nc"><i>68</i>&nbsp;        ImageIcon img = new ImageIcon(getClass().getResource(&quot;/santorini_splash.jpg&quot;));</b>
+<b class="nc"><i>69</i>&nbsp;        bckg = new JLabel(&quot;&quot;, img, JLabel.CENTER);</b>
+<b class="nc"><i>70</i>&nbsp;        bckg.setBounds(0,0,1280, 720);</b>
+<b class="nc"><i>71</i>&nbsp;        add(bckg);</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;        this.setVisible(true);</b>
+<b class="nc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public void createGodSetup(){
+<i>77</i>&nbsp;        //this.removeAll();
+<b class="nc"><i>78</i>&nbsp;        this.setTitle(&quot;Gods select&quot;);</b>
+<b class="nc"><i>79</i>&nbsp;        JPanel contents = new JPanel();</b>
+<b class="nc"><i>80</i>&nbsp;        contents.setBorder(borderContent);</b>
+<b class="nc"><i>81</i>&nbsp;        contents.setLayout(new BorderLayout());</b>
+<b class="nc"><i>82</i>&nbsp;        setContentPane(contents);</b>
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;        JLabel lblTitle = new JLabel(&quot;GODS: &quot;, SwingConstants.CENTER);</b>
+<b class="nc"><i>85</i>&nbsp;        lblTitle.setFont(new Font(Font.DIALOG, Font.BOLD, 20));</b>
+<b class="nc"><i>86</i>&nbsp;        contents.add(lblTitle, BorderLayout.NORTH);</b>
+<i>87</i>&nbsp;
+<b class="nc"><i>88</i>&nbsp;        panelCenter = new JPanel();</b>
+<b class="nc"><i>89</i>&nbsp;        panelCenter.setBorder(borderCenter);</b>
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;        lblListAllGods = new JLabel(&quot;ALL GODS: &quot;);</b>
+<b class="nc"><i>92</i>&nbsp;        lblListAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;        initAllGodsModel();</b>
+<b class="nc"><i>95</i>&nbsp;        listAllGods = new JList&lt;&gt;(listModelAllGods);</b>
+<b class="nc"><i>96</i>&nbsp;        listAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>97</i>&nbsp;        listAllGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</b>
+<b class="nc"><i>98</i>&nbsp;        listAllGods.setBorder(borderList);</b>
+<b class="nc"><i>99</i>&nbsp;        JScrollPane scrollAllGods = new JScrollPane(listAllGods);</b>
+<b class="nc"><i>100</i>&nbsp;        scrollAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>101</i>&nbsp;        scrollAllGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);</b>
+<b class="nc"><i>102</i>&nbsp;        scrollAllGods.setPreferredSize(new Dimension(200,400));</b>
+<b class="nc"><i>103</i>&nbsp;        boxListAllGods.add(lblListAllGods);</b>
+<b class="nc"><i>104</i>&nbsp;        boxListAllGods.add(scrollAllGods);</b>
+<b class="nc"><i>105</i>&nbsp;        panelCenter.add(boxListAllGods);</b>
+<i>106</i>&nbsp;
+<b class="nc"><i>107</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));</b>
+<i>108</i>&nbsp;
+<b class="nc"><i>109</i>&nbsp;        btnAdd = new JButton(&quot;    ADD &gt;    &quot;);</b>
+<b class="nc"><i>110</i>&nbsp;        btnAdd.addActionListener(this);</b>
+<b class="nc"><i>111</i>&nbsp;        btnRemove = new JButton(&quot;   &lt; REMOVE  &quot;);</b>
+<b class="nc"><i>112</i>&nbsp;        btnRemove.addActionListener(this);</b>
+<b class="nc"><i>113</i>&nbsp;        btnRemoveAll = new JButton(&quot;&lt;&lt; REMOVE ALL&quot;);</b>
+<b class="nc"><i>114</i>&nbsp;        btnRemoveAll.addActionListener(this);</b>
+<b class="nc"><i>115</i>&nbsp;        btnAdd.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>116</i>&nbsp;        btnRemove.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>117</i>&nbsp;        btnRemoveAll.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>118</i>&nbsp;        boxButton.add(btnAdd);</b>
+<b class="nc"><i>119</i>&nbsp;        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));</b>
+<b class="nc"><i>120</i>&nbsp;        boxButton.add(btnRemove);</b>
+<b class="nc"><i>121</i>&nbsp;        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));</b>
+<b class="nc"><i>122</i>&nbsp;        boxButton.add(btnRemoveAll);</b>
+<b class="nc"><i>123</i>&nbsp;        panelCenter.add(boxButton);</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        lblListGameGods = new JLabel(&quot;GAME GODS: &quot;);</b>
+<b class="nc"><i>128</i>&nbsp;        lblListGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>129</i>&nbsp;
+<b class="nc"><i>130</i>&nbsp;        listGameGods = new JList&lt;&gt;(listModelGameGods);</b>
+<b class="nc"><i>131</i>&nbsp;        listGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>132</i>&nbsp;        listGameGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</b>
+<b class="nc"><i>133</i>&nbsp;        listGameGods.setBorder(borderList);</b>
+<b class="nc"><i>134</i>&nbsp;        JScrollPane scrollGameGods = new JScrollPane(listGameGods);</b>
+<b class="nc"><i>135</i>&nbsp;        scrollGameGods.setPreferredSize(new Dimension(200, 400));</b>
+<b class="nc"><i>136</i>&nbsp;        scrollGameGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);</b>
+<b class="nc"><i>137</i>&nbsp;        scrollGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>138</i>&nbsp;        boxListGameGods.add(lblListGameGods);</b>
+<b class="nc"><i>139</i>&nbsp;        boxListGameGods.add(scrollGameGods);</b>
+<b class="nc"><i>140</i>&nbsp;        panelCenter.add(boxListGameGods);</b>
+<b class="nc"><i>141</i>&nbsp;        contents.add(panelCenter, BorderLayout.CENTER);</b>
+<i>142</i>&nbsp;
+<b class="nc"><i>143</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(20,1)));</b>
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;        JLabel lblGodCard = new JLabel(&quot;CARD: &quot;);</b>
+<b class="nc"><i>146</i>&nbsp;        lblGodCard.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>147</i>&nbsp;
+<b class="nc"><i>148</i>&nbsp;        lblCard = new JLabel(new ImageIcon());</b>
+<b class="nc"><i>149</i>&nbsp;        lblCard.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>150</i>&nbsp;        lblCard.setPreferredSize(new Dimension(200,300));</b>
+<b class="nc"><i>151</i>&nbsp;        lblDescription= new JLabel();</b>
+<b class="nc"><i>152</i>&nbsp;        lblDescription.setOpaque(true);</b>
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;
+<b class="nc"><i>156</i>&nbsp;        boxPower.add(Box.createRigidArea(new Dimension(100, 30)));</b>
+<b class="nc"><i>157</i>&nbsp;        boxPower.add(lblGodCard);</b>
+<b class="nc"><i>158</i>&nbsp;        boxPower.add(lblCard);</b>
+<b class="nc"><i>159</i>&nbsp;        boxPower.add(lblDescription);</b>
+<b class="nc"><i>160</i>&nbsp;        panelCenter.add(boxPower);</b>
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;        contents.add(panelCenter, BorderLayout.CENTER);</b>
+<i>164</i>&nbsp;
+<b class="nc"><i>165</i>&nbsp;        panelSouth = new JPanel();</b>
+<b class="nc"><i>166</i>&nbsp;        JLabel lblSelectedAllGodsLabel = new JLabel(&quot;Selected ALL GODS: &quot;);</b>
+<b class="nc"><i>167</i>&nbsp;        lblSelectedAllGods = new JLabel();</b>
+<b class="nc"><i>168</i>&nbsp;        JLabel lblSelectedGameGodsLabel = new JLabel(&quot;Selected GAME GODS: &quot;);</b>
+<b class="nc"><i>169</i>&nbsp;        lblSelectedGameGods = new JLabel();</b>
+<b class="nc"><i>170</i>&nbsp;        JButton btnStartGame = new JButton(&quot;start the Game&quot;);</b>
+<b class="nc"><i>171</i>&nbsp;        btnStartGame.setSize(new Dimension(70, 30));</b>
+<b class="nc"><i>172</i>&nbsp;        btnStartGame.addActionListener(e -&gt; {</b>
+<b class="nc"><i>173</i>&nbsp;            int gameGods = listModelGameGods.getSize();</b>
+<b class="nc"><i>174</i>&nbsp;            if (gameGods == numOfPlayer){</b>
+<b class="nc"><i>175</i>&nbsp;                setGameGods();</b>
+<b class="nc"><i>176</i>&nbsp;               new GodSetupUI(numOfPlayer,backEnd);</b>
+<b class="nc"><i>177</i>&nbsp;               this.dispose();</b>
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;            } else {
+<b class="nc"><i>181</i>&nbsp;                JOptionPane.showMessageDialog(</b>
+<i>182</i>&nbsp;                        null,
+<b class="nc"><i>183</i>&nbsp;                        &quot;Choose &quot;+numOfPlayer+&quot; gods for you and your opponent&quot;+(numOfPlayer==3?&quot;s&quot;:&quot;&quot;));</b>
+<i>184</i>&nbsp;            }
+<b class="nc"><i>185</i>&nbsp;        });</b>
+<i>186</i>&nbsp;
+<b class="nc"><i>187</i>&nbsp;        panelSouth.add(lblSelectedAllGodsLabel);</b>
+<b class="nc"><i>188</i>&nbsp;        panelSouth.add(lblSelectedAllGods);</b>
+<b class="nc"><i>189</i>&nbsp;        panelSouth.add(Box.createRigidArea(new Dimension(100,1)));</b>
+<b class="nc"><i>190</i>&nbsp;        panelSouth.add(lblSelectedGameGodsLabel);</b>
+<b class="nc"><i>191</i>&nbsp;        panelSouth.add(lblSelectedGameGods);</b>
+<b class="nc"><i>192</i>&nbsp;        panelSouth.add(Box.createRigidArea(new Dimension(100, 1)));</b>
+<b class="nc"><i>193</i>&nbsp;        panelSouth.add(btnStartGame);</b>
+<b class="nc"><i>194</i>&nbsp;        contents.add(panelSouth, BorderLayout.SOUTH);</b>
+<i>195</i>&nbsp;
+<b class="nc"><i>196</i>&nbsp;        listGameGods.addListSelectionListener(this);</b>
+<b class="nc"><i>197</i>&nbsp;        listAllGods.addListSelectionListener(this);</b>
+<i>198</i>&nbsp;
+<b class="nc"><i>199</i>&nbsp;        this.revalidate();</b>
+<b class="nc"><i>200</i>&nbsp;        setSize(new Dimension(1280, 720));</b>
+<b class="nc"><i>201</i>&nbsp;        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</b>
+<b class="nc"><i>202</i>&nbsp;        setResizable(true);</b>
+<i>203</i>&nbsp;
+<b class="nc"><i>204</i>&nbsp;        setLocationRelativeTo(null);</b>
+<b class="nc"><i>205</i>&nbsp;        setVisible(true);</b>
+<i>206</i>&nbsp;
+<b class="nc"><i>207</i>&nbsp;    }</b>
+<i>208</i>&nbsp;
+<i>209</i>&nbsp;    public void createGodChoice(String[] gods){
+<b class="nc"><i>210</i>&nbsp;        this.setTitle(&quot;Gods select&quot;);</b>
+<b class="nc"><i>211</i>&nbsp;        JPanel contents = new JPanel();</b>
+<b class="nc"><i>212</i>&nbsp;        contents.setBorder(borderContent);</b>
+<b class="nc"><i>213</i>&nbsp;        contents.setLayout(new BorderLayout());</b>
+<b class="nc"><i>214</i>&nbsp;        setContentPane(contents);</b>
+<i>215</i>&nbsp;
+<b class="nc"><i>216</i>&nbsp;        JLabel lblTitle = new JLabel(&quot;GODS: &quot;, SwingConstants.CENTER);</b>
+<b class="nc"><i>217</i>&nbsp;        lblTitle.setFont(new Font(Font.DIALOG, Font.BOLD, 20));</b>
+<b class="nc"><i>218</i>&nbsp;        contents.add(lblTitle, BorderLayout.NORTH);</b>
+<i>219</i>&nbsp;
+<b class="nc"><i>220</i>&nbsp;        panelCenter = new JPanel();</b>
+<b class="nc"><i>221</i>&nbsp;        panelCenter.setBorder(borderCenter);</b>
+<i>222</i>&nbsp;
+<b class="nc"><i>223</i>&nbsp;        lblListAllGods = new JLabel(&quot;ALL GODS: &quot;);</b>
+<b class="nc"><i>224</i>&nbsp;        lblListAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;
+<b class="nc"><i>227</i>&nbsp;        listAllGods = new JList&lt;&gt;(listModelAllGods);</b>
+<b class="nc"><i>228</i>&nbsp;        listAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>229</i>&nbsp;        listAllGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</b>
+<b class="nc"><i>230</i>&nbsp;        listAllGods.setBorder(borderList);</b>
+<b class="nc"><i>231</i>&nbsp;        JScrollPane scrollAllGods = new JScrollPane(listAllGods);</b>
+<b class="nc"><i>232</i>&nbsp;        scrollAllGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>233</i>&nbsp;        scrollAllGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);</b>
+<b class="nc"><i>234</i>&nbsp;        scrollAllGods.setPreferredSize(new Dimension(200,400));</b>
+<b class="nc"><i>235</i>&nbsp;        boxListAllGods.add(lblListAllGods);</b>
+<b class="nc"><i>236</i>&nbsp;        boxListAllGods.add(scrollAllGods);</b>
+<b class="nc"><i>237</i>&nbsp;        panelCenter.add(boxListAllGods);</b>
+<i>238</i>&nbsp;
+<b class="nc"><i>239</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));</b>
+<i>240</i>&nbsp;
+<b class="nc"><i>241</i>&nbsp;        btnAdd = new JButton(&quot;    ADD &gt;    &quot;);</b>
+<b class="nc"><i>242</i>&nbsp;        btnAdd.addActionListener(this);</b>
+<b class="nc"><i>243</i>&nbsp;        btnRemove = new JButton(&quot;   &lt; REMOVE  &quot;);</b>
+<b class="nc"><i>244</i>&nbsp;        btnRemove.addActionListener(this);</b>
+<b class="nc"><i>245</i>&nbsp;        btnRemoveAll = new JButton(&quot;&lt;&lt; REMOVE ALL&quot;);</b>
+<b class="nc"><i>246</i>&nbsp;        btnRemoveAll.addActionListener(this);</b>
+<b class="nc"><i>247</i>&nbsp;        btnAdd.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>248</i>&nbsp;        btnRemove.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>249</i>&nbsp;        btnRemoveAll.setSize(new Dimension(50,30));</b>
+<b class="nc"><i>250</i>&nbsp;        boxButton.add(btnAdd);</b>
+<b class="nc"><i>251</i>&nbsp;        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));</b>
+<b class="nc"><i>252</i>&nbsp;        boxButton.add(btnRemove);</b>
+<b class="nc"><i>253</i>&nbsp;        boxButton.add(Box.createRigidArea(new Dimension(1, 20)));</b>
+<b class="nc"><i>254</i>&nbsp;        boxButton.add(btnRemoveAll);</b>
+<b class="nc"><i>255</i>&nbsp;        panelCenter.add(boxButton);</b>
+<i>256</i>&nbsp;
+<b class="nc"><i>257</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(10,1)));</b>
+<i>258</i>&nbsp;
+<b class="nc"><i>259</i>&nbsp;        lblListGameGods = new JLabel(&quot;GAME GODS: &quot;);</b>
+<b class="nc"><i>260</i>&nbsp;        lblListGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>261</i>&nbsp;
+<b class="nc"><i>262</i>&nbsp;        listGameGods = new JList&lt;&gt;(listModelGameGods);</b>
+<b class="nc"><i>263</i>&nbsp;        listGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>264</i>&nbsp;        listGameGods.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</b>
+<b class="nc"><i>265</i>&nbsp;        listGameGods.setBorder(borderList);</b>
+<b class="nc"><i>266</i>&nbsp;        JScrollPane scrollGameGods = new JScrollPane(listGameGods);</b>
+<b class="nc"><i>267</i>&nbsp;        scrollGameGods.setPreferredSize(new Dimension(200, 400));</b>
+<b class="nc"><i>268</i>&nbsp;        scrollGameGods.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);</b>
+<b class="nc"><i>269</i>&nbsp;        scrollGameGods.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>270</i>&nbsp;        boxListGameGods.add(lblListGameGods);</b>
+<b class="nc"><i>271</i>&nbsp;        boxListGameGods.add(scrollGameGods);</b>
+<b class="nc"><i>272</i>&nbsp;        panelCenter.add(boxListGameGods);</b>
+<b class="nc"><i>273</i>&nbsp;        contents.add(panelCenter, BorderLayout.CENTER);</b>
+<i>274</i>&nbsp;
+<b class="nc"><i>275</i>&nbsp;        panelCenter.add(Box.createRigidArea(new Dimension(20,1)));</b>
+<i>276</i>&nbsp;
+<b class="nc"><i>277</i>&nbsp;        JLabel lblGodCard = new JLabel(&quot;CARD: &quot;);</b>
+<b class="nc"><i>278</i>&nbsp;        lblGodCard.setAlignmentX(LEFT_ALIGNMENT);</b>
+<i>279</i>&nbsp;
+<b class="nc"><i>280</i>&nbsp;        lblCard = new JLabel(new ImageIcon());</b>
+<b class="nc"><i>281</i>&nbsp;        lblCard.setAlignmentX(LEFT_ALIGNMENT);</b>
+<b class="nc"><i>282</i>&nbsp;        lblCard.setPreferredSize(new Dimension(200,300));</b>
+<i>283</i>&nbsp;
+<b class="nc"><i>284</i>&nbsp;        boxPower.add(lblGodCard);</b>
+<b class="nc"><i>285</i>&nbsp;        boxPower.add(Box.createRigidArea(new Dimension(100, 30)));</b>
+<b class="nc"><i>286</i>&nbsp;        boxPower.add(lblCard);</b>
+<b class="nc"><i>287</i>&nbsp;        panelCenter.add(boxPower);</b>
+<b class="nc"><i>288</i>&nbsp;        contents.add(panelCenter, BorderLayout.CENTER);</b>
+<b class="nc"><i>289</i>&nbsp;        lblDescription= new JLabel();</b>
+<b class="nc"><i>290</i>&nbsp;        lblDescription.setOpaque(true);</b>
+<i>291</i>&nbsp;
+<b class="nc"><i>292</i>&nbsp;        boxPower.add(lblDescription);</b>
+<i>293</i>&nbsp;
+<b class="nc"><i>294</i>&nbsp;        panelSouth = new JPanel();</b>
+<b class="nc"><i>295</i>&nbsp;        JLabel lblSelectedAllGodsLabel = new JLabel(&quot;Selected ALL GODS: &quot;);</b>
+<b class="nc"><i>296</i>&nbsp;        lblSelectedAllGods = new JLabel();</b>
+<b class="nc"><i>297</i>&nbsp;        JLabel lblSelectedGameGodsLabel = new JLabel(&quot;Selected GAME GODS: &quot;);</b>
+<b class="nc"><i>298</i>&nbsp;        lblSelectedGameGods = new JLabel();</b>
+<b class="nc"><i>299</i>&nbsp;        JButton btnStartGame = new JButton(&quot;start the Game&quot;);</b>
+<b class="nc"><i>300</i>&nbsp;        btnStartGame.setSize(new Dimension(70, 30));</b>
+<b class="nc"><i>301</i>&nbsp;        btnStartGame.addActionListener(e -&gt; {</b>
+<b class="nc"><i>302</i>&nbsp;            int gameGods = listModelGameGods.getSize();</b>
+<b class="nc"><i>303</i>&nbsp;            if (gameGods == 1){</b>
+<b class="nc"><i>304</i>&nbsp;                setGameGods();</b>
+<b class="nc"><i>305</i>&nbsp;                backEnd.createBoardGui();</b>
+<b class="nc"><i>306</i>&nbsp;                this.dispose();</b>
+<b class="nc"><i>307</i>&nbsp;                backEnd.update(&quot;wait other players&quot;);</b>
+<i>308</i>&nbsp;            } else {
+<b class="nc"><i>309</i>&nbsp;                JOptionPane.showMessageDialog(</b>
+<i>310</i>&nbsp;                        null,
+<i>311</i>&nbsp;                        &quot;Choose one god&quot;);
+<i>312</i>&nbsp;            }
+<b class="nc"><i>313</i>&nbsp;        });</b>
+<i>314</i>&nbsp;
+<b class="nc"><i>315</i>&nbsp;        panelSouth.add(lblSelectedAllGodsLabel);</b>
+<b class="nc"><i>316</i>&nbsp;        panelSouth.add(lblSelectedAllGods);</b>
+<b class="nc"><i>317</i>&nbsp;        panelSouth.add(Box.createRigidArea(new Dimension(100,1)));</b>
+<b class="nc"><i>318</i>&nbsp;        panelSouth.add(lblSelectedGameGodsLabel);</b>
+<b class="nc"><i>319</i>&nbsp;        panelSouth.add(lblSelectedGameGods);</b>
+<b class="nc"><i>320</i>&nbsp;        panelSouth.add(Box.createRigidArea(new Dimension(100, 1)));</b>
+<b class="nc"><i>321</i>&nbsp;        panelSouth.add(btnStartGame);</b>
+<b class="nc"><i>322</i>&nbsp;        contents.add(panelSouth, BorderLayout.SOUTH);</b>
+<i>323</i>&nbsp;
+<b class="nc"><i>324</i>&nbsp;        listGameGods.addListSelectionListener(this);</b>
+<b class="nc"><i>325</i>&nbsp;        listAllGods.addListSelectionListener(this);</b>
+<i>326</i>&nbsp;
+<b class="nc"><i>327</i>&nbsp;        for(String s : gods){</b>
+<b class="nc"><i>328</i>&nbsp;            listModelAllGods.addElement(s.toUpperCase());</b>
+<i>329</i>&nbsp;        }
+<i>330</i>&nbsp;
+<b class="nc"><i>331</i>&nbsp;        setSize(new Dimension(1280, 720));</b>
+<b class="nc"><i>332</i>&nbsp;        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</b>
+<b class="nc"><i>333</i>&nbsp;        setResizable(true);</b>
+<i>334</i>&nbsp;
+<b class="nc"><i>335</i>&nbsp;        setLocationRelativeTo(null);</b>
+<b class="nc"><i>336</i>&nbsp;        setVisible(true);</b>
+<i>337</i>&nbsp;
+<i>338</i>&nbsp;
+<b class="nc"><i>339</i>&nbsp;    }</b>
+<i>340</i>&nbsp;
+<i>341</i>&nbsp;    private void initAllGodsModel(){
+<b class="nc"><i>342</i>&nbsp;        for(EnumDivinity s : EnumDivinity.values()){</b>
+<b class="nc"><i>343</i>&nbsp;            listModelAllGods.addElement(s.toString());</b>
+<i>344</i>&nbsp;        }
+<b class="nc"><i>345</i>&nbsp;    }</b>
+<i>346</i>&nbsp;
+<i>347</i>&nbsp;    protected void setGameGods(){
+<b class="nc"><i>348</i>&nbsp;        StringBuilder message=new StringBuilder();</b>
+<b class="nc"><i>349</i>&nbsp;        for(int i=0;i&lt;listModelGameGods.getSize();i++){</b>
+<b class="nc"><i>350</i>&nbsp;            message.append(listModelGameGods.get(i));</b>
+<b class="nc"><i>351</i>&nbsp;            message.append(&quot; &quot;);</b>
+<i>352</i>&nbsp;        }
+<i>353</i>&nbsp;
+<b class="nc"><i>354</i>&nbsp;        backEnd.sendMessage(message.toString());</b>
+<i>355</i>&nbsp;
+<b class="nc"><i>356</i>&nbsp;    }</b>
+<i>357</i>&nbsp;
+<i>358</i>&nbsp;
+<i>359</i>&nbsp;
+<i>360</i>&nbsp;
+<i>361</i>&nbsp;    @Override
+<i>362</i>&nbsp;    public void actionPerformed(ActionEvent e) {
+<b class="nc"><i>363</i>&nbsp;        Object source = e.getSource();</b>
+<b class="nc"><i>364</i>&nbsp;        if (source == btnAdd){</b>
+<b class="nc"><i>365</i>&nbsp;            addItem();</b>
+<b class="nc"><i>366</i>&nbsp;            return;</b>
+<i>367</i>&nbsp;        }
+<b class="nc"><i>368</i>&nbsp;        if (source == btnRemove){</b>
+<b class="nc"><i>369</i>&nbsp;            removeItem();</b>
+<b class="nc"><i>370</i>&nbsp;            return;</b>
+<i>371</i>&nbsp;        }
+<b class="nc"><i>372</i>&nbsp;        if (source == btnRemoveAll){</b>
+<b class="nc"><i>373</i>&nbsp;            removeAllItems();</b>
+<b class="nc"><i>374</i>&nbsp;            return;</b>
+<i>375</i>&nbsp;        }
+<i>376</i>&nbsp;
+<b class="nc"><i>377</i>&nbsp;    }</b>
+<i>378</i>&nbsp;    private void addItem(){
+<b class="nc"><i>379</i>&nbsp;        int selectedItem = listAllGods.getSelectedIndex();</b>
+<b class="nc"><i>380</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>381</i>&nbsp;            return;</b>
+<i>382</i>&nbsp;        }
+<b class="nc"><i>383</i>&nbsp;        String addedItem = listAllGods.getSelectedValue();</b>
+<b class="nc"><i>384</i>&nbsp;        listModelAllGods.remove(selectedItem);</b>
+<b class="nc"><i>385</i>&nbsp;        displaySelectedItems();</b>
+<b class="nc"><i>386</i>&nbsp;        int gameGods = listModelGameGods.getSize();</b>
+<b class="nc"><i>387</i>&nbsp;        if (gameGods == 0){</b>
+<b class="nc"><i>388</i>&nbsp;            listModelGameGods.addElement(addedItem);</b>
+<b class="nc"><i>389</i>&nbsp;            return;</b>
+<i>390</i>&nbsp;        }
+<b class="nc"><i>391</i>&nbsp;        for (int i = 0; i &lt; gameGods; i++){</b>
+<b class="nc"><i>392</i>&nbsp;            String item = listModelGameGods.elementAt(i);</b>
+<b class="nc"><i>393</i>&nbsp;            int compare = addedItem.compareToIgnoreCase(item);</b>
+<b class="nc"><i>394</i>&nbsp;            if (compare&lt;0){</b>
+<b class="nc"><i>395</i>&nbsp;                listModelGameGods.add(i, addedItem);</b>
+<b class="nc"><i>396</i>&nbsp;                return;</b>
+<i>397</i>&nbsp;            }
+<i>398</i>&nbsp;        }
+<b class="nc"><i>399</i>&nbsp;        listModelGameGods.addElement(addedItem);</b>
+<b class="nc"><i>400</i>&nbsp;    }</b>
+<i>401</i>&nbsp;
+<i>402</i>&nbsp;    private void changeCardGame(){
+<b class="nc"><i>403</i>&nbsp;        int selectedItem = listGameGods.getSelectedIndex();</b>
+<b class="nc"><i>404</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>405</i>&nbsp;            lblCard.setIcon(null);</b>
+<b class="nc"><i>406</i>&nbsp;            lblDescription.setText(&quot;&quot;);</b>
+<b class="nc"><i>407</i>&nbsp;            return;</b>
+<i>408</i>&nbsp;        }
+<b class="nc"><i>409</i>&nbsp;        String cardName = listGameGods.getSelectedValue();</b>
+<b class="nc"><i>410</i>&nbsp;        lblDescription.setText(PowerDescription.getDescription(cardName));</b>
+<b class="nc"><i>411</i>&nbsp;        lblDescription.setFont(new Font(Font.DIALOG,Font.PLAIN,12));</b>
+<b class="nc"><i>412</i>&nbsp;        lblDescription.setHorizontalAlignment(JLabel.CENTER);</b>
+<i>413</i>&nbsp;
+<b class="nc"><i>414</i>&nbsp;        cardName =  &quot;/godsCard/&quot; + cardName + &quot;.png&quot;;</b>
+<i>415</i>&nbsp;
+<b class="nc"><i>416</i>&nbsp;        lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));</b>
+<i>417</i>&nbsp;
+<i>418</i>&nbsp;
+<b class="nc"><i>419</i>&nbsp;    }</b>
+<i>420</i>&nbsp;
+<i>421</i>&nbsp;    private void changeCardAll(){
+<b class="nc"><i>422</i>&nbsp;        int selectedItem = listAllGods.getSelectedIndex();</b>
+<b class="nc"><i>423</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>424</i>&nbsp;            lblCard.setIcon(null);</b>
+<b class="nc"><i>425</i>&nbsp;            lblDescription.setText(&quot;&quot;);</b>
+<b class="nc"><i>426</i>&nbsp;            return;</b>
+<i>427</i>&nbsp;        }
+<i>428</i>&nbsp;
+<b class="nc"><i>429</i>&nbsp;        String cardName = listAllGods.getSelectedValue();</b>
+<b class="nc"><i>430</i>&nbsp;        lblDescription.setText(PowerDescription.getDescription(cardName));</b>
+<b class="nc"><i>431</i>&nbsp;        lblDescription.setFont(new Font(Font.DIALOG,Font.PLAIN,12));</b>
+<b class="nc"><i>432</i>&nbsp;        lblDescription.setHorizontalAlignment(JLabel.CENTER);</b>
+<b class="nc"><i>433</i>&nbsp;        cardName = &quot;/godsCard/&quot; + cardName + &quot;.png&quot;;</b>
+<b class="nc"><i>434</i>&nbsp;        lblCard.setIcon(new ImageIcon(getClass().getResource(cardName)));</b>
+<i>435</i>&nbsp;
+<i>436</i>&nbsp;
+<i>437</i>&nbsp;
+<b class="nc"><i>438</i>&nbsp;    }</b>
+<i>439</i>&nbsp;
+<i>440</i>&nbsp;    private void displaySelectedItems(){
+<i>441</i>&nbsp;        int selectedItem;
+<i>442</i>&nbsp;        String itemName;
+<i>443</i>&nbsp;
+<b class="nc"><i>444</i>&nbsp;        selectedItem = listAllGods.getSelectedIndex();</b>
+<b class="nc"><i>445</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>446</i>&nbsp;            lblSelectedAllGods.setText(&quot;&quot;);</b>
+<i>447</i>&nbsp;        } else {
+<b class="nc"><i>448</i>&nbsp;            itemName = listAllGods.getSelectedValue();</b>
+<b class="nc"><i>449</i>&nbsp;            lblSelectedAllGods.setText(itemName);</b>
+<i>450</i>&nbsp;        }
+<b class="nc"><i>451</i>&nbsp;        selectedItem = listGameGods.getSelectedIndex();</b>
+<b class="nc"><i>452</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>453</i>&nbsp;            lblSelectedGameGods.setText(&quot;&quot;);</b>
+<i>454</i>&nbsp;        }else {
+<b class="nc"><i>455</i>&nbsp;            itemName = listGameGods.getSelectedValue();</b>
+<b class="nc"><i>456</i>&nbsp;            lblSelectedGameGods.setText(itemName);</b>
+<i>457</i>&nbsp;        }
+<b class="nc"><i>458</i>&nbsp;    }</b>
+<i>459</i>&nbsp;
+<i>460</i>&nbsp;    private void removeItem(){
+<b class="nc"><i>461</i>&nbsp;        int selectedItem = listGameGods.getSelectedIndex();</b>
+<b class="nc"><i>462</i>&nbsp;        if (selectedItem == -1){</b>
+<b class="nc"><i>463</i>&nbsp;            return;</b>
+<i>464</i>&nbsp;        }
+<b class="nc"><i>465</i>&nbsp;        String removedItem = listGameGods.getSelectedValue();</b>
+<b class="nc"><i>466</i>&nbsp;        listModelGameGods.remove(selectedItem);</b>
+<b class="nc"><i>467</i>&nbsp;        displaySelectedItems();</b>
+<i>468</i>&nbsp;
+<b class="nc"><i>469</i>&nbsp;        int allGodsSize = listModelAllGods.getSize();</b>
+<b class="nc"><i>470</i>&nbsp;        if (allGodsSize == 0){</b>
+<b class="nc"><i>471</i>&nbsp;            listModelAllGods.addElement(removedItem);</b>
+<b class="nc"><i>472</i>&nbsp;            return;</b>
+<i>473</i>&nbsp;        }
+<b class="nc"><i>474</i>&nbsp;        for (int i = 0; i &lt; allGodsSize; i++){</b>
+<b class="nc"><i>475</i>&nbsp;            String item = listModelAllGods.elementAt(i);</b>
+<b class="nc"><i>476</i>&nbsp;            int compare = removedItem.compareToIgnoreCase(item);</b>
+<b class="nc"><i>477</i>&nbsp;            if (compare&lt;0){</b>
+<b class="nc"><i>478</i>&nbsp;                listModelAllGods.add(i,removedItem);</b>
+<b class="nc"><i>479</i>&nbsp;                return;</b>
+<i>480</i>&nbsp;            }
+<i>481</i>&nbsp;        }
+<b class="nc"><i>482</i>&nbsp;        listModelAllGods.addElement(removedItem);</b>
+<b class="nc"><i>483</i>&nbsp;    }</b>
+<i>484</i>&nbsp;
+<i>485</i>&nbsp;    private void removeAllItems(){
+<b class="nc"><i>486</i>&nbsp;        listModelAllGods.clear();</b>
+<b class="nc"><i>487</i>&nbsp;        initAllGodsModel();</b>
+<b class="nc"><i>488</i>&nbsp;        listModelGameGods.clear();</b>
+<b class="nc"><i>489</i>&nbsp;        displaySelectedItems();</b>
+<b class="nc"><i>490</i>&nbsp;    }</b>
+<i>491</i>&nbsp;
+<i>492</i>&nbsp;    @Override
+<i>493</i>&nbsp;    public void valueChanged(ListSelectionEvent e) {
+<i>494</i>&nbsp;
+<b class="nc"><i>495</i>&nbsp;        Object source = e.getSource();</b>
+<b class="nc"><i>496</i>&nbsp;        if (source == listAllGods){</b>
+<b class="nc"><i>497</i>&nbsp;            changeCardAll();</b>
+<b class="nc"><i>498</i>&nbsp;            displaySelectedItems();</b>
+<b class="nc"><i>499</i>&nbsp;            return;</b>
+<i>500</i>&nbsp;        }
+<b class="nc"><i>501</i>&nbsp;        if (source == listGameGods){</b>
+<b class="nc"><i>502</i>&nbsp;            changeCardGame();</b>
+<b class="nc"><i>503</i>&nbsp;            displaySelectedItems();</b>
+<b class="nc"><i>504</i>&nbsp;            return;</b>
+<i>505</i>&nbsp;        }
+<i>506</i>&nbsp;
+<b class="nc"><i>507</i>&nbsp;    }</b>
+<i>508</i>&nbsp;
+<i>509</i>&nbsp;    @Override
+<i>510</i>&nbsp;    public void itemStateChanged(ItemEvent e) {
+<b class="nc"><i>511</i>&nbsp;        Object source = e.getSource();</b>
+<b class="nc"><i>512</i>&nbsp;        if (source == boxPower){</b>
+<b class="nc"><i>513</i>&nbsp;            displaySelectedItems();</b>
+<b class="nc"><i>514</i>&nbsp;            return;</b>
+<i>515</i>&nbsp;        }
+<b class="nc"><i>516</i>&nbsp;    }</b>
+<i>517</i>&nbsp;
+<i>518</i>&nbsp;    private void setFonts(){
+<b class="nc"><i>519</i>&nbsp;        UIManager.put(&quot;Button.font&quot;, fontBold);</b>
+<b class="nc"><i>520</i>&nbsp;        UIManager.put(&quot;Label.font&quot;, fontBold);</b>
+<b class="nc"><i>521</i>&nbsp;        UIManager.put(&quot;List.font&quot;, fontPlain);</b>
+<b class="nc"><i>522</i>&nbsp;    }</b>
+<i>523</i>&nbsp;
+<i>524</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

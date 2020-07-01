@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Ares</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Ares (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Ares</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89,7%
+  </span>
+  <span class="absValue">
+    (35/ 39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.State.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * This class describes the behaviour of the Ares, God of war
+<i>10</i>&nbsp; * It has the power or removing the block. At the end of the Ares&#39; turn, one of the places neighboring the unmoved worker of Ares might be selected.
+<i>11</i>&nbsp; * If the chosen place is free of worker and last block is not a dome then it&#39;s last block is removed
+<i>12</i>&nbsp; *
+<i>13</i>&nbsp; * @author CG51
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * @version 1.1
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class Ares extends Player {
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Class attribute
+<i>20</i>&nbsp;     */
+<i>21</i>&nbsp;    private int numWrk;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Class constructor to set the player&#39;s ID
+<i>25</i>&nbsp;     * @param playerID
+<i>26</i>&nbsp;     * @param model
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    public Ares(String playerID, Model model) {
+<b class="fc"><i>29</i>&nbsp;        super(playerID, model);</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Choosing the coordinate with respect to Ares&#39; power and the index of unmoved worker is assigned to numWork var
+<i>34</i>&nbsp;     * @param selection of type Coordinate
+<i>35</i>&nbsp;     * @return true or false depending on the result
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @Override
+<i>39</i>&nbsp;    public boolean makeSelection(Coordinate selection) {
+<b class="fc"><i>40</i>&nbsp;        boolean result= super.makeSelection(selection);</b>
+<b class="fc"><i>41</i>&nbsp;        if(result) {</b>
+<b class="fc"><i>42</i>&nbsp;            numWrk = model.getGrid().getTile(model.getCurrentWorker()).getWorker().getNum();</b>
+<b class="fc"><i>43</i>&nbsp;            numWrk = 1 - numWrk;</b>
+<i>44</i>&nbsp;        }
+<b class="fc"><i>45</i>&nbsp;        return result;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Behaviour of FSM is defined in accordance with the Ares&#39; power
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void nextPhase() {
+<b class="fc"><i>53</i>&nbsp;        State currentState = model.getCurrentState();</b>
+<b class="fc"><i>54</i>&nbsp;        State nextState = null;</b>
+<b class="fc"><i>55</i>&nbsp;        if (currentState instanceof Select)</b>
+<b class="fc"><i>56</i>&nbsp;            nextState = new Move();</b>
+<i>57</i>&nbsp;
+<b class="fc"><i>58</i>&nbsp;        else if (currentState instanceof Move)</b>
+<b class="fc"><i>59</i>&nbsp;            nextState = new Build();</b>
+<i>60</i>&nbsp;
+<b class="fc"><i>61</i>&nbsp;        else if (currentState instanceof Build)</b>
+<b class="fc"><i>62</i>&nbsp;            nextState = new PowerEnd();</b>
+<b class="fc"><i>63</i>&nbsp;        model.setCurrentState(nextState);</b>
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * Defines the Power of Ares
+<i>69</i>&nbsp;     * @param destination of type Coordinate
+<i>70</i>&nbsp;     * @return true or false depending on the result
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    @Override
+<i>73</i>&nbsp;    public boolean makePower(Coordinate destination) {
+<b class="fc"><i>74</i>&nbsp;        if(isActive()){</b>
+<b class="fc"><i>75</i>&nbsp;            model.setCurrentState(new Move());</b>
+<b class="fc"><i>76</i>&nbsp;            boolean result=false;</b>
+<b class="fc"><i>77</i>&nbsp;            List&lt;Coordinate&gt;tileAroundDestination=model.getGrid().validTileAround(destination);</b>
+<b class="fc"><i>78</i>&nbsp;            for(Coordinate c : tileAroundDestination){</b>
+<b class="fc"><i>79</i>&nbsp;                Worker tmp= model.getGrid().getTile(c).getWorker();</b>
+<b class="fc"><i>80</i>&nbsp;                if(tmp.equals(this.getWorker(numWrk))) {</b>
+<b class="fc"><i>81</i>&nbsp;                    result = this.reduce(destination);</b>
+<b class="fc"><i>82</i>&nbsp;                    break;</b>
+<i>83</i>&nbsp;                }
+<b class="nc"><i>84</i>&nbsp;            }</b>
+<b class="fc"><i>85</i>&nbsp;            if(result) {</b>
+<b class="fc"><i>86</i>&nbsp;                model.setCurrentState(new End());</b>
+<b class="fc"><i>87</i>&nbsp;                numWrk=0;</b>
+<i>88</i>&nbsp;            }
+<i>89</i>&nbsp;            else
+<i>90</i>&nbsp;            {
+<b class="nc"><i>91</i>&nbsp;                model.setCurrentState(new PowerEnd());</b>
+<b class="nc"><i>92</i>&nbsp;                togglePower();</b>
+<i>93</i>&nbsp;            }
+<b class="fc"><i>94</i>&nbsp;            return result;</b>
+<i>95</i>&nbsp;        }
+<i>96</i>&nbsp;        else{
+<b class="fc"><i>97</i>&nbsp;            model.setCurrentState(new End());</b>
+<b class="fc"><i>98</i>&nbsp;            return true;</b>
+<i>99</i>&nbsp;        }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    /**
+<i>104</i>&nbsp;     * Method removes the last block of the Coordinate
+<i>105</i>&nbsp;     * @param destination
+<i>106</i>&nbsp;     * @return true or false
+<i>107</i>&nbsp;     */
+<i>108</i>&nbsp;    public boolean reduce(Coordinate destination){
+<b class="fc"><i>109</i>&nbsp;        if(!new Checks(model,null,destination).isNotWorker().isNotDome().isNotBuild(0).simpleGetResult()) {</b>
+<b class="fc"><i>110</i>&nbsp;            model.getGrid().getTile(destination).reduceBlock();</b>
+<b class="fc"><i>111</i>&nbsp;            return true;</b>
+<i>112</i>&nbsp;        }
+<b class="nc"><i>113</i>&nbsp;        else return false;</b>
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

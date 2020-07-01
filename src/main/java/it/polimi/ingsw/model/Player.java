@@ -246,7 +246,7 @@ public abstract class Player implements Serializable{
 
 
     /**
-     * This function needs an implementation of the FSM structure which describe game's round for each kind of god.
+     * This function implement the FSM structure which describe game's round for each kind of god.
      * For each state, the function had to decide the next state, depends also if the power is active or not.
      */
     public void nextPhase(){

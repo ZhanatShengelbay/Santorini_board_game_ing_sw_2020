@@ -21,6 +21,7 @@ public class Zeus extends Player {
     /**
      * Constructor to keep the value of PlayerID holding Zeus, which is inherited from the super class
      * @param playerID
+     * @param model
      */
     public Zeus(String playerID, Model model){
         super(playerID,model);

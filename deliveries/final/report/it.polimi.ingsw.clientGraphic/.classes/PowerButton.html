@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PowerButton</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.clientGraphic</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PowerButton (it.polimi.ingsw.clientGraphic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PowerButton</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (2/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25,5%
+  </span>
+  <span class="absValue">
+    (13/ 51)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.clientGraphic;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import javax.imageio.ImageIO;
+<i>5</i>&nbsp;import javax.swing.*;
+<i>6</i>&nbsp;import java.awt.*;
+<i>7</i>&nbsp;import java.awt.event.MouseEvent;
+<i>8</i>&nbsp;import java.awt.image.BufferedImage;
+<i>9</i>&nbsp;import java.io.IOException;
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;public class PowerButton extends Button {</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    BoardGUI boardGui;
+<i>14</i>&nbsp;    BackEndGui model;
+<i>15</i>&nbsp;
+<b class="fc"><i>16</i>&nbsp;    public PowerButton(BoardGUI boardGui, BackEndGui model) {</b>
+<b class="fc"><i>17</i>&nbsp;        this.boardGui = boardGui;</b>
+<b class="fc"><i>18</i>&nbsp;        this.model = model;</b>
+<b class="fc"><i>19</i>&nbsp;        this.addMouseListener(this);</b>
+<b class="fc"><i>20</i>&nbsp;        BufferedImage img = null;</b>
+<b class="fc"><i>21</i>&nbsp;        String URI = &quot;/heropower_inactive.png&quot;;</b>
+<i>22</i>&nbsp;        try {
+<b class="fc"><i>23</i>&nbsp;            img = ImageIO.read(getClass().getResource(URI));</b>
+<b class="nc"><i>24</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>25</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i>26</i>&nbsp;        }</b>
+<b class="fc"><i>27</i>&nbsp;        assert img != null;</b>
+<b class="fc"><i>28</i>&nbsp;        Image dimg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);</b>
+<b class="fc"><i>29</i>&nbsp;        this.setIcon(new ImageIcon(dimg));</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    @Override
+<i>33</i>&nbsp;    public void updateGraphic(boolean state) {
+<i>34</i>&nbsp;        String URI;
+<b class="nc"><i>35</i>&nbsp;        if (state) {</b>
+<b class="nc"><i>36</i>&nbsp;            URI = &quot;/heropower_active.png&quot;;</b>
+<i>37</i>&nbsp;        } else
+<b class="nc"><i>38</i>&nbsp;            URI = &quot;/heropower_inactive.png&quot;;</b>
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        BufferedImage img = null;</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;        try {
+<b class="nc"><i>43</i>&nbsp;            img = ImageIO.read(getClass().getResource(URI));</b>
+<b class="nc"><i>44</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>45</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>46</i>&nbsp;        }</b>
+<b class="nc"><i>47</i>&nbsp;        assert img != null;</b>
+<b class="nc"><i>48</i>&nbsp;        Image dimg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);</b>
+<b class="nc"><i>49</i>&nbsp;        this.setIcon(new ImageIcon(dimg));</b>
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public void actionPerformed() {
+<b class="nc"><i>55</i>&nbsp;        updateGraphic(model.togglePower());</b>
+<b class="nc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @Override
+<i>60</i>&nbsp;    public void mouseEntered(MouseEvent e) {
+<b class="nc"><i>61</i>&nbsp;        if(!model.power) {</b>
+<b class="nc"><i>62</i>&nbsp;            BufferedImage img = null;</b>
+<b class="nc"><i>63</i>&nbsp;            String URI = &quot;/heropower_inactive_on.png&quot;;</b>
+<i>64</i>&nbsp;            try {
+<b class="nc"><i>65</i>&nbsp;                img = ImageIO.read(getClass().getResource(URI));</b>
+<b class="nc"><i>66</i>&nbsp;            } catch (IOException h) {</b>
+<b class="nc"><i>67</i>&nbsp;                h.printStackTrace();</b>
+<b class="nc"><i>68</i>&nbsp;            }</b>
+<b class="nc"><i>69</i>&nbsp;            assert img != null;</b>
+<b class="nc"><i>70</i>&nbsp;            Image dimg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);</b>
+<b class="nc"><i>71</i>&nbsp;            this.setIcon(new ImageIcon(dimg));</b>
+<i>72</i>&nbsp;        }
+<b class="nc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @Override
+<i>76</i>&nbsp;    public void mouseExited(MouseEvent e) {
+<b class="nc"><i>77</i>&nbsp;        if(!model.power) {</b>
+<b class="nc"><i>78</i>&nbsp;            BufferedImage img = null;</b>
+<b class="nc"><i>79</i>&nbsp;            String URI = &quot;/heropower_inactive.png&quot;;</b>
+<i>80</i>&nbsp;            try {
+<b class="nc"><i>81</i>&nbsp;                img = ImageIO.read(getClass().getResource(URI));</b>
+<b class="nc"><i>82</i>&nbsp;            } catch (IOException h) {</b>
+<b class="nc"><i>83</i>&nbsp;                h.printStackTrace();</b>
+<b class="nc"><i>84</i>&nbsp;            }</b>
+<b class="nc"><i>85</i>&nbsp;            assert img != null;</b>
+<b class="nc"><i>86</i>&nbsp;            Image dimg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);</b>
+<b class="nc"><i>87</i>&nbsp;            this.setIcon(new ImageIcon(dimg));</b>
+<i>88</i>&nbsp;        }
+<b class="nc"><i>89</i>&nbsp;    }</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

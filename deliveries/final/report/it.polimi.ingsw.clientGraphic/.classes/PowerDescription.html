@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PowerDescription</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.clientGraphic</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PowerDescription (it.polimi.ingsw.clientGraphic)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PowerDescription</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PowerDescription$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.clientGraphic;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.EnumDivinity;
+<i>4</i>&nbsp;
+<b class="nc"><i>5</i>&nbsp;public class PowerDescription {</b>
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    public static String getDescription(String god){
+<b class="nc"><i>8</i>&nbsp;       EnumDivinity x= EnumDivinity.valueOf(god);</b>
+<b class="nc"><i>9</i>&nbsp;       switch(x){</b>
+<i>10</i>&nbsp;           case PAN:
+<b class="nc"><i>11</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Win Condition: You also win if &quot; + &quot;&lt;br&gt;&quot;+</b>
+<i>12</i>&nbsp;                       &quot;your Worker moves down two or &quot; +
+<i>13</i>&nbsp;                       &quot;more levels.&lt;/html&gt; &quot;;
+<i>14</i>&nbsp;           case ARES:
+<b class="nc"><i>15</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; End of Your Turn: You may  &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>16</i>&nbsp;                   &quot;remove an unoccupied block &quot; +
+<i>17</i>&nbsp;                   &quot;(not dome) neighboring your &quot; +&quot;&lt;br&gt;&quot;+
+<i>18</i>&nbsp;                   &quot;unmoved Worker. You also remove any Tokens &quot; +&quot;&lt;br&gt;&quot;+
+<i>19</i>&nbsp;                   &quot;on the block.&lt;/html&gt; &quot;;
+<i>20</i>&nbsp;           case ZEUS:
+<b class="nc"><i>21</i>&nbsp;               return&quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Build: Your Worker may build a block under itself&lt;/html&gt;&quot;;</b>
+<i>22</i>&nbsp;           case ATLAS:
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Your Build: Your Worker may &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>25</i>&nbsp;                       &quot;build a dome at any level.&lt;/html&gt;&quot;;
+<i>26</i>&nbsp;           case LIMUS:
+<b class="nc"><i>27</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Opponent’s Turn: Opponent &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>28</i>&nbsp;                       &quot;Workers cannot build on spaces &quot; +
+<i>29</i>&nbsp;                       &quot;neighboring your Workers, &quot; +&quot;&lt;br&gt;&quot;+
+<i>30</i>&nbsp;                       &quot;unless building a dome to create a Complete &quot; +
+<i>31</i>&nbsp;                       &quot;Tower.&lt;/html&gt;&quot;;
+<i>32</i>&nbsp;           case APOLLO:
+<b class="nc"><i>33</i>&nbsp;               return&quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Move: Your Worker may &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>34</i>&nbsp;                       &quot;move into an opponent Worker’s &quot; +
+<i>35</i>&nbsp;                       &quot;space by forcing their Worker to &quot; +&quot;&lt;br&gt;&quot;+
+<i>36</i>&nbsp;                       &quot;the space yours just vacated.&lt;/html&gt;&quot;;
+<i>37</i>&nbsp;           case ATHENA:
+<b class="nc"><i>38</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Opponent’s Turn: If one of your &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>39</i>&nbsp;                       &quot;Workers moved up on your last &quot; +
+<i>40</i>&nbsp;                       &quot;turn, opponent Workers cannot &quot; +&quot;&lt;br&gt;&quot;+
+<i>41</i>&nbsp;                       &quot;move up this turn.&lt;/html&gt;&quot;;
+<i>42</i>&nbsp;           case TRITON:
+<b class="nc"><i>43</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Your Move: Each time your &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>44</i>&nbsp;                       &quot;Worker moves into a perimeter &quot; +
+<i>45</i>&nbsp;                       &quot;space, it may immediately move &quot; +&quot;&lt;br&gt;&quot;+
+<i>46</i>&nbsp;                       &quot;again.&lt;/html&gt;&quot;;
+<i>47</i>&nbsp;           case ARTEMIS:
+<b class="nc"><i>48</i>&nbsp;               return &quot;&lt;html&gt;&quot;+x.name()+&quot; Your Move: Your Worker may &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>49</i>&nbsp;                       &quot;move one additional time, but not &quot; +
+<i>50</i>&nbsp;                       &quot;back to its initial space.&lt;/html&gt;&quot;;
+<i>51</i>&nbsp;           case DEMETER:
+<b class="nc"><i>52</i>&nbsp;               return&quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Build: Your Worker may &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>53</i>&nbsp;                       &quot;build one additional time, but not &quot; +&quot;&lt;br&gt;&quot;+
+<i>54</i>&nbsp;                       &quot;on the same space.&lt;/html&gt;&quot;;
+<i>55</i>&nbsp;           case MINOTAUR:
+<b class="nc"><i>56</i>&nbsp;               return &quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Move: Your Worker may &quot; +</b>
+<i>57</i>&nbsp;                       &quot;move into an opponent Worker’s &quot; +&quot;&lt;br&gt;&quot;+
+<i>58</i>&nbsp;                       &quot;space, if their Worker can be\n&quot; +
+<i>59</i>&nbsp;                       &quot;forced one space straight backwards to an &quot; +&quot;&lt;br&gt;&quot;+
+<i>60</i>&nbsp;                       &quot;unoccupied space at any level. &lt;/html&gt;&quot;;
+<i>61</i>&nbsp;           case APHRODITE:
+<b class="nc"><i>62</i>&nbsp;               return&quot;&lt;html&gt;&quot;+  x.name()+&quot; Any Move: If an opponent Worker&quot; +</b>
+<i>63</i>&nbsp;                       &quot;starts its turn neighboring one of&quot; +&quot;&lt;br&gt;&quot;+
+<i>64</i>&nbsp;                       &quot;your Workers, its last move must&quot; +&quot;&lt;br&gt;&quot;+
+<i>65</i>&nbsp;                       &quot;be to a space neighboring one of your Workers.&lt;/html&gt;&quot;;
+<i>66</i>&nbsp;           case HEPHAESTUS:
+<b class="nc"><i>67</i>&nbsp;               return &quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Build: Your Worker may &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>68</i>&nbsp;                       &quot;build one additional block (not &quot; +
+<i>69</i>&nbsp;                       &quot;dome)&quot;+&quot;&lt;br&gt;&quot;+&quot; on top of your first block.&lt;/html&gt;&quot;;
+<i>70</i>&nbsp;           case PROMETHEUS:
+<b class="nc"><i>71</i>&nbsp;               return &quot;&lt;html&gt;&quot;+ x.name()+&quot; Your Turn: If your Worker does &quot; +&quot;&lt;br&gt;&quot;+</b>
+<i>72</i>&nbsp;                       &quot;not move up, it may build both &quot; +&quot;&lt;br&gt;&quot;+
+<i>73</i>&nbsp;                       &quot;before and after moving.&lt;/html&gt;&quot;;
+<i>74</i>&nbsp;           default:
+<b class="nc"><i>75</i>&nbsp;               return &quot;&quot; ;</b>
+<i>76</i>&nbsp;       }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

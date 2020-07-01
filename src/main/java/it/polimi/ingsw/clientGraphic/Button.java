@@ -6,8 +6,6 @@ import java.awt.event.MouseListener;
 
 public class Button extends JLabel implements MouseListener {
 
-    static final int WIDHT=75;
-    static final int HEIGHT=75;
 
 
     public void actionPerformed() {

@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ModelView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ModelView (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ModelView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (6/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64%
+  </span>
+  <span class="absValue">
+    (16/ 25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.State.Win;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.io.Serializable;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;import java.util.Map;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Class describes the ModelView functionality
+<i>11</i>&nbsp; * @author CG51
+<i>12</i>&nbsp; * @version 1.1
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public class ModelView implements Serializable {
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Class attributes
+<i>17</i>&nbsp;     */
+<i>18</i>&nbsp;    private static final long serialVersionUID = 30L;
+<i>19</i>&nbsp;    private Grid grid;
+<i>20</i>&nbsp;    private String currentPlayer;
+<i>21</i>&nbsp;    private List&lt;Player&gt; players;
+<i>22</i>&nbsp;    private String state;
+<i>23</i>&nbsp;    private Map&lt;String, String&gt; godsPlayer;
+<i>24</i>&nbsp;    String winner;
+<i>25</i>&nbsp;    private String message;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    public ModelView(Model model) {</b>
+<b class="fc"><i>29</i>&nbsp;        Model clone = model.clone();</b>
+<b class="fc"><i>30</i>&nbsp;        this.grid = clone.getGrid();</b>
+<b class="fc"><i>31</i>&nbsp;        if(!(clone.getPlayers().isEmpty()))</b>
+<b class="fc"><i>32</i>&nbsp;            this.currentPlayer = clone.getCurrentPlayer().getPlayerID();</b>
+<b class="fc"><i>33</i>&nbsp;        this.players = clone.getPlayers();</b>
+<b class="fc"><i>34</i>&nbsp;        this.state = clone.getCurrentState().getClass().getSimpleName().toLowerCase();</b>
+<b class="fc"><i>35</i>&nbsp;        this.godsPlayer = clone.getGodsPlayer();</b>
+<b class="fc"><i>36</i>&nbsp;        if(clone.getCurrentState() instanceof Win)</b>
+<b class="nc"><i>37</i>&nbsp;            this.winner = ((Win)clone.getCurrentState()).getWinner();</b>
+<b class="fc"><i>38</i>&nbsp;    }</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public Map&lt;String, String&gt; getGodsPlayer() {
+<b class="fc"><i>41</i>&nbsp;        return godsPlayer;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;    public ModelView(Model model, String message) {</b>
+<b class="nc"><i>46</i>&nbsp;        new ModelView(model).setMessage(message);</b>
+<b class="nc"><i>47</i>&nbsp;    }</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public int getNumOfPlayers() {
+<b class="nc"><i>51</i>&nbsp;        return players.size();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public String getPlayer(int index) {
+<b class="fc"><i>55</i>&nbsp;        return players.get(index).getPlayerID();</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public int sizePlayers() {
+<b class="fc"><i>59</i>&nbsp;        return players.size();</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public String getWinner(){
+<b class="nc"><i>63</i>&nbsp;        return winner;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    public Grid getGrid() {
+<b class="fc"><i>67</i>&nbsp;        return grid;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    public String getState() {
+<b class="nc"><i>71</i>&nbsp;        return state;</b>
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    public String getMessage() {
+<b class="nc"><i>75</i>&nbsp;        return message;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    public ModelView setMessage(String message) {
+<b class="fc"><i>79</i>&nbsp;        this.message = message;</b>
+<b class="fc"><i>80</i>&nbsp;        return this;</b>
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public String getCurrentPlayer() {
+<b class="nc"><i>84</i>&nbsp;        return currentPlayer;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

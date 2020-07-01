@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Athena</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Athena (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Athena</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,7%
+  </span>
+  <span class="absValue">
+    (13/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.State.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; *  Class describes the power of Athena is described in this class. if player owns the Athena, if s/he moved up any of her/his workers,
+<i>8</i>&nbsp; *  on opponent&#39;s turn opponent can NOT move up, it is carried out through an abstract class that is extended
+<i>9</i>&nbsp; *  @author CG51
+<i>10</i>&nbsp; *  @version 1.1
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;public class Athena extends PlayerWithGroundEffect {
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Class attribute
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;    private Coordinate from;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Constructor is used to initialize the object.
+<i>21</i>&nbsp;     * @param playerID players name
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    public Athena(String playerID, Model model) {
+<b class="fc"><i>24</i>&nbsp;        super(playerID, model);</b>
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Method is overridden to keep info from where player moved
+<i>30</i>&nbsp;     * @param selection
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    @Override
+<i>33</i>&nbsp;    public boolean makeSelection(Coordinate selection) {
+<b class="fc"><i>34</i>&nbsp;        model.getGroundEffects().remove(this);</b>
+<b class="fc"><i>35</i>&nbsp;        boolean result = super.makeSelection(selection);</b>
+<b class="fc"><i>36</i>&nbsp;        if(result)from = selection;</b>
+<b class="fc"><i>37</i>&nbsp;        return result;</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * Method is overridden to activate the ground effect if player moved UP
+<i>43</i>&nbsp;     * @param destination The input choice of type Coordinate
+<i>44</i>&nbsp;     * @return true or false
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public boolean makeMovement(Coordinate destination) {
+<b class="fc"><i>48</i>&nbsp;        boolean result = super.makeMovement(destination);</b>
+<b class="fc"><i>49</i>&nbsp;        if(result)</b>
+<b class="fc"><i>50</i>&nbsp;            if(model.getGrid().HeightDifference(from,destination)==1)</b>
+<b class="fc"><i>51</i>&nbsp;                addEffect();</b>
+<b class="fc"><i>52</i>&nbsp;        return result;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * Method throws exception according to the power of Athena when opponent tries to move up
+<i>60</i>&nbsp;     * @param destination of type Coordinate
+<i>61</i>&nbsp;     * @return
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;    @Override
+<i>64</i>&nbsp;    public boolean makePower(Coordinate destination) {
+<b class="nc"><i>65</i>&nbsp;        throw new IllegalStateException();</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * The method defines that if Athena moved up, opponent should respect her power
+<i>71</i>&nbsp;     * @param from starting point of tile
+<i>72</i>&nbsp;     * @param destination ending point of tile
+<i>73</i>&nbsp;     *
+<i>74</i>&nbsp;     * @return true or false
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;    @Override
+<i>77</i>&nbsp;    public boolean respectEffect(Coordinate from,Coordinate destination) {
+<b class="fc"><i>78</i>&nbsp;        if(model.getCurrentState() instanceof Move)</b>
+<b class="fc"><i>79</i>&nbsp;            return model.getGrid().HeightDifference(from, destination) &gt; 0;</b>
+<b class="nc"><i>80</i>&nbsp;        else return false;</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

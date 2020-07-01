@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Checks</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Checks (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Checks</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98,2%
+  </span>
+  <span class="absValue">
+    (56/ 57)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.Collections;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * This class describes the validity conditions of the chosen coordinate and it is used by the main actions of the game: move and build.
+<i>9</i>&nbsp; * Has the following methods
+<i>10</i>&nbsp; * @author CG51
+<i>11</i>&nbsp; * @version 1.1
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class Checks {
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /** In this field the attributes of the class that hold the values of declared types */
+<i>17</i>&nbsp;    private Model model;
+<i>18</i>&nbsp;    private Coordinate from;
+<i>19</i>&nbsp;    private List&lt;Coordinate&gt; destinations;
+<i>20</i>&nbsp;    private List&lt;Boolean&gt; result;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * in this construction result is made up from the potential destination points as an Array list which contains the number of false boolean object that equals to the array size
+<i>25</i>&nbsp;     * @param model of type Model
+<i>26</i>&nbsp;     * @param from Coordinate
+<i>27</i>&nbsp;     * @param destination of type Coordinate
+<i>28</i>&nbsp;     */
+<b class="fc"><i>29</i>&nbsp;    public Checks( Model model, Coordinate from, Coordinate destination) {</b>
+<b class="fc"><i>30</i>&nbsp;        this.model=model;</b>
+<b class="fc"><i>31</i>&nbsp;        this.from = from;</b>
+<b class="fc"><i>32</i>&nbsp;        this.destinations = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>33</i>&nbsp;        if(model.getGrid().contains(destination)) {</b>
+<b class="fc"><i>34</i>&nbsp;            this.destinations.add(destination);</b>
+<b class="fc"><i>35</i>&nbsp;            result = new ArrayList&lt;&gt;(Collections.nCopies(destinations.size(), true));</b>
+<i>36</i>&nbsp;        }else{
+<i>37</i>&nbsp;            //WIP
+<b class="fc"><i>38</i>&nbsp;            this.destinations.add(from);</b>
+<b class="fc"><i>39</i>&nbsp;            result = new ArrayList&lt;&gt;(Collections.nCopies(destinations.size(), false));</b>
+<i>40</i>&nbsp;        }
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;    }</b>
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * overloading Checks construction to made up the valid coordinates in the tile as an array. It&#39;s instances are true boolean objects.
+<i>46</i>&nbsp;     * @param model current model
+<i>47</i>&nbsp;     * @param coordinate current coordinate
+<i>48</i>&nbsp;     */
+<b class="fc"><i>49</i>&nbsp;    public Checks(Model model, Coordinate coordinate){</b>
+<b class="fc"><i>50</i>&nbsp;        this.model=model;</b>
+<b class="fc"><i>51</i>&nbsp;        this.from = coordinate;</b>
+<b class="fc"><i>52</i>&nbsp;        this.destinations=model.getGrid().validTileAround(coordinate);</b>
+<b class="fc"><i>53</i>&nbsp;        result=new ArrayList&lt;&gt;(Collections.nCopies(destinations.size(), true));</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * method calculates the level difference between destination and from coordinates, if the difference is more that maximum possible height, in the array of result false is set in corresponding index
+<i>60</i>&nbsp;     * @param MaxPositiveHeight integer value
+<i>61</i>&nbsp;     * @return current object instance
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;    public Checks isRisible(int MaxPositiveHeight){
+<b class="fc"><i>64</i>&nbsp;        for(Coordinate destination : destinations) {</b>
+<b class="fc"><i>65</i>&nbsp;            int heightDifference = model.getGrid().getTile(destination).getHeight().ordinal() - model.getGrid().getTile(from).getHeight().ordinal();</b>
+<b class="fc"><i>66</i>&nbsp;            if (heightDifference &gt; MaxPositiveHeight) result.set(destinations.indexOf(destination),false);</b>
+<b class="fc"><i>67</i>&nbsp;        }</b>
+<b class="fc"><i>68</i>&nbsp;        return this;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * method isRisible() is overloaded for the default case, i.e according to the game rules, without using any power, it is possible to move up to 1 level;
+<i>73</i>&nbsp;     * @return  isRisible(1)
+<i>74</i>&nbsp;     */
+<i>75</i>&nbsp;    public Checks isRisible(){
+<b class="fc"><i>76</i>&nbsp;        return isRisible(1);</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * method verifies each coordinate in the destinations array whether it is a dome or not, positive results are filled with false element in the corresponding indexes
+<i>81</i>&nbsp;     * @return current object instance
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    public Checks isNotDome(){
+<b class="fc"><i>84</i>&nbsp;        for(Coordinate destination : destinations) {</b>
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;            if (model.getGrid().getTile(destination).getHeight().equals(TypeBlock.DOME))</b>
+<b class="fc"><i>87</i>&nbsp;                result.set(destinations.indexOf(destination),false);</b>
+<b class="fc"><i>88</i>&nbsp;        }</b>
+<i>89</i>&nbsp;
+<b class="fc"><i>90</i>&nbsp;        return this;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    public Checks isNotBuild(int height){
+<b class="fc"><i>95</i>&nbsp;        for(Coordinate destination : destinations) {</b>
+<i>96</i>&nbsp;
+<b class="fc"><i>97</i>&nbsp;            if (model.getGrid().getTile(destination).getHeight().ordinal()==(height))</b>
+<b class="nc"><i>98</i>&nbsp;                result.set(destinations.indexOf(destination),false);</b>
+<b class="fc"><i>99</i>&nbsp;        }</b>
+<b class="fc"><i>100</i>&nbsp;        return this;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    /**
+<i>105</i>&nbsp;     * Method verifies that in the possible destinations there are no worker, otherwise false is set into corresponding index of result array
+<i>106</i>&nbsp;     * @return current object instance
+<i>107</i>&nbsp;     */
+<i>108</i>&nbsp;    public Checks isNotWorker(){
+<b class="fc"><i>109</i>&nbsp;        for(Coordinate destination : destinations) {</b>
+<i>110</i>&nbsp;
+<b class="fc"><i>111</i>&nbsp;            if (model.getGrid().getTile(destination).getWorker()!=null)</b>
+<b class="fc"><i>112</i>&nbsp;                result.set(destinations.indexOf(destination),false);</b>
+<b class="fc"><i>113</i>&nbsp;        }</b>
+<i>114</i>&nbsp;
+<b class="fc"><i>115</i>&nbsp;        return this;</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    /**
+<i>119</i>&nbsp;     * method deletes the coordinate that is never reachable from the corresponding index of the destination array
+<i>120</i>&nbsp;     * @param alwaysFalseCoordinate i.e the coordinate that is impossible to reach
+<i>121</i>&nbsp;     * @return current object instance
+<i>122</i>&nbsp;     */
+<i>123</i>&nbsp;    public Checks remove(Coordinate alwaysFalseCoordinate){
+<b class="fc"><i>124</i>&nbsp;        result.remove(destinations.indexOf(alwaysFalseCoordinate));</b>
+<b class="fc"><i>125</i>&nbsp;        destinations.remove(alwaysFalseCoordinate);</b>
+<b class="fc"><i>126</i>&nbsp;        return this;</b>
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    /**
+<i>131</i>&nbsp;     * Method is used in some classes in order to implement some God&#39;s power, to add the valid Coordinate to the standard valid coordinates
+<i>132</i>&nbsp;     * @param additionalValidCoordinate of type Coordinate
+<i>133</i>&nbsp;     * @return true or false
+<i>134</i>&nbsp;     */
+<i>135</i>&nbsp;    public Checks add(Coordinate additionalValidCoordinate){
+<b class="fc"><i>136</i>&nbsp;        result.add(true);</b>
+<b class="fc"><i>137</i>&nbsp;        destinations.add(additionalValidCoordinate);</b>
+<b class="fc"><i>138</i>&nbsp;        return this;</b>
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    /**
+<i>142</i>&nbsp;     *  Getter method to access the result array, verifies the destinations with accessible set of destinations,
+<i>143</i>&nbsp;     *  in case if one of the players possess the Athena&#39;s power
+<i>144</i>&nbsp;     *  and the destination can not be reachable according to GroundEffect rule, this destination is removed from the array
+<i>145</i>&nbsp;     * @return the array containing the accessible destination
+<i>146</i>&nbsp;     */
+<i>147</i>&nbsp;    public List&lt;Coordinate&gt; getResult() {
+<b class="fc"><i>148</i>&nbsp;        List&lt;PlayerWithGroundEffect&gt; tmp = model.getGroundEffects();</b>
+<b class="fc"><i>149</i>&nbsp;        List&lt;Coordinate&gt; returnList = new ArrayList&lt;&gt;();</b>
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;
+<b class="fc"><i>152</i>&nbsp;        for(Coordinate destination : destinations) {</b>
+<b class="fc"><i>153</i>&nbsp;            if (result.get(destinations.indexOf(destination))) {</b>
+<b class="fc"><i>154</i>&nbsp;                returnList.add(destination);</b>
+<b class="fc"><i>155</i>&nbsp;                if (!tmp.isEmpty()) {</b>
+<b class="fc"><i>156</i>&nbsp;                    for (PlayerWithGroundEffect g : tmp) {</b>
+<b class="fc"><i>157</i>&nbsp;                        if(!g.equals(model.getCurrentPlayer()))</b>
+<b class="fc"><i>158</i>&nbsp;                            if (g.respectEffect(from, destination)) returnList.remove(destination);</b>
+<b class="fc"><i>159</i>&nbsp;                    }</b>
+<i>160</i>&nbsp;                }
+<i>161</i>&nbsp;            }
+<b class="fc"><i>162</i>&nbsp;        }</b>
+<b class="fc"><i>163</i>&nbsp;        return returnList;</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    public boolean simpleGetResult(){
+<b class="fc"><i>167</i>&nbsp;        if(result==null||result.size()&gt;1) return false; //wrong function</b>
+<b class="fc"><i>168</i>&nbsp;        else return !result.get(0);</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

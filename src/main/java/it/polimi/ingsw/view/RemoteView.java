@@ -146,9 +146,8 @@ public class RemoteView extends Subject<PlayerChoice> implements Observer<ModelV
      * @param c1
      * @param c2
      * @return true or false
-     * @throws Exception
      */
-    public boolean checkInputCoordinates(String c1, String c2) throws Exception{
+    public boolean checkInputCoordinates(String c1, String c2){
         if(Integer.parseInt(c1) > 5 || Integer.parseInt(c1) < 0 || Integer.parseInt(c2) > 5 || Integer.parseInt(c2) < 0) {
             return false;
         }

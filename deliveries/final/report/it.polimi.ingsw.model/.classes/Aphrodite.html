@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Aphrodite</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Aphrodite (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Aphrodite</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72%
+  </span>
+  <span class="absValue">
+    (18/ 25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.State.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Class describes the power of Aphrodite, Goddess of love.
+<i>10</i>&nbsp; * Player holding the Aphrodite has an effect on opponent&#39;s move.
+<i>11</i>&nbsp; * During any move, if opponent&#39;s (any) worker starts its turn neighboring one of Aphrodite&#39;s workers,
+<i>12</i>&nbsp; * its (opponent&#39;s) last move must to be a space neighboring one of Aphrodite&#39;s workers
+<i>13</i>&nbsp; * Class has the following method to exploit described above power
+<i>14</i>&nbsp; * @author CG51
+<i>15</i>&nbsp; * @version 1.1
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class Aphrodite extends PlayerWithGroundEffect {
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Constructor to initialize Aphrodite object
+<i>21</i>&nbsp;     * @param playerID possessing Aphrodite
+<i>22</i>&nbsp;     * @param model
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public Aphrodite(String playerID, Model model) {
+<b class="fc"><i>26</i>&nbsp;        super(playerID, model);</b>
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /** Overridden to insert Aphrodite into the groundEffects in model
+<i>32</i>&nbsp;     * @param destination
+<i>33</i>&nbsp;     * @return
+<i>34</i>&nbsp;             */
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public boolean positionWorker(Coordinate destination) {
+<i>38</i>&nbsp;        //Add in the ground effect this player
+<b class="fc"><i>39</i>&nbsp;        if(!model.getGroundEffects().contains(this))</b>
+<b class="fc"><i>40</i>&nbsp;            model.getGroundEffects().add(this);</b>
+<b class="fc"><i>41</i>&nbsp;        return super.positionWorker(destination);</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Method is overridden to modify the selection event in accordance with Ground Effect
+<i>46</i>&nbsp;     * @param selection
+<i>47</i>&nbsp;     * @return
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    @Override
+<i>50</i>&nbsp;    public boolean makeSelection(Coordinate selection) {
+<b class="nc"><i>51</i>&nbsp;        model.getGroundEffects().remove(this);</b>
+<b class="nc"><i>52</i>&nbsp;        return super.makeSelection(selection);</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * Overridden to respect the Ground Effect in the Build event
+<i>57</i>&nbsp;     * @param destination
+<i>58</i>&nbsp;     * @return true or false depending on the Build event result
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override
+<i>62</i>&nbsp;    public boolean makeBuild(Coordinate destination) {
+<b class="nc"><i>63</i>&nbsp;        boolean result= super.makeBuild(destination);</b>
+<b class="nc"><i>64</i>&nbsp;        if(result) addEffect();</b>
+<b class="nc"><i>65</i>&nbsp;        return result;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * to check the affect of Aphrodite, it checks the from Coordinate and if it neighbors one of the Aphrodite&#39;s worker
+<i>70</i>&nbsp;     * @param from starting point of tile
+<i>71</i>&nbsp;     * @param destination ending point of tile
+<i>72</i>&nbsp;     * @return true or false
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    @Override
+<i>75</i>&nbsp;    public boolean respectEffect(Coordinate from, Coordinate destination) {
+<b class="fc"><i>76</i>&nbsp;        if (model.getCurrentState() instanceof Move) {</b>
+<b class="fc"><i>77</i>&nbsp;            List&lt;Coordinate&gt; aroundTile = model.getGrid().validTileAround(from);</b>
+<b class="fc"><i>78</i>&nbsp;            for (Coordinate c : aroundTile) {</b>
+<b class="fc"><i>79</i>&nbsp;                Worker wrkNearFrom = model.getGrid().getTile(c).getWorker();</b>
+<i>80</i>&nbsp;                //this triggers the search of an aphrodite worker near the destination tile
+<b class="fc"><i>81</i>&nbsp;                if (wrkNearFrom != null &amp;&amp; wrkNearFrom.getPlayer().equals(this)) {</b>
+<b class="fc"><i>82</i>&nbsp;                    List&lt;Coordinate&gt; aroundDestination = model.getGrid().validTileAround(destination);</b>
+<b class="fc"><i>83</i>&nbsp;                    for (Coordinate d : aroundDestination) {</b>
+<b class="fc"><i>84</i>&nbsp;                        Worker wrkNearDestination = model.getGrid().getTile(d).getWorker();</b>
+<b class="fc"><i>85</i>&nbsp;                        if (wrkNearDestination != null &amp;&amp; wrkNearDestination.getPlayer().equals(this))</b>
+<b class="fc"><i>86</i>&nbsp;                            return false;</b>
+<b class="fc"><i>87</i>&nbsp;                    }</b>
+<b class="fc"><i>88</i>&nbsp;                    return true;</b>
+<i>89</i>&nbsp;                }
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;            }</b>
+<i>92</i>&nbsp;        }
+<b class="nc"><i>93</i>&nbsp;        return false;</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @Override
+<i>100</i>&nbsp;    public boolean makePower(Coordinate destination) {
+<b class="nc"><i>101</i>&nbsp;        throw new IllegalArgumentException();</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

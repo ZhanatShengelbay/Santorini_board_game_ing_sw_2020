@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Cardinal</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.utility</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Cardinal (it.polimi.ingsw.utility)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cardinal</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63,9%
+  </span>
+  <span class="absValue">
+    (23/ 36)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Cardinal$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64,9%
+  </span>
+  <span class="absValue">
+    (24/ 37)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.utility;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Class might be useful/ more intuitive to manage the coordinates while using keyboard
+<i>5</i>&nbsp; *
+<i>6</i>&nbsp; * @author CG51
+<i>7</i>&nbsp; * @version 0.1
+<i>8</i>&nbsp; */
+<b class="fc"><i>9</i>&nbsp;public enum Cardinal {</b>
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * costant enum values representing respective cardinal directions
+<i>12</i>&nbsp;     */
+<b class="fc"><i>13</i>&nbsp;    N,</b>
+<b class="fc"><i>14</i>&nbsp;    NE,</b>
+<b class="fc"><i>15</i>&nbsp;    E,</b>
+<b class="fc"><i>16</i>&nbsp;    SE,</b>
+<b class="fc"><i>17</i>&nbsp;    S,</b>
+<b class="fc"><i>18</i>&nbsp;    SW,</b>
+<b class="fc"><i>19</i>&nbsp;    W,</b>
+<b class="fc"><i>20</i>&nbsp;    NW;</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Method to parse the string from input into enum value
+<i>25</i>&nbsp;     *
+<i>26</i>&nbsp;     * @param input entered string
+<i>27</i>&nbsp;     * @return corresponding enum value of type Cardinal
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    public static Cardinal parseInput(String input) {
+<b class="nc"><i>30</i>&nbsp;        return Enum.valueOf(Cardinal.class, input.toUpperCase());</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public static Cardinal getDirection(Coordinate from, Coordinate destination) {
+<b class="fc"><i>35</i>&nbsp;        int x=destination.getX()-from.getX();</b>
+<b class="fc"><i>36</i>&nbsp;        int y=destination.getY()-from.getY();</b>
+<b class="fc"><i>37</i>&nbsp;        Cardinal result=null;</b>
+<b class="fc"><i>38</i>&nbsp;        switch(x){</b>
+<i>39</i>&nbsp;            case 0:
+<b class="fc"><i>40</i>&nbsp;                if(y==1) result=N;</b>
+<b class="nc"><i>41</i>&nbsp;                else result=S;</b>
+<b class="nc"><i>42</i>&nbsp;                break;</b>
+<i>43</i>&nbsp;            case 1:
+<b class="nc"><i>44</i>&nbsp;                if(y==1) result=NE;</b>
+<b class="nc"><i>45</i>&nbsp;                else if(y==0) result=E;</b>
+<b class="nc"><i>46</i>&nbsp;                else if(y==-1) result=SE;</b>
+<i>47</i>&nbsp;                break;
+<i>48</i>&nbsp;            case -1:
+<b class="nc"><i>49</i>&nbsp;                if(y==1) result=NW;</b>
+<b class="nc"><i>50</i>&nbsp;                else if(y==0) result=W;</b>
+<b class="nc"><i>51</i>&nbsp;                else if(y==-1) result=SW;</b>
+<i>52</i>&nbsp;                break;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;        }
+<b class="fc"><i>55</i>&nbsp;        return result;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Getter method to access the abscissa when cardinal system is used
+<i>59</i>&nbsp;     *
+<i>60</i>&nbsp;     * @return integer value of the abscissa of the cardinal point
+<i>61</i>&nbsp;     * @throws RuntimeException if incorrect direction is entered
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public int getX() {
+<b class="fc"><i>65</i>&nbsp;        switch (this) {</b>
+<i>66</i>&nbsp;            case N:
+<i>67</i>&nbsp;            case S:
+<b class="fc"><i>68</i>&nbsp;                return 0;</b>
+<i>69</i>&nbsp;            case NE:
+<i>70</i>&nbsp;            case SE:
+<i>71</i>&nbsp;            case E:
+<b class="fc"><i>72</i>&nbsp;                return 1;</b>
+<i>73</i>&nbsp;            case SW:
+<i>74</i>&nbsp;            case NW:
+<i>75</i>&nbsp;            case W:
+<b class="fc"><i>76</i>&nbsp;                return -1;</b>
+<i>77</i>&nbsp;            default:
+<b class="nc"><i>78</i>&nbsp;                new RuntimeException(&quot;Unxpected case!&quot;);</b>
+<i>79</i>&nbsp;        }
+<b class="nc"><i>80</i>&nbsp;        return 0;</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    /**
+<i>85</i>&nbsp;     * getter method of type integer to access the ordinate
+<i>86</i>&nbsp;     *
+<i>87</i>&nbsp;     * @return integer value depending on listed constant case
+<i>88</i>&nbsp;     * @throws RuntimeException if incorrect direction is entered
+<i>89</i>&nbsp;     */
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    public int getY() {
+<b class="fc"><i>92</i>&nbsp;        switch (this) {</b>
+<i>93</i>&nbsp;            case E:
+<i>94</i>&nbsp;            case W:
+<b class="fc"><i>95</i>&nbsp;                return 0;</b>
+<i>96</i>&nbsp;            case NE:
+<i>97</i>&nbsp;            case NW:
+<i>98</i>&nbsp;            case N:
+<b class="fc"><i>99</i>&nbsp;                return 1;</b>
+<i>100</i>&nbsp;            case SW:
+<i>101</i>&nbsp;            case SE:
+<i>102</i>&nbsp;            case S:
+<b class="fc"><i>103</i>&nbsp;                return -1;</b>
+<i>104</i>&nbsp;            default:
+<b class="nc"><i>105</i>&nbsp;                new RuntimeException(&quot;Unxpected case!&quot;);</b>
+<i>106</i>&nbsp;        }
+<b class="nc"><i>107</i>&nbsp;        return 0;</b>
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

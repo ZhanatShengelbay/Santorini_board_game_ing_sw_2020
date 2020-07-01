@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GraphicTile</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.clientGraphic</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GraphicTile (it.polimi.ingsw.clientGraphic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GraphicTile</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (27/ 30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.clientGraphic;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.TypeBlock;
+<i>4</i>&nbsp;import it.polimi.ingsw.utility.Coordinate;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.imageio.ImageIO;
+<i>7</i>&nbsp;import javax.swing.*;
+<i>8</i>&nbsp;import java.awt.*;
+<i>9</i>&nbsp;import java.awt.image.BufferedImage;
+<i>10</i>&nbsp;import java.io.IOException;
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;public class GraphicTile extends JLabel  {</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    private int height;
+<i>15</i>&nbsp;    private String playerColor;
+<i>16</i>&nbsp;    private final Coordinate coordinate;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    public GraphicTile(Coordinate coordinate) {
+<b class="fc"><i>19</i>&nbsp;        super();</b>
+<b class="fc"><i>20</i>&nbsp;        height=0;</b>
+<b class="fc"><i>21</i>&nbsp;        playerColor =&quot;&quot;;</b>
+<b class="fc"><i>22</i>&nbsp;        this.coordinate = coordinate;</b>
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public Coordinate getCoordinate() {
+<b class="nc"><i>26</i>&nbsp;        return coordinate;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public String getPlayerColor() {
+<b class="fc"><i>30</i>&nbsp;        return playerColor;</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public int getTileHeight() {
+<b class="fc"><i>34</i>&nbsp;       return height; }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public void updateGraphic(String playerColor, int height){
+<b class="fc"><i>37</i>&nbsp;        boolean change=false;</b>
+<b class="fc"><i>38</i>&nbsp;        if(playerColor ==null)</b>
+<b class="fc"><i>39</i>&nbsp;            playerColor =&quot;&quot;;</b>
+<b class="fc"><i>40</i>&nbsp;        if(!this.playerColor.equals(playerColor)){</b>
+<b class="fc"><i>41</i>&nbsp;            change=true;</b>
+<b class="fc"><i>42</i>&nbsp;            this.playerColor = playerColor;</b>
+<i>43</i>&nbsp;        }
+<b class="fc"><i>44</i>&nbsp;        if(this.height!=height){</b>
+<b class="fc"><i>45</i>&nbsp;            change=true;</b>
+<b class="fc"><i>46</i>&nbsp;            this.height=height;</b>
+<i>47</i>&nbsp;        }
+<b class="fc"><i>48</i>&nbsp;        if(change){</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;            BufferedImage img = null;</b>
+<b class="fc"><i>51</i>&nbsp;            String URI=&quot;/tileImage/&quot;+TypeBlock.values()[this.height].toString().toLowerCase()+this.playerColor.toLowerCase() +&quot;.png&quot;;</b>
+<i>52</i>&nbsp;            try {
+<b class="fc"><i>53</i>&nbsp;                img = ImageIO.read(getClass().getResource(URI));</b>
+<b class="nc"><i>54</i>&nbsp;            } catch (IOException e) {</b>
+<b class="nc"><i>55</i>&nbsp;                e.printStackTrace();</b>
+<b class="fc"><i>56</i>&nbsp;            }</b>
+<b class="fc"><i>57</i>&nbsp;            assert img != null;</b>
+<b class="fc"><i>58</i>&nbsp;            Image dimg= img.getScaledInstance(125, 125, Image.SCALE_SMOOTH);</b>
+<b class="fc"><i>59</i>&nbsp;            this.setIcon(new ImageIcon(dimg));</b>
+<b class="fc"><i>60</i>&nbsp;            this.updateUI();</b>
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

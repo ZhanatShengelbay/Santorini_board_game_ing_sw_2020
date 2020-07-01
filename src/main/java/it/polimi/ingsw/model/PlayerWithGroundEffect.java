@@ -35,4 +35,13 @@ public abstract class PlayerWithGroundEffect extends Player{
      * @return true or false
      */
     abstract  public boolean respectEffect(Coordinate from, Coordinate destination);
+    /**
+     * If the player lose, remove the groundEffect from the list in model
+     */
+
+    @Override
+    protected void defeatHandler() {
+        model.getGroundEffects().remove(this);
+        super.defeatHandler();
+    }
 }

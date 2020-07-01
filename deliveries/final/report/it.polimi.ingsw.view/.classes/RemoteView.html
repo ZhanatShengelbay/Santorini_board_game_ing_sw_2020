@@ -1,0 +1,319 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RemoteView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RemoteView (it.polimi.ingsw.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RemoteView</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    61,7%
+  </span>
+  <span class="absValue">
+    (50/ 81)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RemoteView$MessageReceiver</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (8/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    58,6%
+  </span>
+  <span class="absValue">
+    (51/ 87)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.EnumDivinity;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.Model;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.ModelView;
+<i>6</i>&nbsp;import it.polimi.ingsw.model.State.*;
+<i>7</i>&nbsp;import it.polimi.ingsw.model.playerChoice.GameChoice;
+<i>8</i>&nbsp;import it.polimi.ingsw.model.playerChoice.PlayerChoice;
+<i>9</i>&nbsp;import it.polimi.ingsw.model.playerChoice.SetUpChoice;
+<i>10</i>&nbsp;import it.polimi.ingsw.utility.Observer;
+<i>11</i>&nbsp;import it.polimi.ingsw.utility.Subject;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.io.*;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/**
+<i>16</i>&nbsp; * Represents the unique client. Placed between the Client and Controller.
+<i>17</i>&nbsp; * @author CG51
+<i>18</i>&nbsp; * @version 1.1
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class RemoteView extends Subject&lt;PlayerChoice&gt; implements Observer&lt;ModelView&gt;{
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * attributes
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    ByteArrayOutputStream os;
+<i>25</i>&nbsp;    ObjectOutputStream out;
+<i>26</i>&nbsp;    private Connection connection;
+<i>27</i>&nbsp;    //State currentState;
+<i>28</i>&nbsp;    private Model model;
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;    private class MessageReceiver implements Observer&lt;String&gt; {</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;        @Override
+<i>33</i>&nbsp;        public void update(String message) {
+<i>34</i>&nbsp;            try{
+<b class="nc"><i>35</i>&nbsp;                String[] inputs = message.split(&quot; &quot;);</b>
+<b class="nc"><i>36</i>&nbsp;                handleMove(inputs);</b>
+<b class="nc"><i>37</i>&nbsp;            }catch(IllegalArgumentException e){</b>
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;            }</b>
+<b class="nc"><i>40</i>&nbsp;        }</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     *
+<i>45</i>&nbsp;     * @param connection
+<i>46</i>&nbsp;     * @param model
+<i>47</i>&nbsp;     */
+<b class="fc"><i>48</i>&nbsp;    public RemoteView(Connection connection, Model model) {</b>
+<b class="fc"><i>49</i>&nbsp;        this.model = model;</b>
+<b class="fc"><i>50</i>&nbsp;        this.connection = connection;</b>
+<b class="fc"><i>51</i>&nbsp;        connection.addObserver(new MessageReceiver());</b>
+<i>52</i>&nbsp;        try{
+<b class="fc"><i>53</i>&nbsp;            os = new ByteArrayOutputStream();</b>
+<b class="fc"><i>54</i>&nbsp;            out = new ObjectOutputStream(os);</b>
+<i>55</i>&nbsp;        }
+<b class="nc"><i>56</i>&nbsp;        catch (IOException e){</b>
+<b class="nc"><i>57</i>&nbsp;            showError(&quot;Serialization setup error&quot;);</b>
+<b class="fc"><i>58</i>&nbsp;        }</b>
+<b class="fc"><i>59</i>&nbsp;    }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public String getPlayerID(){
+<b class="nc"><i>62</i>&nbsp;        return connection.getID();</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    protected void handleMove(String[] inputs) {
+<i>66</i>&nbsp;        try{
+<b class="fc"><i>67</i>&nbsp;            checkInput(inputs);</b>
+<i>68</i>&nbsp;        }
+<b class="nc"><i>69</i>&nbsp;        catch (Error e){</b>
+<b class="nc"><i>70</i>&nbsp;            return;</b>
+<i>71</i>&nbsp;        }
+<b class="fc"><i>72</i>&nbsp;        catch (Exception ex){</b>
+<b class="fc"><i>73</i>&nbsp;            showError(&quot;Coordinates need to be numbers&quot;);</b>
+<b class="nc"><i>74</i>&nbsp;            return;</b>
+<b class="fc"><i>75</i>&nbsp;        }</b>
+<b class="fc"><i>76</i>&nbsp;        if (model.getCurrentState() instanceof Power){</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;            GameChoice choice;
+<b class="fc"><i>79</i>&nbsp;            if(inputs[0].toLowerCase().compareTo(&quot;@&quot;) == 0) {</b>
+<b class="fc"><i>80</i>&nbsp;                choice = new GameChoice(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2]), connection.getID(), this);</b>
+<b class="fc"><i>81</i>&nbsp;                choice.activePower();</b>
+<i>82</i>&nbsp;            }
+<b class="fc"><i>83</i>&nbsp;            else  choice = new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]), connection.getID(), this);</b>
+<b class="fc"><i>84</i>&nbsp;            notify(choice);</b>
+<b class="nc"><i>85</i>&nbsp;        }</b>
+<b class="fc"><i>86</i>&nbsp;        else if (model.getCurrentState() instanceof GameStart){</b>
+<b class="fc"><i>87</i>&nbsp;            String[] stdInputs = new String[inputs.length];</b>
+<b class="fc"><i>88</i>&nbsp;            for(int i=0; i&lt;inputs.length; i++){</b>
+<b class="fc"><i>89</i>&nbsp;                stdInputs[i] = inputs[i].substring(0, 1).toUpperCase() + inputs[i].substring(1).toLowerCase();</b>
+<i>90</i>&nbsp;            }
+<b class="fc"><i>91</i>&nbsp;            notify(new SetUpChoice(stdInputs, connection.getID(),this));</b>
+<b class="nc"><i>92</i>&nbsp;        }</b>
+<i>93</i>&nbsp;        else {
+<b class="fc"><i>94</i>&nbsp;            notify(new GameChoice(Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]),connection.getID(), this));</b>
+<i>95</i>&nbsp;        }
+<b class="nc"><i>96</i>&nbsp;    }</b>
+<i>97</i>&nbsp;    // include error strings in error object and then show it in it.polimi.ingsw.client?
+<i>98</i>&nbsp;    private void checkInput(String[] inputs) throws Error, Exception{
+<i>99</i>&nbsp;        boolean godFound;
+<b class="fc"><i>100</i>&nbsp;        if (model.getCurrentState() instanceof GameStart){</b>
+<b class="fc"><i>101</i>&nbsp;            for (String input : inputs){</b>
+<b class="fc"><i>102</i>&nbsp;                godFound = false;</b>
+<b class="fc"><i>103</i>&nbsp;                for(EnumDivinity e : EnumDivinity.values()){</b>
+<b class="fc"><i>104</i>&nbsp;                    if (input.toUpperCase().compareTo(e.toString()) == 0) {</b>
+<b class="fc"><i>105</i>&nbsp;                        godFound = true;</b>
+<i>106</i>&nbsp;                    }
+<i>107</i>&nbsp;                }
+<b class="fc"><i>108</i>&nbsp;                if(!godFound){</b>
+<b class="fc"><i>109</i>&nbsp;                    showError(&quot;Not a God&quot;);</b>
+<b class="nc"><i>110</i>&nbsp;                    throw new Error();</b>
+<i>111</i>&nbsp;                }
+<i>112</i>&nbsp;            }
+<i>113</i>&nbsp;        }
+<i>114</i>&nbsp;        else{
+<b class="fc"><i>115</i>&nbsp;            if(inputs.length == 3){</b>
+<b class="fc"><i>116</i>&nbsp;                if(model.getCurrentState() instanceof Power){</b>
+<b class="fc"><i>117</i>&nbsp;                    if(inputs[0].compareTo(&quot;@&quot;) != 0){</b>
+<b class="fc"><i>118</i>&nbsp;                        showError(&quot;Need @ symbol to activate power&quot;);</b>
+<b class="nc"><i>119</i>&nbsp;                        throw new Error();</b>
+<i>120</i>&nbsp;                    }
+<b class="fc"><i>121</i>&nbsp;                    if(!checkInputCoordinates(inputs[1], inputs[2])){</b>
+<b class="fc"><i>122</i>&nbsp;                        showError(&quot;Wrong coordinates&quot;);</b>
+<b class="nc"><i>123</i>&nbsp;                        throw new Error();</b>
+<i>124</i>&nbsp;                    }
+<i>125</i>&nbsp;                }
+<i>126</i>&nbsp;                else{
+<b class="fc"><i>127</i>&nbsp;                    showError(&quot;Wrong number of arguments&quot;);</b>
+<b class="nc"><i>128</i>&nbsp;                    throw new Error();</b>
+<i>129</i>&nbsp;                }
+<i>130</i>&nbsp;            }
+<b class="fc"><i>131</i>&nbsp;            else if(inputs.length == 2){</b>
+<b class="fc"><i>132</i>&nbsp;                if(!checkInputCoordinates(inputs[0], inputs[1])){</b>
+<b class="fc"><i>133</i>&nbsp;                    showError(&quot;Wrong coordinates&quot;);</b>
+<b class="nc"><i>134</i>&nbsp;                    throw new Error();</b>
+<i>135</i>&nbsp;                }
+<i>136</i>&nbsp;            }
+<i>137</i>&nbsp;            else{
+<b class="fc"><i>138</i>&nbsp;                showError(&quot;Wrong number of arguments&quot;);</b>
+<b class="nc"><i>139</i>&nbsp;                throw new Error();</b>
+<i>140</i>&nbsp;            }
+<i>141</i>&nbsp;        }
+<b class="fc"><i>142</i>&nbsp;    }</b>
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    /**
+<i>145</i>&nbsp;     * Method is used in CLI mode, throws an exception if invalid coordinates are entered
+<i>146</i>&nbsp;     * @param c1
+<i>147</i>&nbsp;     * @param c2
+<i>148</i>&nbsp;     * @return true or false
+<i>149</i>&nbsp;     * @throws Exception
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    public boolean checkInputCoordinates(String c1, String c2) throws Exception{
+<b class="fc"><i>152</i>&nbsp;        if(Integer.parseInt(c1) &gt; 5 || Integer.parseInt(c1) &lt; 0 || Integer.parseInt(c2) &gt; 5 || Integer.parseInt(c2) &lt; 0) {</b>
+<b class="fc"><i>153</i>&nbsp;            return false;</b>
+<i>154</i>&nbsp;        }
+<b class="fc"><i>155</i>&nbsp;        else return true;</b>
+<i>156</i>&nbsp;    }
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    /**
+<i>159</i>&nbsp;     * Sends the message to the connection
+<i>160</i>&nbsp;     * @param message
+<i>161</i>&nbsp;     */
+<i>162</i>&nbsp;    public void showMessage(Object message){
+<b class="fc"><i>163</i>&nbsp;        connection.send(message);</b>
+<b class="nc"><i>164</i>&nbsp;    }</b>
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    /**
+<i>167</i>&nbsp;     * Sends the event to the connection
+<i>168</i>&nbsp;     * @param event
+<i>169</i>&nbsp;     */
+<i>170</i>&nbsp;    public void showEvent(Event event){
+<b class="fc"><i>171</i>&nbsp;        connection.send(event);</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;    }</b>
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;    /**
+<i>176</i>&nbsp;     * displays the error
+<i>177</i>&nbsp;     * @param error
+<i>178</i>&nbsp;     */
+<i>179</i>&nbsp;    public void showError(String error){
+<b class="fc"><i>180</i>&nbsp;        showMessage(error);</b>
+<i>181</i>&nbsp;        //something else
+<b class="nc"><i>182</i>&nbsp;    }</b>
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    protected void showModel(Model model) {
+<i>185</i>&nbsp;        //connection.send(model.getOutcome(getPlayer()).printOutcome() + &quot;\tMake your move&quot;);
+<b class="nc"><i>186</i>&nbsp;    }</b>
+<i>187</i>&nbsp;
+<i>188</i>&nbsp;    /**
+<i>189</i>&nbsp;     * is used to make the player aware of the current state
+<i>190</i>&nbsp;     * @param model
+<i>191</i>&nbsp;     */
+<i>192</i>&nbsp;    @Override
+<i>193</i>&nbsp;    public void update(ModelView model){
+<i>194</i>&nbsp;        try {
+<b class="nc"><i>195</i>&nbsp;            connection.send(model);</b>
+<b class="nc"><i>196</i>&nbsp;            if (model.getState().equals(&quot;select&quot;) &amp;&amp; model.getCurrentPlayer().equals(getPlayerID()))</b>
+<b class="nc"><i>197</i>&nbsp;                showMessage(&quot;Select the worker you want to move\n&quot;);</b>
+<b class="nc"><i>198</i>&nbsp;            if (model.getState().equals(&quot;positionworkers&quot;) &amp;&amp; model.getCurrentPlayer().equals(getPlayerID()))</b>
+<b class="nc"><i>199</i>&nbsp;                showMessage(&quot;Place your worker\n&quot;);</b>
+<b class="nc"><i>200</i>&nbsp;            if (model.getState().equals(&quot;win&quot;)) {</b>
+<b class="nc"><i>201</i>&nbsp;                if (model.getWinner().compareTo(connection.getID()) == 0) showEvent(Event.WIN);</b>
+<b class="nc"><i>202</i>&nbsp;                else showEvent(Event.LOST);</b>
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;            }
+<b class="nc"><i>205</i>&nbsp;        }catch (NullPointerException e)</b>
+<i>206</i>&nbsp;        {
+<b class="nc"><i>207</i>&nbsp;            System.out.println(&quot;Null connection\n&quot;);</b>
+<b class="nc"><i>208</i>&nbsp;        }</b>
+<b class="nc"><i>209</i>&nbsp;    }</b>
+<i>210</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-30 17:12</div>
+</div>
+</body>
+</html>

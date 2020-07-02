@@ -96,7 +96,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         JButton btnInstr = new JButton("how to play");
         btnInstr.setSize(150, 50);
-        btnInstr.setLocation(750, 620);
+        btnInstr.setLocation(800, 620);
         btnInstr.setBackground(Color.getHSBColor(10, 10, 9));
         btnInstr.addActionListener(new ActionListener() {
                                        @Override
@@ -109,7 +109,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         JButton btnExit = new JButton("Exit");
         btnExit.setSize(150, 50);
-        btnExit.setLocation(950, 620);
+        btnExit.setLocation(1000, 620);
         btnExit.setBackground(Color.getHSBColor(10, 10, 9));
         btnExit.addActionListener(new ActionListener() {
             @Override

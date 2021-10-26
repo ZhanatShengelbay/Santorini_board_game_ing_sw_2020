@@ -57,7 +57,7 @@ The requirements that have met:
 -------------------------
 To develop the project MVC (Model-View-Controller) pattern is applied.
 
-### HOW TO RUN THE PROGRAMM:
+### How to run it:
 
 Game is loaded to the server Azure and released in single .jar file. While .jar file is clicked GUI is launched which connects the server Azure.
 You can launch the Cli mode with this command:

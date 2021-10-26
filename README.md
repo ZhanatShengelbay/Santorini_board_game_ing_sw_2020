@@ -11,7 +11,6 @@ The goal of this project is to develop the fundamental skills of teamwork, softw
 
 ### Description and Rules
 (from [boardgamegeek.com](https://boardgamegeek.com/boardgame/194655/santorini))
-The board game is designed to be played by 2 to 3 players. 
 
 Santorini is an accessible strategy game, simple enough for an elementary school classroom while aiming to provide gameplay depth and content for hardcore gamers to explore, The rules are simple. Each turn consists of 2 steps:
 
@@ -56,6 +55,7 @@ The requirements that have met:
 
 -------------------------
 To develop the project MVC (Model-View-Controller) pattern is applied.
+The board game is designed to be played by 2 to 3 players. 
 
 ### How to run it:
 

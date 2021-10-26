@@ -32,7 +32,7 @@ Simplified Rules + CLI + Socket
 
 **for 30 Lode:**
 
-Complete Rules + CLI + GUI + Socket + 2 FA (FA = Advanced Functionality)
+Complete Rules + CLI + GUI + Socket + 2 FA (FA = Advanced Feature)
 
 • *Simplified Rules:* it must be possible to complete a game with exactly two players;
 cards 1 to 5 of the game manual must be supported.
